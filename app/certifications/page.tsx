@@ -2,7 +2,7 @@
 
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Breadcrumb } from "@/components/common/breadcrumb"
+import { Breadcrumb } from "@/components/shared/breadcrumb"
 import { StructuredData } from "@/components/providers/structured-data"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

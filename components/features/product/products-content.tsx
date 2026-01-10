@@ -1,14 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { ProductFilter } from "@/components/product/product-filter"
-import { ProductComparison } from "@/components/product/product-comparison"
+import { ProductFilter } from "@/components/features/product/product-filter"
+import { ProductComparison } from "@/components/features/product/product-comparison"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { sampleProducts } from "@/lib/data/products"
-import { useProductFilter } from "@/hooks/use-product-filter"
+import { useProductFilter } from "@/components/features/product/hooks/use-product-filter"
 import { Product } from "@/lib/types/product"
 
 function ProductCard({

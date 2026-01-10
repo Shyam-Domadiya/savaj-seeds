@@ -1,7 +1,8 @@
+import { Breadcrumb } from "@/components/shared/breadcrumb"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Breadcrumb } from "@/components/common/breadcrumb"
-import { ProductsContent } from "@/components/product/products-content"
+import { ProductsContent } from "@/components/features/product/products-content"
+import PageTransition from "@/components/layout/page-transition"
 import { StructuredData } from "@/components/providers/structured-data"
 import { generateMetadata as generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo"
 

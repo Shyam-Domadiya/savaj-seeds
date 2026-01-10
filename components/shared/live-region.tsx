@@ -7,7 +7,7 @@ interface LiveRegionProps {
   children: ReactNode
   politeness?: "polite" | "assertive" | "off"
   atomic?: boolean
-  relevant?: "additions" | "removals" | "text" | "all"
+  relevant?: "additions" | "removals" | "text" | "all" | "additions text"
   className?: string
   id?: string
 }
@@ -26,12 +26,12 @@ export function LiveRegion({
     // Ensure the live region is properly announced by screen readers
     if (regionRef.current) {
       const region = regionRef.current
-      
+
       // Force screen readers to re-read the content when it changes
       if (politeness !== "off") {
         const originalContent = region.textContent
         region.textContent = ""
-        
+
         // Use a small delay to ensure screen readers pick up the change
         setTimeout(() => {
           region.textContent = originalContent
@@ -62,9 +62,9 @@ export function PoliteAnnouncement({ children, className, id }: {
   id?: string
 }) {
   return (
-    <LiveRegion 
-      politeness="polite" 
-      className={className} 
+    <LiveRegion
+      politeness="polite"
+      className={className}
       id={id}
     >
       {children}
@@ -78,9 +78,9 @@ export function AssertiveAnnouncement({ children, className, id }: {
   id?: string
 }) {
   return (
-    <LiveRegion 
-      politeness="assertive" 
-      className={className} 
+    <LiveRegion
+      politeness="assertive"
+      className={className}
       id={id}
     >
       {children}

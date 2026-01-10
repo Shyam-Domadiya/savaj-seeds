@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, forwardRef } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 
-interface LazyImageProps {
+interface LazyImageProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string
   alt: string
   width?: number
@@ -22,7 +22,7 @@ interface LazyImageProps {
   unoptimized?: boolean
 }
 
-export function LazyImage({
+export const LazyImage = forwardRef<HTMLDivElement, LazyImageProps>(({
   src,
   alt,
   width,
@@ -38,11 +38,20 @@ export function LazyImage({
   quality = 75,
   unoptimized = false,
   ...props
-}: LazyImageProps) {
+}, ref) => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [isInView, setIsInView] = useState(priority)
-  const imgRef = useRef<HTMLDivElement>(null)
+  const internalRef = useRef<HTMLDivElement>(null)
+
+  // Combine refs
+  useEffect(() => {
+    if (typeof ref === 'function') {
+      ref(internalRef.current)
+    } else if (ref) {
+      ref.current = internalRef.current
+    }
+  }, [ref])
 
   // Intersection Observer for lazy loading
   useEffect(() => {
@@ -61,8 +70,8 @@ export function LazyImage({
       }
     )
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current)
+    if (internalRef.current) {
+      observer.observe(internalRef.current)
     }
 
     return () => observer.disconnect()
@@ -88,9 +97,9 @@ export function LazyImage({
     unoptimized,
     ...(fill ? { fill: true } : { width, height }),
     ...(sizes && { sizes }),
-    ...(placeholder === "blur" && blurDataURL && { 
-      placeholder: "blur" as const, 
-      blurDataURL 
+    ...(placeholder === "blur" && blurDataURL && {
+      placeholder: "blur" as const,
+      blurDataURL
     }),
     className: cn(
       "transition-opacity duration-300",
@@ -102,7 +111,7 @@ export function LazyImage({
 
   return (
     <div
-      ref={imgRef}
+      ref={internalRef}
       className={cn(
         "relative overflow-hidden",
         fill ? "w-full h-full" : "",
@@ -112,7 +121,7 @@ export function LazyImage({
     >
       {/* Loading skeleton */}
       {isLoading && !hasError && (
-        <Skeleton 
+        <Skeleton
           className={cn(
             "absolute inset-0 z-10",
             fill ? "w-full h-full" : ""
@@ -123,7 +132,7 @@ export function LazyImage({
 
       {/* Error fallback */}
       {hasError && (
-        <div 
+        <div
           className={cn(
             "absolute inset-0 flex items-center justify-center bg-muted text-muted-foreground",
             fill ? "w-full h-full" : ""
@@ -143,4 +152,6 @@ export function LazyImage({
       )}
     </div>
   )
-}
+})
+
+LazyImage.displayName = "LazyImage"

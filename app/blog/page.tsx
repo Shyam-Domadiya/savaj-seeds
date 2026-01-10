@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Breadcrumb } from "@/components/common/breadcrumb"
+import { Breadcrumb } from "@/components/shared/breadcrumb"
 import { Badge } from "@/components/ui/badge"
 import { StructuredData } from "@/components/providers/structured-data"
 import { getBlogPosts, formatDate } from "@/lib/blog"

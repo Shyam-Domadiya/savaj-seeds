@@ -1,8 +1,7 @@
 import { Suspense } from "react"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Breadcrumb } from "@/components/common/breadcrumb"
-import { getBlogPosts } from "@/lib/blog"
+import { Breadcrumb } from "@/components/shared/breadcrumb"
 import { SearchResults } from "./search-results"
 
 export const metadata = {
@@ -14,7 +13,6 @@ export const metadata = {
 export const dynamic = "force-dynamic"
 
 export default async function SearchPage() {
-  const posts = await getBlogPosts()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -28,7 +26,7 @@ export default async function SearchPage() {
         <section className="py-12 md:py-16">
           <div className="container">
             <Suspense fallback={<SearchResultsSkeleton />}>
-              <SearchResults initialPosts={posts} />
+              <SearchResults />
             </Suspense>
           </div>
         </section>

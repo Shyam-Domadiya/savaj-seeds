@@ -32,7 +32,7 @@ export function PerformanceMonitor({
 
       const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming
       const paint = performance.getEntriesByType('paint')
-      
+
       let firstContentfulPaint = 0
       let largestContentfulPaint = 0
       let cumulativeLayoutShift = 0
@@ -90,7 +90,7 @@ export function PerformanceMonitor({
       const connectionType = connection ? `${connection.effectiveType || 'unknown'} (${connection.downlink || 'unknown'}Mbps)` : 'unknown'
 
       const metrics: PerformanceMetrics = {
-        pageLoadTime: navigation.loadEventEnd - navigation.navigationStart,
+        pageLoadTime: navigation.loadEventEnd,
         firstContentfulPaint,
         largestContentfulPaint,
         cumulativeLayoutShift,

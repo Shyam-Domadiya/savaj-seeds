@@ -1,7 +1,8 @@
-import { SeedCalculator } from "@/components/product/seed-calculator"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Breadcrumb } from "@/components/common/breadcrumb"
+import { Breadcrumb } from "@/components/shared/breadcrumb"
+import { SeedCalculator } from "@/components/features/product/seed-calculator"
+import PageTransition from "@/components/layout/page-transition"
 
 export const metadata = {
     title: "Seed Rate Calculator - Savaj Seeds",

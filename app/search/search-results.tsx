@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Search, Filter, SortAsc, SortDesc } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 import { formatDate } from "@/lib/utils"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -23,7 +24,7 @@ interface SearchResult {
 export function SearchResults() {
   const searchParams = useSearchParams()
   const query = searchParams.get("q") || ""
-  
+
   const [results, setResults] = useState<SearchResult[]>([])
   const [filteredResults, setFilteredResults] = useState<SearchResult[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -44,7 +45,7 @@ export function SearchResults() {
       date: "2024-01-15"
     },
     {
-      id: "2", 
+      id: "2",
       title: "Sweet Pepper Seeds",
       description: "Colorful bell pepper variety with thick walls and excellent flavor profile. Available in multiple colors including red, yellow, and orange.",
       type: "product",
@@ -128,12 +129,12 @@ export function SearchResults() {
   useEffect(() => {
     const performSearch = async () => {
       setIsLoading(true)
-      
+
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500))
-      
+
       let searchResults = allSearchData
-      
+
       if (query.trim()) {
         searchResults = allSearchData.filter(item =>
           item.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -141,7 +142,7 @@ export function SearchResults() {
           item.category?.toLowerCase().includes(query.toLowerCase())
         )
       }
-      
+
       setResults(searchResults)
       setIsLoading(false)
     }
@@ -152,12 +153,12 @@ export function SearchResults() {
   // Apply filters and sorting
   useEffect(() => {
     let filtered = [...results]
-    
+
     // Apply type filter
     if (filterType !== "all") {
       filtered = filtered.filter(result => result.type === filterType)
     }
-    
+
     // Apply sorting
     filtered.sort((a, b) => {
       switch (sortBy) {
@@ -179,7 +180,7 @@ export function SearchResults() {
           return bScore - aScore
       }
     })
-    
+
     setFilteredResults(filtered)
     setCurrentPage(1)
   }, [results, filterType, sortBy, query])
@@ -236,7 +237,7 @@ export function SearchResults() {
           <div className="h-8 bg-muted rounded w-64 animate-pulse" />
           <div className="h-4 bg-muted rounded w-48 animate-pulse" />
         </div>
-        
+
         <div className="space-y-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="border border-border rounded-lg p-6 space-y-3">
@@ -351,7 +352,7 @@ export function SearchResults() {
           <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-semibold mb-2">No results found</h3>
           <p className="text-muted-foreground mb-4">
-            {query 
+            {query
               ? `We couldn't find any results for "${query}". Try adjusting your search terms.`
               : "No results available at the moment."
             }
@@ -373,7 +374,7 @@ export function SearchResults() {
           >
             Previous
           </Button>
-          
+
           <div className="flex items-center gap-1">
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
               const pageNum = i + 1

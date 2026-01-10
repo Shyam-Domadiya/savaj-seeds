@@ -1,12 +1,15 @@
+
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { Breadcrumb } from "@/components/common/breadcrumb"
-import { ProductImageGallery } from "@/components/product/product-image-gallery"
-import { ExpandableSection } from "@/components/common/expandable-section"
+import { Breadcrumb } from "@/components/shared/breadcrumb"
+import { ProductImageGallery } from "@/components/features/product/product-image-gallery"
+import { ProductReviews } from "@/components/features/product/product-reviews"
+import { ExpandableSection } from "@/components/shared/expandable-section"
 import { DownloadableResources } from "@/components/sections/downloadable-resources"
 import { StructuredData } from "@/components/providers/structured-data"
+import PageTransition from "@/components/layout/page-transition"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,7 +18,7 @@ import { Separator } from "@/components/ui/separator"
 import { getProductById } from "@/lib/data/products"
 import { generateMetadata as generateSEOMetadata, generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo"
 import { Star, Download, Leaf, Clock, TrendingUp } from "lucide-react"
-import { DownloadGuideButton } from "@/components/product/download-guide-button"
+import { DownloadGuideButton } from "@/components/features/product/download-guide-button"
 
 interface ProductPageProps {
   params: Promise<{
@@ -38,7 +41,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
     title: product.seoMetadata.title,
     description: product.seoMetadata.description,
     keywords: product.seoMetadata.keywords,
-    url: `/products/${id}`,
+    url: `/ products / ${id} `,
     type: 'website',
     image: product.images[0]?.url || '/images/logo.png',
   })
@@ -70,7 +73,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
     { name: "Products", url: "/products" },
-    { name: product.name, url: `/products/${id}` },
+    { name: product.name, url: `/ products / ${id} ` },
   ])
 
   return (
@@ -169,7 +172,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {/* Action Buttons */}
                 <div className="flex gap-3">
                   <Button size="lg" className="flex-1" asChild>
-                    <Link href={`/contact?subject=Pricing Request: {product.name}`}>
+                    <Link href={`/ contact ? subject = Pricing Request: { product.name } `}>
                       Contact for Pricing
                     </Link>
                   </Button>

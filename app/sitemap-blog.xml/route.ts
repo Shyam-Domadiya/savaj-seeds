@@ -3,11 +3,11 @@ import { getBlogPosts } from '@/lib/blog'
 
 export async function GET(): Promise<Response> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://savajseeds.com'
-  
+
   try {
     // Get all blog posts
     const posts = await getBlogPosts()
-    
+
     // Blog-specific sitemap
     const blogSitemap: MetadataRoute.Sitemap = [
       // Blog main page
@@ -30,16 +30,16 @@ export async function GET(): Promise<Response> {
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${blogSitemap
-  .map(
-    (item) => `
+        .map(
+          (item) => `
   <url>
     <loc>${item.url}</loc>
-    <lastmod>${item.lastModified?.toISOString()}</lastmod>
+    <lastmod>${item.lastModified instanceof Date ? item.lastModified.toISOString() : new Date(item.lastModified!).toISOString()}</lastmod>
     <changefreq>${item.changeFrequency}</changefreq>
     <priority>${item.priority}</priority>
   </url>`
-  )
-  .join('')}
+        )
+        .join('')}
 </urlset>`
 
     return new Response(sitemap, {
@@ -50,7 +50,7 @@ ${blogSitemap
     })
   } catch (error) {
     console.error('Error generating blog sitemap:', error)
-    
+
     // Return minimal sitemap on error
     const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

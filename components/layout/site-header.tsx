@@ -1,12 +1,12 @@
-"use client"
 
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
+import { LiveChatWidget } from "@/components/features/live-chat/live-chat-widget"
 
 import { MobileNav } from "@/components/layout/mobile-nav"
-import { ScreenReaderOnly } from "@/components/common/screen-reader-only"
 import { Search, Calculator } from "lucide-react"
 import { cn } from "@/lib/utils"
 

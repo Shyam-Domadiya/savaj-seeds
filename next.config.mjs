@@ -4,9 +4,7 @@ const nextConfig = {
     buildActivity: false,
     appIsrStatus: false,
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+    // ignoreBuildErrors: true,
   images: {
     unoptimized: false,
     domains: [],

@@ -1,11 +1,11 @@
 // Analytics and tracking utilities
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void
+    gtag: any
     dataLayer: any[]
-    fbq: (...args: any[]) => void
+    fbq: any
     _linkedin_partner_id: string
-    lintrk: (...args: any[]) => void
+    lintrk: any
   }
 }
 
@@ -121,10 +121,10 @@ export const initGTM = () => {
 export const initFacebookPixel = () => {
   if (typeof window === 'undefined' || !FB_PIXEL_ID) return
 
-  window.fbq = window.fbq || function() {
+  window.fbq = window.fbq || function () {
     (window.fbq.q = window.fbq.q || []).push(arguments)
   }
-  
+
   const script = document.createElement('script')
   script.src = 'https://connect.facebook.net/en_US/fbevents.js'
   script.async = true
@@ -139,7 +139,7 @@ export const initLinkedInInsight = () => {
   if (typeof window === 'undefined' || !LINKEDIN_PARTNER_ID) return
 
   window._linkedin_partner_id = LINKEDIN_PARTNER_ID
-  window.lintrk = window.lintrk || function() {
+  window.lintrk = window.lintrk || function () {
     (window.lintrk.q = window.lintrk.q || []).push(arguments)
   }
 

@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
-import { Product, ProductSort } from "@/lib/types/product"
-import { ProductFilterState } from "@/components/product/product-filter"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Product, ProductSort, Season } from "@/lib/types/product"
+import { ProductFilterState } from "@/components/features/product/product-filter"
 
 interface UseProductFilterProps {
   products: Product[]
@@ -36,7 +37,7 @@ export function useProductFilter({
 
       // Season filter
       if (filters.seasons.length > 0) {
-        const hasMatchingSeason = filters.seasons.some(season =>
+        const hasMatchingSeason = filters.seasons.some((season: Season) =>
           product.seasonality && product.seasonality.includes(season)
         )
         if (!hasMatchingSeason) return false

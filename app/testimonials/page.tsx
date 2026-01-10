@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { TestimonialsSection } from '@/components/sections/testimonials-section';
-import { Breadcrumb } from '@/components/common/breadcrumb';
+import { Breadcrumb } from '@/components/shared/breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Customer Testimonials - Savaj Seeds',

@@ -6,7 +6,7 @@ export interface SEOConfig {
   keywords?: string[]
   image?: string
   url?: string
-  type?: 'website' | 'article'
+  type?: 'website' | 'article' | 'product'
   publishedTime?: string
   modifiedTime?: string
   author?: string

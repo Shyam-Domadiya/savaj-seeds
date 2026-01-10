@@ -9,7 +9,7 @@ import { SiteFooter } from "@/components/layout/site-footer"
 import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { CropCalendar } from "@/components/sections/crop-calendar"
 
-import { ScreenReaderOnly } from "@/components/common/screen-reader-only"
+import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
 import { Sprout, Leaf, Package, Users, ArrowRight, Award, ShieldCheck } from "lucide-react"
 import { cn } from "@/lib/utils"
 
