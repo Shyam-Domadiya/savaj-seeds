@@ -1,4 +1,0 @@
-components/product/download-guide-button.tsx(33,17): error TS7031: Binding element 'blob' implicitly has an 'any' type.
-components/product/download-guide-button.tsx(33,23): error TS7031: Binding element 'url' implicitly has an 'any' type.
-components/product/download-guide-button.tsx(33,28): error TS7031: Binding element 'loading' implicitly has an 'any' type.
-components/product/download-guide-button.tsx(33,37): error TS7031: Binding element 'error' implicitly has an 'any' type.
