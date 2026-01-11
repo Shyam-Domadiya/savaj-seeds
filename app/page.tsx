@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { TestimonialsSection } from "@/components/sections/testimonials-section"
+
 import { CropCalendar } from "@/components/sections/crop-calendar"
 
 import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
@@ -247,7 +247,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <TestimonialsSection />
+
 
         <section className="py-20 md:py-28 lg:py-32 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden animate-in fade-in duration-700">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:64px_64px]" />

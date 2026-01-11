@@ -14,7 +14,7 @@ import {
   Linkedin
 } from "lucide-react"
 import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
-import { WeatherWidget } from "@/components/features/weather/weather-widget"
+
 import { businessInfo } from "@/lib/data/team"
 
 export function SiteFooter() {
@@ -83,10 +83,7 @@ export function SiteFooter() {
               })}
             </div>
 
-            {/* Weather Widget */}
-            <div className="pt-4">
-              <WeatherWidget />
-            </div>
+
           </div>
 
           {/* Quick Links */}
