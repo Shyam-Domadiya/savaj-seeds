@@ -152,7 +152,7 @@ function ProductCard({ product }: { product: any }) {
             <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300">
                 <div className="relative h-48 bg-muted">
                     <img
-                        src={product.images[0]?.url || '/placeholder.jpg'}
+                        src={product.images[0]?.url || '/images/product-tomato.png'}
                         alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

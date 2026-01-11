@@ -16,7 +16,16 @@ const nextConfig = {
   },
   experimental: {
     optimizeCss: false, // Disabled due to missing critters dependency
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-icons',
+      'recharts',
+      'date-fns',
+      'framer-motion',
+      '@radix-ui/react-alert-dialog',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+    ],
   },
   compress: true,
   trailingSlash: false,

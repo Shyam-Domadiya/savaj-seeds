@@ -2,19 +2,19 @@ import { Product, ProductImage, ProductSpecification, GrowingGuide, Downloadable
 
 // Sample product images
 const createProductImages = (productName: string, count: number = 4): ProductImage[] => {
-  let mainImage = '/placeholder.jpg';
+  let mainImage = '/images/product-tomato.png';
 
   if (productName.includes('Tomato')) {
-    mainImage = '/images/product-tomato.jpg';
+    mainImage = '/images/product-tomato.png';
   } else if (productName.includes('Pepper')) {
-    mainImage = '/images/product-pepper.jpg';
+    mainImage = '/images/product-pepper.png';
   } else if (productName.includes('Wheat')) {
-    mainImage = '/images/product-wheat.jpg';
+    mainImage = '/images/product-wheat.png';
   }
 
   return Array.from({ length: count }, (_, index) => ({
     id: `${productName.toLowerCase().replace(/\s+/g, '-')}-img-${index + 1}`,
-    url: index === 0 ? mainImage : `/placeholder.jpg`, // Only main image is real for now
+    url: index === 0 ? mainImage : mainImage, // Using main image for all views temporarily to avoid placeholders
     altText: `${productName} - View ${index + 1}`,
     caption: index === 0 ? `${productName} - Main view` : `${productName} - Angle ${index + 1}`,
     isPrimary: index === 0,

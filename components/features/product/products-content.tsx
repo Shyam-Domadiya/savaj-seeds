@@ -22,7 +22,7 @@ function ProductCard({
       <CardHeader className="space-y-4">
         <div className="mb-4 aspect-video rounded-xl overflow-hidden shadow-sm group-hover:shadow-lg transition-all duration-500 relative">
           <img
-            src={product.images[0]?.url || '/placeholder.jpg'}
+            src={product.images[0]?.url || '/images/product-tomato.png'}
             alt={product.images[0]?.altText || product.name}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />

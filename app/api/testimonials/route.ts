@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Basic validation
     const requiredFields = ['customerName', 'customerLocation', 'rating', 'testimonial', 'productUsed'];
     for (const field of requiredFields) {
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const newTestimonial = {
       id: Date.now().toString(),
       customerName: body.customerName,
-      customerImage: body.customerImage || '/placeholder-user.jpg',
+      customerImage: body.customerImage || '/images/team-amit.png',
       customerLocation: body.customerLocation,
       customerType: body.customerType || 'Individual',
       rating: body.rating,
