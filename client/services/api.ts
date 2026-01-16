@@ -8,6 +8,22 @@ const api = axios.create({
     },
 });
 
+// Request interceptor to add token to headers
+api.interceptors.request.use(
+    (config) => {
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 api.interceptors.response.use(
     (response) => response,
     (error) => {

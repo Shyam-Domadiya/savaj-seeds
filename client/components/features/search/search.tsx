@@ -11,7 +11,7 @@ interface SearchResult {
   id: string
   title: string
   description: string
-  type: "product" | "blog" | "page"
+  type: "product" | "page"
   url: string
 }
 
@@ -21,13 +21,13 @@ interface SearchProps {
   showResults?: boolean
 }
 
-export function SearchComponent({ className, placeholder = "Search products, articles...", showResults = true }: SearchProps) {
+export function SearchComponent({ className, placeholder = "Search products...", showResults = true }: SearchProps) {
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<SearchResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
-  
+
   const searchRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
@@ -42,7 +42,7 @@ export function SearchComponent({ className, placeholder = "Search products, art
       url: "/products"
     },
     {
-      id: "2", 
+      id: "2",
       title: "Sweet Pepper Seeds",
       description: "Colorful bell pepper variety with thick walls and excellent flavor",
       type: "product",
@@ -52,16 +52,10 @@ export function SearchComponent({ className, placeholder = "Search products, art
       id: "3",
       title: "Hybrid Wheat Seeds",
       description: "Premium wheat variety optimized for Indian climate",
-      type: "product", 
+      type: "product",
       url: "/products"
     },
-    {
-      id: "4",
-      title: "Seed Selection Guide",
-      description: "Learn about quality seeds and selection for optimal farming success",
-      type: "blog",
-      url: "/blog"
-    },
+
     {
       id: "5",
       title: "About Savaj Seeds",
@@ -86,15 +80,15 @@ export function SearchComponent({ className, placeholder = "Search products, art
     }
 
     setIsLoading(true)
-    
+
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 300))
-    
+
     const filteredResults = searchData.filter(item =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase())
     ).slice(0, 6) // Limit to 6 results
-    
+
     setResults(filteredResults)
     setIsLoading(false)
   }
@@ -120,7 +114,7 @@ export function SearchComponent({ className, placeholder = "Search products, art
       switch (e.key) {
         case "ArrowDown":
           e.preventDefault()
-          setSelectedIndex(prev => 
+          setSelectedIndex(prev =>
             prev < results.length - 1 ? prev + 1 : prev
           )
           break
@@ -177,8 +171,7 @@ export function SearchComponent({ className, placeholder = "Search products, art
     switch (type) {
       case "product":
         return "🌱"
-      case "blog":
-        return "📝"
+
       case "page":
         return "📄"
       default:
@@ -190,8 +183,7 @@ export function SearchComponent({ className, placeholder = "Search products, art
     switch (type) {
       case "product":
         return "Product"
-      case "blog":
-        return "Article"
+
       case "page":
         return "Page"
       default:
@@ -263,7 +255,7 @@ export function SearchComponent({ className, placeholder = "Search products, art
                   </div>
                 </button>
               ))}
-              
+
               {query.trim() && (
                 <button
                   onClick={() => {

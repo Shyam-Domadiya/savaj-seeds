@@ -13,11 +13,9 @@ export const metadata = {
 export const dynamic = "force-dynamic"
 
 import { getAllProducts } from "@/lib/actions/product"
-import { getBlogPosts } from "@/lib/blog"
 
 export default async function SearchPage() {
   const products = await getAllProducts()
-  const posts = await getBlogPosts()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -31,7 +29,7 @@ export default async function SearchPage() {
         <section className="py-12 md:py-16">
           <div className="container">
             <Suspense fallback={<SearchResultsSkeleton />}>
-              <SearchResults initialPosts={posts} initialProducts={products} />
+              <SearchResults initialProducts={products} />
             </Suspense>
           </div>
         </section>

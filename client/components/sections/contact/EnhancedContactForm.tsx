@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { useFormAnalytics } from "@/hooks/use-analytics"
+
 import { Send, CheckCircle, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import api from "@/services/api"
@@ -37,7 +37,7 @@ const contactCategories = [
 
 export function EnhancedContactForm() {
   const { toast } = useToast()
-  const { trackFormStart, trackFormFieldFocus, trackFormSubmit, trackFormError } = useFormAnalytics('contact', 'contact_page')
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -85,7 +85,6 @@ export function EnhancedContactForm() {
   const handleChange = (name: string, value: string) => {
     // Track form start on first interaction
     if (!hasStarted) {
-      trackFormStart()
       setHasStarted(true)
     }
 
@@ -98,13 +97,13 @@ export function EnhancedContactForm() {
   }
 
   const handleFocus = (name: string) => {
-    trackFormFieldFocus(name)
+    // trackFormFieldFocus(name)
   }
 
   const handleBlur = (name: string, value: string) => {
     const error = validateField(name, value)
     if (error) {
-      trackFormError(error, name)
+      // trackFormError(error, name)
     }
     setErrors(prev => ({ ...prev, [name]: error }))
   }
@@ -125,7 +124,7 @@ export function EnhancedContactForm() {
     e.preventDefault()
 
     if (!validateForm()) {
-      trackFormError("Form validation failed", "form_validation")
+      // trackFormError("Form validation failed", "form_validation")
       toast({
         title: "Please fix the errors",
         description: "Check the form for validation errors and try again.",
@@ -142,7 +141,7 @@ export function EnhancedContactForm() {
       await api.post('/contact', formData)
 
       // Track successful form submission
-      trackFormSubmit()
+      // trackFormSubmit()
 
       toast({
         title: "Message Sent Successfully!",
@@ -161,7 +160,7 @@ export function EnhancedContactForm() {
       setErrors({})
       setHasStarted(false)
     } catch (error) {
-      trackFormError("Form submission failed", "api_error")
+      // trackFormError("Form submission failed", "api_error")
       toast({
         title: "Failed to send message",
         description: "Please try again or contact us directly.",

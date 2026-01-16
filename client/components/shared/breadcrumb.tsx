@@ -30,10 +30,10 @@ export function Breadcrumb({ className, customTitle }: BreadcrumbProps) {
     ]
 
     let currentPath = ""
-    
+
     pathSegments.forEach((segment, index) => {
       currentPath += `/${segment}`
-      
+
       // Convert segment to readable label
       let label = segment
         .split("-")
@@ -41,9 +41,8 @@ export function Breadcrumb({ className, customTitle }: BreadcrumbProps) {
         .join(" ")
 
       // Handle special cases for better labels
-      if (segment === "blog" && index === pathSegments.length - 1) {
-        label = "Blog"
-      } else if (segment === "products") {
+      // Handle special cases for better labels
+      if (segment === "products") {
         label = "Products"
       } else if (segment === "contact") {
         label = "Contact"
@@ -66,8 +65,8 @@ export function Breadcrumb({ className, customTitle }: BreadcrumbProps) {
   const breadcrumbs = generateBreadcrumbs()
 
   return (
-    <nav 
-      aria-label="Breadcrumb" 
+    <nav
+      aria-label="Breadcrumb"
       className={cn(
         "flex items-center space-x-1 text-sm text-muted-foreground py-4",
         className
@@ -77,14 +76,14 @@ export function Breadcrumb({ className, customTitle }: BreadcrumbProps) {
         {breadcrumbs.map((breadcrumb, index) => (
           <li key={breadcrumb.href} className="flex items-center">
             {index > 0 && (
-              <ChevronRight 
-                className="h-4 w-4 mx-2 text-muted-foreground/60" 
+              <ChevronRight
+                className="h-4 w-4 mx-2 text-muted-foreground/60"
                 aria-hidden="true"
               />
             )}
             {index === breadcrumbs.length - 1 ? (
               // Current page - not a link
-              <span 
+              <span
                 className="font-medium text-foreground flex items-center gap-1"
                 aria-current="page"
               >

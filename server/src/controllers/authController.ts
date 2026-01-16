@@ -12,6 +12,11 @@ const authUser = asyncHandler(async (req: Request, res: Response) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
+        // Update login stats
+        user.loginCount = (user.loginCount || 0) + 1;
+        user.lastLogin = new Date();
+        await user.save();
+
         const token = generateToken((user._id as any).toString());
 
         // Set cookie
@@ -52,6 +57,8 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
         name,
         email,
         password,
+        loginCount: 1,
+        lastLogin: new Date(),
     });
 
     if (user) {

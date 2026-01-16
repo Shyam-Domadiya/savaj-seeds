@@ -9,6 +9,7 @@ import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
 import { MobileNav } from "@/components/layout/mobile-nav"
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/context/AuthContext"
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -19,6 +20,7 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname()
+  const { user, logout } = useAuth()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 shadow-sm transition-shadow duration-300 hover:shadow-md">
@@ -60,6 +62,24 @@ export function SiteHeader() {
 
         {/* Header Actions */}
         <div className="flex items-center gap-2">
+          {user ? (
+            <div className="flex items-center gap-2">
+              <Link href="/user">
+                <Button variant="ghost" size="sm" className="hidden sm:inline-flex font-medium">
+                  Dashboard
+                </Button>
+              </Link>
+              <Button variant="ghost" size="sm" onClick={() => logout()} className="hidden sm:inline-flex text-muted-foreground hover:text-foreground">
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Link href="/login">
+              <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+                Login
+              </Button>
+            </Link>
+          )}
           {/* Weather Widget removed as per user request */}
           <Link href="/search">
             <div className="inline-flex items-center justify-center h-10 w-10 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors">

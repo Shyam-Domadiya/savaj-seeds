@@ -1,13 +1,13 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
+
 import { Toaster } from "@/components/ui/toaster"
 import { BackToTop } from "@/components/layout/back-to-top"
-import { PerformanceMonitor } from "@/components/features/performance-monitor"
+
 import { SkipNav } from "@/components/layout/skip-nav"
 import { StructuredData } from "@/components/providers/structured-data"
-import { AnalyticsProvider } from "@/components/providers/analytics-provider"
+
 import { ConsentBanner } from "@/components/providers/consent-banner"
 import { generateBusinessSchema, generateWebsiteSchema, generateOrganizationSchema, generateServiceSchema } from "@/lib/seo"
 import { Providers } from "@/components/providers/providers"
@@ -177,14 +177,14 @@ export default function RootLayout({
     <html lang="en" className={`${_geist.variable} ${_geistMono.variable}`} suppressHydrationWarning>
       <head>
         <StructuredData data={[businessSchema, websiteSchema, organizationSchema, serviceSchema]} />
-        <link rel="dns-prefetch" href="//www.google-analytics.com" />
+
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
         <meta name="HandheldFriendly" content="true" />
         <meta name="MobileOptimized" content="width" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Savaj Seeds" />
         <meta name="application-name" content="Savaj Seeds" />
@@ -193,17 +193,17 @@ export default function RootLayout({
         <meta name="color-scheme" content="light dark" />
       </head>
       <body className={`font-sans antialiased`}>
-        <AnalyticsProvider>
-          <Providers>
-            <SkipNav />
-            {children}
-            <BackToTop />
-            {/* <PerformanceMonitor enableConsoleLogging={false} /> */}
-            <Toaster />
-            <Analytics />
-            <ConsentBanner />
-          </Providers>
-        </AnalyticsProvider>
+
+        <Providers>
+          <SkipNav />
+          {children}
+          <BackToTop />
+
+          <Toaster />
+
+          <ConsentBanner />
+        </Providers>
+
       </body>
     </html>
   )

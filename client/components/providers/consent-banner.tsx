@@ -4,8 +4,20 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import { setAnalyticsConsent, getAnalyticsConsent } from '@/lib/analytics'
 import { X, Settings, Shield } from 'lucide-react'
+
+const CONSENT_KEY = 'user-consent-preferences'
+
+const getAnalyticsConsent = () => {
+  if (typeof window === 'undefined') return null
+  const stored = localStorage.getItem(CONSENT_KEY)
+  return stored ? JSON.parse(stored) : null
+}
+
+const setAnalyticsConsent = (consent: any) => {
+  if (typeof window === 'undefined') return
+  localStorage.setItem(CONSENT_KEY, JSON.stringify(consent))
+}
 
 export function ConsentBanner() {
   const [showBanner, setShowBanner] = useState(false)
@@ -76,7 +88,7 @@ export function ConsentBanner() {
                 <div className="space-y-2">
                   <CardTitle className="text-lg">We value your privacy</CardTitle>
                   <CardDescription className="text-sm leading-relaxed">
-                    We use cookies and similar technologies to improve your experience, analyze site usage, 
+                    We use cookies and similar technologies to improve your experience, analyze site usage,
                     and assist in our marketing efforts. You can manage your preferences or learn more in our{' '}
                     <a href="/privacy-policy" className="text-primary hover:underline">
                       Privacy Policy
@@ -84,7 +96,7 @@ export function ConsentBanner() {
                   </CardDescription>
                 </div>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
                 <Button
                   variant="outline"
@@ -130,7 +142,7 @@ export function ConsentBanner() {
                 <X className="h-4 w-4" />
               </Button>
             </CardHeader>
-            
+
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 {/* Essential Cookies */}
@@ -156,7 +168,7 @@ export function ConsentBanner() {
                   <Checkbox
                     id="analytics"
                     checked={consent.analytics}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleConsentChange('analytics', checked as boolean)
                     }
                     className="mt-1"
@@ -166,7 +178,7 @@ export function ConsentBanner() {
                       Analytics Cookies
                     </label>
                     <p className="text-xs text-muted-foreground">
-                      Help us understand how visitors interact with our website by collecting 
+                      Help us understand how visitors interact with our website by collecting
                       and reporting information anonymously.
                     </p>
                   </div>
@@ -177,7 +189,7 @@ export function ConsentBanner() {
                   <Checkbox
                     id="marketing"
                     checked={consent.marketing}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleConsentChange('marketing', checked as boolean)
                     }
                     className="mt-1"
@@ -187,7 +199,7 @@ export function ConsentBanner() {
                       Marketing Cookies
                     </label>
                     <p className="text-xs text-muted-foreground">
-                      Used to track visitors across websites to display relevant advertisements 
+                      Used to track visitors across websites to display relevant advertisements
                       and measure campaign effectiveness.
                     </p>
                   </div>

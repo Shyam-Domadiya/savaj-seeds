@@ -7,11 +7,8 @@ const __dirname = path.dirname(__filename);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: __dirname,
-  devIndicators: {
-    buildActivity: false,
-    appIsrStatus: false,
-  },
-    // ignoreBuildErrors: true,
+  devIndicators: false,
+  // ignoreBuildErrors: true,
   images: {
     unoptimized: false,
     domains: [],

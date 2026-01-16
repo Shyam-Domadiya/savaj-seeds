@@ -34,15 +34,15 @@ export default function RegisterPage() {
 
     return (
         <div className="flex h-screen w-full items-center justify-center bg-gray-50 px-4">
-            <Card className="w-full max-w-sm">
-                <CardHeader>
-                    <CardTitle className="text-2xl">Register</CardTitle>
-                    <CardDescription>
-                        Create an account to get started.
+            <Card className="w-full max-w-[420px] shadow-xl border-border/60">
+                <CardHeader className="space-y-4 pb-8 pt-8 px-10 text-center">
+                    <CardTitle className="text-3xl font-bold tracking-tight">Create an account</CardTitle>
+                    <CardDescription className="text-base">
+                        Enter your details below to create your account
                     </CardDescription>
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
-                    <CardContent className="grid gap-4">
+                    <CardContent className="grid gap-6 px-10">
                         {error && (
                             <Alert variant="destructive">
                                 <AlertCircle className="h-4 w-4" />
@@ -50,8 +50,8 @@ export default function RegisterPage() {
                                 <AlertDescription>{error}</AlertDescription>
                             </Alert>
                         )}
-                        <div className="grid gap-2">
-                            <Label htmlFor="name">Name</Label>
+                        <div className="grid gap-3">
+                            <Label htmlFor="name" className="text-base font-medium">Name</Label>
                             <Input
                                 id="name"
                                 type="text"
@@ -59,38 +59,41 @@ export default function RegisterPage() {
                                 required
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
+                                className="h-12 text-base px-4"
                             />
                         </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                        <div className="grid gap-3">
+                            <Label htmlFor="email" className="text-base font-medium">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="m@example.com"
+                                placeholder="name@example.com"
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                className="h-12 text-base px-4"
                             />
                         </div>
-                        <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                        <div className="grid gap-3">
+                            <Label htmlFor="password" className="text-base font-medium">Password</Label>
                             <Input
                                 id="password"
                                 type="password"
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                className="h-12 text-base px-4"
                             />
                         </div>
                     </CardContent>
-                    <CardFooter className="flex flex-col gap-4">
-                        <Button className="w-full" type="submit" disabled={loading}>
-                            {loading ? 'Creating account...' : 'Unite with us'}
+                    <CardFooter className="flex flex-col gap-6 pt-6 pb-10 px-10">
+                        <Button className="w-full h-12 text-lg font-semibold shadow-md hover:shadow-lg transition-all" type="submit" disabled={loading}>
+                            {loading ? 'Creating account...' : 'Create Account'}
                         </Button>
-                        <div className="text-center text-sm">
+                        <div className="text-center text-sm text-muted-foreground">
                             Already have an account?{' '}
-                            <Link href="/login" className="underline">
-                                Sign in
+                            <Link href="/login" className="font-semibold text-primary hover:underline underline-offset-4 tracking-wide">
+                                Sign In
                             </Link>
                         </div>
                     </CardFooter>

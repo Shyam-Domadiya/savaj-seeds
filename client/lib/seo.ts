@@ -6,7 +6,7 @@ export interface SEOConfig {
   keywords?: string[]
   image?: string
   url?: string
-  type?: 'website' | 'article' | 'product'
+  type?: 'website' | 'product'
   publishedTime?: string
   modifiedTime?: string
   author?: string
@@ -124,13 +124,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
           type: 'image/png',
         },
       ],
-      ...(type === 'article' && {
-        publishedTime,
-        modifiedTime,
-        authors: author ? [author] : ['Savaj Seeds'],
-        section,
-        tags,
-      }),
+
     },
     twitter: {
       card: 'summary_large_image',
@@ -660,48 +654,7 @@ export function generateProductSchema(product: {
   }
 }
 
-// Article Schema for blog posts
-export function generateArticleSchema(article: {
-  title: string
-  description: string
-  author: string
-  publishedTime: string
-  modifiedTime?: string
-  image: string
-  url: string
-  section?: string
-  tags?: string[]
-}) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://savajseeds.com'
 
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: article.description,
-    image: article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`,
-    author: {
-      '@type': 'Person',
-      name: article.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Savaj Seeds',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${baseUrl}/images/logo.png`,
-      },
-    },
-    datePublished: article.publishedTime,
-    dateModified: article.modifiedTime || article.publishedTime,
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': article.url.startsWith('http') ? article.url : `${baseUrl}${article.url}`,
-    },
-    articleSection: article.section || 'Agriculture',
-    keywords: article.tags?.join(', ') || 'seeds, farming, agriculture',
-  }
-}
 
 // FAQ Schema
 export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {

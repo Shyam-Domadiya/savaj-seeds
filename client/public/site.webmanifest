@@ -10,7 +10,11 @@
   "scope": "/",
   "lang": "en-US",
   "dir": "ltr",
-  "categories": ["agriculture", "business", "productivity"],
+  "categories": [
+    "agriculture",
+    "business",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/icon-light-32x32.png",
@@ -72,19 +76,6 @@
       "short_name": "Contact",
       "description": "Get in touch with us",
       "url": "/contact",
-      "icons": [
-        {
-          "src": "/icon-light-32x32.png",
-          "sizes": "32x32",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Blog",
-      "short_name": "Blog",
-      "description": "Read farming insights",
-      "url": "/blog",
       "icons": [
         {
           "src": "/icon-light-32x32.png",

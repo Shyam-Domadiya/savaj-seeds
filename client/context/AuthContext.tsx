@@ -19,13 +19,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
-    // Check if user is logged in
+    // Check if user is logged in (Only if token exists)
     useEffect(() => {
         const checkUserLoggedIn = async () => {
+            if (typeof window === 'undefined') return;
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+
             try {
                 const { data } = await api.get('/users/profile');
                 setUser(data);
             } catch (err) {
+
+                localStorage.removeItem('token');
                 setUser(null);
             } finally {
                 setLoading(false);
@@ -40,6 +50,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setError(null);
         try {
             const { data } = await api.post('/auth/login', userData);
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+            }
             setUser(data);
             router.push('/user'); // Redirect to dashboard
         } catch (err: any) {
@@ -55,6 +68,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setError(null);
         try {
             const { data } = await api.post('/auth/register', userData);
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+            }
             setUser(data);
             router.push('/user'); // Redirect to dashboard
         } catch (err: any) {
@@ -68,6 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const logout = async () => {
         try {
             await api.post('/auth/logout');
+            localStorage.removeItem('token');
             setUser(null);
             router.push('/login');
         } catch (err) {
