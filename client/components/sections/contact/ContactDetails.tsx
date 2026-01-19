@@ -2,41 +2,23 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   MapPin,
   Phone,
   Mail,
   MessageCircle,
-  Building,
-  FileText,
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-  Linkedin
+  Building
 } from 'lucide-react';
 import { businessInfo } from '@/lib/data/team';
 import { cn } from '@/lib/utils';
 
 interface BusinessInfoProps {
   className?: string;
-  showSocialMedia?: boolean;
-  showRegistration?: boolean;
 }
 
 export function BusinessInfo({
-  className,
-  showSocialMedia = true,
-  showRegistration = true
+  className
 }: BusinessInfoProps) {
-  const socialIcons = {
-    facebook: Facebook,
-    instagram: Instagram,
-    twitter: Twitter,
-    youtube: Youtube,
-    linkedin: Linkedin,
-  };
 
   return (
     <div className={cn("space-y-6", className)}>
@@ -130,68 +112,7 @@ export function BusinessInfo({
 
 
 
-      {/* Business Registration */}
-      {showRegistration && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-primary" />
-              Business Registration
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div>
-              <h4 className="font-semibold mb-1">Company Name</h4>
-              <p className="text-muted-foreground">{businessInfo.companyName}</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-1">Established</h4>
-              <p className="text-muted-foreground">{businessInfo.establishedYear}</p>
-            </div>
-            {businessInfo.registrationNumber && (
-              <div>
-                <h4 className="font-semibold mb-1">Registration Number</h4>
-                <p className="text-muted-foreground text-sm">{businessInfo.registrationNumber}</p>
-              </div>
-            )}
-            <div>
-              <h4 className="font-semibold mb-1">GST Number</h4>
-              <p className="text-muted-foreground text-sm">{businessInfo.gstNumber}</p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
-      {/* Social Media */}
-      {showSocialMedia && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Follow Us</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-3">
-              {Object.entries(businessInfo.socialMedia).map(([platform, url]) => {
-                if (!url) return null;
-                const IconComponent = socialIcons[platform as keyof typeof socialIcons];
-                return (
-                  <Button
-                    key={platform}
-                    variant="outline"
-                    size="sm"
-                    className="hover:scale-105 transition-transform duration-300"
-                    asChild
-                  >
-                    <Link href={url} target="_blank" rel="noopener noreferrer">
-                      <IconComponent className="w-4 h-4 mr-2" />
-                      {platform.charAt(0).toUpperCase() + platform.slice(1)}
-                    </Link>
-                  </Button>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }

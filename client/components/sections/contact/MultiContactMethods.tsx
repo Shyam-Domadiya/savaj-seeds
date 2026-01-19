@@ -5,14 +5,14 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Phone, 
-  Mail, 
-  MessageCircle, 
-  Facebook, 
-  Instagram, 
-  Twitter, 
-  Youtube, 
+import {
+  Phone,
+  Mail,
+  MessageCircle,
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
   Linkedin,
   Clock,
   MapPin,
@@ -177,57 +177,6 @@ export function MultiContactMethods() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Emergency Contact */}
-      <Card className="bg-gradient-to-r from-orange-50 to-red-50 border-orange-200">
-        <CardHeader>
-          <CardTitle className="text-xl text-orange-800 flex items-center gap-2">
-            <Phone className="w-5 h-5" />
-            Emergency Agricultural Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-orange-700 mb-4">
-            For urgent agricultural emergencies or time-sensitive crop issues, contact our 24/7 emergency hotline.
-          </p>
-          <Button
-            variant="outline"
-            className="border-orange-300 text-orange-700 hover:bg-orange-100"
-            onClick={() => window.open("tel:+919173386405")}
-          >
-            <Phone className="w-4 h-4 mr-2" />
-            Emergency Hotline: +91 91733 86405
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Social Media */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">Follow Us on Social Media</CardTitle>
-          <p className="text-muted-foreground">
-            Stay updated with farming tips, product launches, and agricultural insights.
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-3">
-            {socialMethods.map((social) => (
-              <Button
-                key={social.name}
-                variant="outline"
-                size="sm"
-                className={`hover:scale-105 transition-all duration-300 ${social.color}`}
-                asChild
-              >
-                <Link href={social.url || "#"} target="_blank" rel="noopener noreferrer">
-                  {social.icon}
-                  <span className="ml-2">{social.name}</span>
-                </Link>
-              </Button>
             ))}
           </div>
         </CardContent>

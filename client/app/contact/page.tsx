@@ -77,37 +77,9 @@ export default function ContactPage() {
               <EnhancedContactForm />
 
               <div className="space-y-8">
-                <BusinessInfo showRegistration={true} />
+                <BusinessInfo />
 
-                <Card className="bg-gradient-to-br from-primary to-primary/90 text-primary-foreground border-0 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-500 animate-in fade-in-50 slide-in-from-right-8 duration-700 delay-100">
-                  <CardHeader>
-                    <CardTitle className="text-2xl">Need Immediate Assistance?</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-5">
-                    <p className="leading-relaxed text-primary-foreground/90 text-[15px]">
-                      Our agricultural experts are available to provide immediate guidance on seed selection and farming
-                      practices.
-                    </p>
-                    <div className="space-y-3">
-                      <Button
-                        variant="secondary"
-                        size="lg"
-                        className="w-full h-12 text-base shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-                        onClick={() => window.open("tel:+917923456789")}
-                      >
-                        Call Now: +91 79 2345 6789
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="w-full h-12 text-base bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-                        onClick={() => window.open("https://wa.me/919173386405")}
-                      >
-                        WhatsApp: +91 91733 86405
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+
               </div>
             </div>
           </div>
