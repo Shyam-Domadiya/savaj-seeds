@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed:admin": "ts-node src/scripts/seedAdmin.ts",
+    "seed:admin": "ts-node src/scripts/seed-admin.ts",
     "generate:qr": "ts-node src/scripts/generate-qrs.ts"
   },
   "keywords": [],
