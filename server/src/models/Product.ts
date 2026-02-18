@@ -13,6 +13,7 @@ export interface IGrowingGuideSection {
 
 export interface IProduct extends Document {
     name: string;
+    slug: string;
     description: string;
     longDescription?: string;
     category: string;

@@ -47,7 +47,8 @@ export function generateMetadata(config: SEOConfig): Metadata {
     canonical,
   } = config
 
-  const fullTitle = title.includes('Savaj Seeds') ? title : `${title} - Savaj Seeds`
+  const safeTitle = title || 'Savaj Seeds';
+  const fullTitle = safeTitle.includes('Savaj Seeds') ? safeTitle : `${safeTitle} - Savaj Seeds`
   const imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
   const canonicalUrl = canonical || (url.startsWith('http') ? url : `${baseUrl}${url}`)
 

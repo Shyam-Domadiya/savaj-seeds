@@ -55,4 +55,12 @@ const submitContactForm = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-export { submitContactForm };
+// @desc    Get all contact messages
+// @route   GET /api/contact
+// @access  Private/Admin
+const getContacts = asyncHandler(async (req: Request, res: Response) => {
+    const contacts = await Contact.find({}).sort({ createdAt: -1 });
+    res.json(contacts);
+});
+
+export { submitContactForm, getContacts };
