@@ -9,7 +9,7 @@ import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
 import { MobileNav } from "@/components/layout/mobile-nav"
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { ThemeToggle } from "@/components/layout/theme-toggle"
+
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -61,7 +61,7 @@ export function SiteHeader() {
 
         {/* Header Actions */}
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+
 
           <Link href="/search">
             <div className="inline-flex items-center justify-center h-10 w-10 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors">
