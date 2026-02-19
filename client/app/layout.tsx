@@ -135,7 +135,7 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   other: {
     'theme-color': '#22c55e',
-    'color-scheme': 'light dark',
+    'color-scheme': 'light',
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
@@ -190,14 +190,14 @@ export default function RootLayout({
         <meta name="application-name" content="Savaj Seeds" />
         <meta name="msapplication-TileColor" content="#22c55e" />
         <meta name="theme-color" content="#22c55e" />
-        <meta name="color-scheme" content="light dark" />
+        <meta name="color-scheme" content="light" />
       </head>
       <body className={`font-sans antialiased`}>
 
         <Providers
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <SkipNav />
