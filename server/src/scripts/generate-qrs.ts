@@ -13,7 +13,7 @@ const generateQRCodes = async () => {
     try {
         await connectDB();
 
-        const qrDir = path.join(__dirname, '../../../client/public/qrcodes');
+        const qrDir = path.join(__dirname, '../../../assets/qrcodes');
 
         // Ensure output directory exists
         if (!fs.existsSync(qrDir)) {
