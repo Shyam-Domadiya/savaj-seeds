@@ -31,8 +31,12 @@ export function useProductFilter({
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
       // Category filter
-      if (filters.categories.length > 0 && !filters.categories.includes(product.category)) {
-        return false
+      if (filters.categories.length > 0) {
+        // Allow partial matches (e.g. "Vegetable" filter matches "Vegetable Seeds" product)
+        const hasMatchingCategory = filters.categories.some(category =>
+          product.category.includes(category) || category.includes(product.category)
+        )
+        if (!hasMatchingCategory) return false
       }
 
       // Season filter
