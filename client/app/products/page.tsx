@@ -10,7 +10,7 @@ export const metadata = generateSEOMetadata({
   title: "Premium Quality Seeds - Vegetable, Crop & Hybrid Seeds",
   description: "Explore our comprehensive range of premium vegetable seeds, crop seeds, and hybrid varieties for optimal farming success. High-yielding, disease-resistant seeds for every season.",
   keywords: [
-    "vegetable seeds", "crop seeds", "hybrid seeds", "organic seeds", "seasonal seeds",
+    "vegetable seeds", "crop seeds", "hybrid seeds", "organic sebeds", "seasonal seeds",
     "tomato seeds", "cucumber seeds", "pepper seeds", "wheat seeds", "rice seeds",
     "high yield seeds", "disease resistant seeds", "drought tolerant seeds",
     "premium quality seeds", "certified seeds", "agricultural products"
@@ -43,6 +43,7 @@ export default async function ProductsPage() {
       </div>
 
       <main className="flex-1">
+
         <ProductsContent initialProducts={products} />
 
         <section className="py-20 md:py-28 bg-muted/40">
