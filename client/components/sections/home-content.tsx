@@ -25,20 +25,20 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
 
                 <div className="container relative z-20">
                     <div className="mx-auto max-w-4xl text-center space-y-6 md:space-y-8">
-                        <h1 id="hero-heading" className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-100 drop-shadow-lg">
+                        <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-100 drop-shadow-lg">
                             Happiness from the{" "}
                             <span className="text-primary-foreground bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-300">
                                 Farmer's Field
                             </span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light max-w-2xl mx-auto animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-200 drop-shadow-md">
+                        <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light max-w-2xl mx-auto animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-200 drop-shadow-md px-4">
                             Premium quality seeds that transform agriculture. Grow better, harvest more, and cultivate success with Savaj Seeds.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-5 justify-center pt-8 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-300">
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center pt-8 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-300 px-6 sm:px-0">
                             <Button
                                 asChild
                                 size="lg"
-                                className="text-lg h-14 px-10 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white rounded-full"
+                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white rounded-full"
                             >
                                 <Link href="/products">
                                     View Our Products
@@ -49,7 +49,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                                 asChild
                                 size="lg"
                                 variant="outline"
-                                className="text-lg h-14 px-10 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-md hover:scale-105 transition-all duration-300 rounded-full"
+                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-md hover:scale-105 transition-all duration-300 rounded-full"
                             >
                                 <Link href="/contact">Contact Us</Link>
                             </Button>
@@ -143,9 +143,9 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         {/* Vegetable Seeds Card */}
-                        <Link href="/products?category=vegetable" className="group relative h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-100">
+                        <Link href="/products?category=vegetable" className="group relative h-[300px] sm:h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-100">
                             <div className="absolute inset-0">
                                 <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                 <Image
@@ -174,7 +174,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                         </Link>
 
                         {/* Crop Seeds Card */}
-                        <Link href="/products?category=crop" className="group relative h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-200">
+                        <Link href="/products?category=crop" className="group relative h-[300px] sm:h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-200">
                             <div className="absolute inset-0">
                                 <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                 <Image
@@ -203,7 +203,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                         </Link>
 
                         {/* Hybrid Seeds Card */}
-                        <Link href="/products?category=hybrid" className="group relative h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-300">
+                        <Link href="/products?category=hybrid" className="group relative h-[300px] sm:h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-300">
                             <div className="absolute inset-0">
                                 <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                 <Image
