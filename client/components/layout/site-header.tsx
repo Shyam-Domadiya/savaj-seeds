@@ -23,7 +23,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 shadow-sm transition-shadow duration-300 hover:shadow-md">
-      <div className="container flex h-24 items-center justify-between gap-4">
+      <div className="container flex h-16 md:h-24 items-center justify-between gap-4">
         <Link
           href="/"
           className="flex items-center gap-3 transition-all duration-300 hover:opacity-80 hover:scale-105"
@@ -34,7 +34,7 @@ export function SiteHeader() {
             alt="Savaj Seeds logo"
             width={180}
             height={80}
-            className="h-14 w-auto dark:brightness-0 dark:invert"
+            className="h-10 md:h-14 w-auto dark:brightness-0 dark:invert"
             priority
           />
           <ScreenReaderOnly>
