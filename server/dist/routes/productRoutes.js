@@ -5,7 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const productController_1 = require("../controllers/productController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
 const router = express_1.default.Router();
-router.route('/').get(productController_1.getProducts);
-router.route('/:id').get(productController_1.getProductById);
+router.route('/').get(productController_1.getProducts).post(authMiddleware_1.protect, productController_1.createProduct);
+router
+    .route('/:id')
+    .get(productController_1.getProductById)
+    .delete(authMiddleware_1.protect, productController_1.deleteProduct)
+    .put(authMiddleware_1.protect, productController_1.updateProduct);
 exports.default = router;

@@ -10,6 +10,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const db_1 = __importDefault(require("./config/db"));
 const contactRoutes_1 = __importDefault(require("./routes/contactRoutes"));
 const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const errorMiddleware_1 = require("./middleware/errorMiddleware");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -26,6 +27,7 @@ app.use((0, cookie_parser_1.default)());
 // Routes
 app.use('/api/contact', contactRoutes_1.default);
 app.use('/api/products', productRoutes_1.default);
+app.use('/api/auth', authRoutes_1.default);
 app.get('/', (req, res) => {
     res.send('API is running...');
 });

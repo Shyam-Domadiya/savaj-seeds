@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.submitContactForm = void 0;
+exports.getContacts = exports.submitContactForm = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const Contact_1 = __importDefault(require("../models/Contact"));
 const sendEmail_1 = __importDefault(require("../utils/sendEmail"));
@@ -57,3 +57,11 @@ const submitContactForm = (0, express_async_handler_1.default)(async (req, res) 
     }
 });
 exports.submitContactForm = submitContactForm;
+// @desc    Get all contact messages
+// @route   GET /api/contact
+// @access  Private/Admin
+const getContacts = (0, express_async_handler_1.default)(async (req, res) => {
+    const contacts = await Contact_1.default.find({}).sort({ createdAt: -1 });
+    res.json(contacts);
+});
+exports.getContacts = getContacts;
