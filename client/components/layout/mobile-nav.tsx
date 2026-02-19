@@ -93,7 +93,7 @@ export function MobileNav({ className }: MobileNavProps) {
   }
 
   return (
-    <div className={cn("lg:hidden", className)}>
+    <div className={cn("hidden md:block lg:hidden", className)}>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <Button

@@ -11,6 +11,7 @@ import { StructuredData } from "@/components/providers/structured-data"
 import { ConsentBanner } from "@/components/providers/consent-banner"
 import { generateBusinessSchema, generateWebsiteSchema, generateOrganizationSchema, generateServiceSchema } from "@/lib/seo"
 import { Providers } from "@/components/providers/providers"
+import { BottomNav } from "@/components/layout/bottom-nav"
 import "./globals.css"
 
 const _geist = Geist({
@@ -192,7 +193,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#22c55e" />
         <meta name="color-scheme" content="light" />
       </head>
-      <body className={`font-sans antialiased`}>
+      <body className={`font-sans antialiased pb-16 md:pb-0`}>
 
         <Providers
           attribute="class"
@@ -207,6 +208,7 @@ export default function RootLayout({
           <Toaster />
 
           <ConsentBanner />
+          <BottomNav />
         </Providers>
 
       </body>
