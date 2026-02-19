@@ -43,6 +43,15 @@ export default async function ProductsPage() {
       </div>
 
       <main className="flex-1">
+        {products.length === 0 && (
+          <div className="container py-8">
+            <div className="rounded-md bg-destructive/10 p-4 text-destructive">
+              <h3 className="font-bold">Debug Info (No Products Found)</h3>
+              <p>API URL used: {process.env.NEXT_PUBLIC_API_URL || 'undefined (using localhost fallback)'}</p>
+              <p>Please check Vercel Environment Variables.</p>
+            </div>
+          </div>
+        )}
         <ProductsContent initialProducts={products} />
 
         <section className="py-20 md:py-28 bg-muted/40">
