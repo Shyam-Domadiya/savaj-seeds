@@ -23,6 +23,8 @@ import { getAllProducts } from "@/lib/actions/product"
 
 
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductsPage() {
   const products = await getAllProducts()
 
