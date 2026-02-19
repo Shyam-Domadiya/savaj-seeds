@@ -8,7 +8,7 @@ import { Sprout, Leaf, Package, Users, ArrowRight, Award, ShieldCheck } from "lu
 export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode }) {
     return (
         <>
-            <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden animate-in fade-in duration-1000" aria-labelledby="hero-heading">
+            <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden animate-in fade-in duration-1000" aria-labelledby="hero-heading">
                 {/* Hero Background Image */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10" />
@@ -24,8 +24,8 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                 </div>
 
                 <div className="container relative z-20">
-                    <div className="mx-auto max-w-4xl text-center space-y-8">
-                        <h1 id="hero-heading" className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-100 drop-shadow-lg">
+                    <div className="mx-auto max-w-4xl text-center space-y-6 md:space-y-8">
+                        <h1 id="hero-heading" className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-100 drop-shadow-lg">
                             Happiness from the{" "}
                             <span className="text-primary-foreground bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-300">
                                 Farmer's Field
@@ -58,7 +58,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                 </div>
             </section>
 
-            <section className="py-20 md:py-28 lg:py-32 relative overflow-hidden" aria-labelledby="features-heading">
+            <section className="py-12 md:py-28 lg:py-32 relative overflow-hidden" aria-labelledby="features-heading">
                 <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-background -z-10" />
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
@@ -134,7 +134,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
 
             {cropCalendar}
 
-            <section className="py-20 md:py-28 lg:py-32 bg-muted/30">
+            <section className="py-12 md:py-28 lg:py-32 bg-muted/30">
                 <div className="container">
                     <div className="mx-auto max-w-3xl text-center mb-16 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
                         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">Our Seed Categories</h2>
