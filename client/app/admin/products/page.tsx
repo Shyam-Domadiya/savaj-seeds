@@ -1,5 +1,7 @@
 'use client';
 
+import { getApiUrl } from '@/lib/api-config';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -32,7 +34,7 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products`);
+            const res = await fetch(`${getApiUrl()}/products`);
             if (!res.ok) throw new Error('Failed to fetch products');
             const data = await res.json();
             setProducts(data);
@@ -50,7 +52,7 @@ export default function AdminProducts() {
     const deleteHandler = async (id: string) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products/${id}`, {
+                const res = await fetch(`${getApiUrl()}/products/${id}`, {
                     method: 'DELETE',
                     headers: {
                         ...getAuthHeader(),

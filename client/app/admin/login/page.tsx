@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { getApiUrl } from '@/lib/api-config';
 import { useRouter } from 'next/navigation';
 import { setAdminUser } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
@@ -16,12 +17,14 @@ export default function AdminLogin() {
     const router = useRouter();
     const { toast } = useToast();
 
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/auth/login`, {
+            const res = await fetch(`${getApiUrl()}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
