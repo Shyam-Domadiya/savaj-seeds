@@ -30,7 +30,7 @@ const transformProduct = (p: any): Product => {
 export async function getAllProducts(): Promise<Product[]> {
     try {
         const res = await fetch(`${API_URL}/products`, {
-            cache: 'no-store', // Ensure fresh data or use 'force-cache' based on needs
+            next: { revalidate: 3600 },
         });
 
         if (!res.ok) {
