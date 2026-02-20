@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { getApiUrl } from "@/lib/api-config"
 import { ProductFilter } from "@/components/features/product/product-filter"
 
@@ -169,51 +170,38 @@ function ProductCard({
 }
 
 export function ProductsContent({ initialProducts }: { initialProducts: Product[] }) {
-  const [products, setProducts] = useState<Product[]>(initialProducts)
-  const [loading, setLoading] = useState(false)
+  const { data: products = [], isLoading } = useQuery<Product[]>({
+    queryKey: ['public-products'],
+    queryFn: async () => {
+      const apiUrl = getApiUrl();
+      console.log('Fetching products client-side from:', apiUrl);
 
-  // Client-side fallback if server-side fetch failed (e.g. Vercel timeout)
-  useEffect(() => {
-    if (initialProducts.length === 0) {
-      const fetchProducts = async () => {
-        setLoading(true);
-        try {
-          const apiUrl = getApiUrl();
-          console.log('Fetching products client-side from:', apiUrl);
+      const res = await fetch(`${apiUrl}/products`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch products');
+      }
 
-          const res = await fetch(`${apiUrl}/products`);
-          if (res.ok) {
-            const data = await res.json();
-            // Transform data if needed, matching server action logic
-            const transformed = data.map((p: any) => ({
-              ...p,
-              id: p.slug,
-              mongoId: p._id,
-              specifications: [
-                p.seedColor && { id: 'seedColor', name: 'Seed Color', value: p.seedColor, category: 'Basic' },
-                p.morphologicalCharacters && { id: 'morph', name: 'Morphological Characters', value: p.morphologicalCharacters, category: 'Basic' },
-                p.flowerColor && { id: 'flowerColor', name: 'Flower Color', value: p.flowerColor, category: 'Basic' },
-                p.fruitShape && { id: 'fruitShape', name: 'Fruit Shape', value: p.fruitShape, category: 'Basic' },
-                p.plantHeight && { id: 'plantHeight', name: 'Plant Height', value: p.plantHeight, category: 'Basic' },
-              ].filter(Boolean),
-              images: p.images || [],
-              seasonality: p.seasonality || [],
-              seoMetadata: p.seoMetadata || { title: p.name, description: p.description, keywords: [] }
-            }));
-            setProducts(transformed);
-          }
-        } catch (error) {
-          console.error("Client-side fetch failed:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchProducts();
-    } else {
-      setProducts(initialProducts);
-    }
-  }, [initialProducts]);
+      const data = await res.json();
+      // Transform data to match Product type
+      return data.map((p: any) => ({
+        ...p,
+        id: p.slug,
+        mongoId: p._id,
+        specifications: [
+          p.seedColor && { id: 'seedColor', name: 'Seed Color', value: p.seedColor, category: 'Basic' },
+          p.morphologicalCharacters && { id: 'morph', name: 'Morphological Characters', value: p.morphologicalCharacters, category: 'Basic' },
+          p.flowerColor && { id: 'flowerColor', name: 'Flower Color', value: p.flowerColor, category: 'Basic' },
+          p.fruitShape && { id: 'fruitShape', name: 'Fruit Shape', value: p.fruitShape, category: 'Basic' },
+          p.plantHeight && { id: 'plantHeight', name: 'Plant Height', value: p.plantHeight, category: 'Basic' },
+        ].filter(Boolean),
+        images: p.images || [],
+        seasonality: p.seasonality || [],
+        seoMetadata: p.seoMetadata || { title: p.name, description: p.description, keywords: [] }
+      }));
+    },
+    initialData: initialProducts.length > 0 ? initialProducts : undefined,
+    enabled: initialProducts.length === 0,
+  });
 
   const {
     filters,

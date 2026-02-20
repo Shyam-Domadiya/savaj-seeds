@@ -2,7 +2,8 @@
 
 import { getApiUrl } from '@/lib/api-config';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getAuthHeader } from '@/lib/auth';
@@ -27,65 +28,55 @@ interface Product {
 }
 
 export default function AdminProducts() {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
     const { toast } = useToast();
-    const router = useRouter();
+    const queryClient = useQueryClient();
 
-    const fetchProducts = async () => {
-        try {
+    const { data: products = [], isLoading } = useQuery<Product[]>({
+        queryKey: ['products'],
+        queryFn: async () => {
             const res = await fetch(`${getApiUrl()}/products`);
             if (!res.ok) throw new Error('Failed to fetch products');
-            const data = await res.json();
-            setProducts(data);
-        } catch (error: any) {
+            return res.json();
+        },
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: async (id: string) => {
+            const res = await fetch(`${getApiUrl()}/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    ...getAuthHeader(),
+                },
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.message || 'Delete failed');
+            }
+            return res.json();
+        },
+        onSuccess: () => {
+            toast({
+                title: 'Success',
+                description: 'Product deleted successfully',
+            });
+            queryClient.invalidateQueries({ queryKey: ['products'] });
+        },
+        onError: (error: any) => {
             toast({
                 title: 'Error',
                 description: error.message,
                 variant: 'destructive',
             });
-        } finally {
-            setLoading(false);
-        }
-    };
+        },
+    });
 
     const deleteHandler = async (id: string) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
-            try {
-                const res = await fetch(`${getApiUrl()}/products/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        ...getAuthHeader(),
-                    },
-                });
-
-                if (res.ok) {
-                    toast({
-                        title: 'Success',
-                        description: 'Product deleted successfully',
-                    });
-                    setProducts(products.filter((product) => product._id !== id));
-                } else {
-                    const data = await res.json();
-                    throw new Error(data.message || 'Delete failed');
-                }
-            } catch (error: any) {
-                toast({
-                    title: 'Error',
-                    description: error.message,
-                    variant: 'destructive',
-                });
-            }
+            deleteMutation.mutate(id);
         }
     };
 
-
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="flex justify-center items-center h-64">
                 <Loader2 className="w-8 h-8 animate-spin text-green-600" />
