@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getApiUrl } from '@/lib/api-config';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { use } from 'react';
 import { getAuthHeader } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
@@ -50,7 +51,6 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
     const { id } = use(params);
     const router = useRouter();
     const { toast } = useToast();
-    const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
     // Initial State
@@ -68,33 +68,36 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
 
 
 
-    // Fetch Product
+
+
+    const { data: fetchedProduct, isLoading: isQueryLoading, error: queryError } = useQuery({
+        queryKey: ['product', id],
+        queryFn: async () => {
+            const res = await fetch(`${getApiUrl()}/products/${id}`);
+            if (!res.ok) throw new Error('Product not found');
+            return res.json();
+        },
+        enabled: !!id && id !== 'new',
+    });
+
     useEffect(() => {
-        if (id === 'new') {
-            setLoading(false);
-            return;
+        if (fetchedProduct) {
+            setProduct(fetchedProduct);
         }
+    }, [fetchedProduct]);
 
-        const fetchProduct = async () => {
-            try {
-                const res = await fetch(`${getApiUrl()}/products/${id}`);
-                if (!res.ok) throw new Error('Product not found');
-                const data = await res.json();
-                setProduct(data);
-            } catch (error: any) {
-                toast({
-                    title: 'Error',
-                    description: error.message,
-                    variant: 'destructive',
-                });
-                router.push('/admin/products');
-            } finally {
-                setLoading(false);
-            }
-        };
+    useEffect(() => {
+        if (queryError) {
+            toast({
+                title: 'Error',
+                description: (queryError as Error).message,
+                variant: 'destructive',
+            });
+            router.push('/admin/products');
+        }
+    }, [queryError, router, toast]);
 
-        if (id) fetchProduct();
-    }, [id, router, toast]);
+    const isLoading = id !== 'new' && isQueryLoading;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -173,7 +176,7 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
         }
     };
 
-    if (loading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
+    if (id !== 'new' && isQueryLoading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin" /></div>;
 
     return (
         <div className="space-y-6 max-w-4xl mx-auto pb-10">
