@@ -115,14 +115,6 @@ export function SiteFooter() {
                 </Link>
               </li>
 
-              <li>
-                <Link
-                  href="/testimonials"
-                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
-                >
-                  Testimonials
-                </Link>
-              </li>
             </ul>
           </nav>
 
