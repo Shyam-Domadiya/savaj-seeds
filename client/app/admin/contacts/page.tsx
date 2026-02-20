@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getApiUrl } from '@/lib/api-config';
 import { getAuthHeader } from '@/lib/auth';
 import {
@@ -27,44 +28,28 @@ interface Contact {
 }
 
 export default function AdminContacts() {
-    const [contacts, setContacts] = useState<Contact[]>([]);
-    const [loading, setLoading] = useState(true);
-    const { toast } = useToast();
+    const { data: contacts = [], isLoading } = useQuery<Contact[]>({
+        queryKey: ['contacts'],
+        queryFn: async () => {
+            const res = await fetch(`${getApiUrl()}/contact`, {
+                headers: {
+                    ...getAuthHeader(),
+                },
+            });
+            if (!res.ok) throw new Error('Failed to fetch messages');
+            return res.json();
+        },
+    });
 
-
-
-    useEffect(() => {
-        const fetchContacts = async () => {
-            try {
-                const res = await fetch(`${getApiUrl()}/contact`, {
-                    headers: {
-                        ...getAuthHeader(),
-                    },
-                });
-                if (!res.ok) throw new Error('Failed to fetch messages');
-                const data = await res.json();
-                setContacts(data);
-            } catch (error: any) {
-                toast({
-                    title: 'Error',
-                    description: error.message,
-                    variant: 'destructive',
-                });
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchContacts();
-    }, [toast]);
-
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="flex justify-center items-center h-64">
                 <Loader2 className="w-8 h-8 animate-spin text-green-600" />
             </div>
         );
     }
+
+
 
     return (
         <div className="space-y-6">
