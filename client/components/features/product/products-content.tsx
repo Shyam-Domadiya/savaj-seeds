@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useState, useEffect } from "react"
+import { getApiUrl } from "@/lib/api-config"
 import { ProductFilter } from "@/components/features/product/product-filter"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -177,7 +178,7 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
       const fetchProducts = async () => {
         setLoading(true);
         try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api';
+          const apiUrl = getApiUrl();
           console.log('Fetching products client-side from:', apiUrl);
 
           const res = await fetch(`${apiUrl}/products`);

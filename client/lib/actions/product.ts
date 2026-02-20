@@ -1,6 +1,7 @@
 import { Product } from '@/lib/types/product';
+import { getApiUrl } from '@/lib/api-config';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api';
+const API_URL = getApiUrl();
 
 const transformProduct = (p: any): Product => {
     const specifications: any[] = [];

@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { getApiUrl } from '@/lib/api-config';
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api',
+    baseURL: getApiUrl(),
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
