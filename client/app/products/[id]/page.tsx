@@ -146,22 +146,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
 
             {/* Quick stats for Mobile/Tablet (Stacked below image) */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Quick stats for Mobile/Tablet (Stacked below image) */}
+            <div className="grid grid-cols-3 gap-3">
               <div className="bg-card p-4 rounded-xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center">
                 <Clock className="h-6 w-6 text-primary mb-2" />
                 <span className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Maturity</span>
-                <span className="font-semibold">{product.maturityTime}</span>
+                <span className="font-semibold text-sm">{product.maturityTime}</span>
               </div>
               <div className="bg-card p-4 rounded-xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center">
                 <Leaf className="h-6 w-6 text-primary mb-2" />
                 <span className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Type</span>
-                <span className="font-semibold">{product.category}</span>
+                <span className="font-semibold text-sm">{product.category}</span>
               </div>
-            </div>
-
-            {/* QR Code */}
-            <div className="flex justify-center">
-              <ProductQR />
+              <div className="flex items-stretch">
+                <ProductQR className="w-full h-full" hideLabel={false} />
+              </div>
             </div>
           </div>
 

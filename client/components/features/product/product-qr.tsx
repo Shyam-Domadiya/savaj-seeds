@@ -3,7 +3,12 @@ import QRCode from "react-qr-code"
 import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 
-export function ProductQR() {
+interface ProductQRProps {
+    className?: string;
+    hideLabel?: boolean;
+}
+
+export function ProductQR({ className, hideLabel = false }: ProductQRProps) {
     const pathname = usePathname()
 
     const { data: url } = useQuery({
@@ -21,14 +26,13 @@ export function ProductQR() {
     if (!url) return null
 
     return (
-        <div className="flex flex-col items-center gap-2 p-4 bg-white rounded-xl shadow-sm border border-border/50 w-fit">
+        <div className={`flex flex-col items-center justify-center gap-2 p-2 bg-white rounded-xl shadow-sm border border-border/50 ${className}`}>
             <QRCode
-                size={128}
                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                 value={url}
                 viewBox={`0 0 256 256`}
             />
-            <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Scan for details</span>
+            {!hideLabel && <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider text-center">Scan Me</span>}
         </div>
     )
 }
