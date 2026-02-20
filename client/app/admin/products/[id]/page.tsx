@@ -202,7 +202,25 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                         </div>
                         <div className="space-y-2">
                             <Label>Category</Label>
-                            <Input name="category" value={product.category} onChange={handleChange} required />
+                            <Select value={product.category} onValueChange={(val) => handleSelectChange('category', val)}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select Category" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Cotton">Cotton</SelectItem>
+                                    <SelectItem value="Wheat">Wheat</SelectItem>
+                                    <SelectItem value="Groundnut">Groundnut</SelectItem>
+                                    <SelectItem value="Cumin">Cumin</SelectItem>
+                                    <SelectItem value="Sesame">Sesame</SelectItem>
+                                    <SelectItem value="Castor">Castor</SelectItem>
+                                    <SelectItem value="Maize">Maize</SelectItem>
+                                    <SelectItem value="Gram">Gram</SelectItem>
+                                    <SelectItem value="Millet">Millet</SelectItem>
+                                    <SelectItem value="Coriander">Coriander</SelectItem>
+                                    <SelectItem value="Pigeon Pea">Pigeon Pea</SelectItem>
+                                    <SelectItem value="Vegetable">Vegetable</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div className="space-y-2">
                             <Label>Difficulty</Label>
