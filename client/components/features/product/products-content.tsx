@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ProductFilter } from "@/components/features/product/product-filter"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -168,6 +168,52 @@ function ProductCard({
 }
 
 export function ProductsContent({ initialProducts }: { initialProducts: Product[] }) {
+  const [products, setProducts] = useState<Product[]>(initialProducts)
+  const [loading, setLoading] = useState(false)
+
+  // Client-side fallback if server-side fetch failed (e.g. Vercel timeout)
+  useEffect(() => {
+    if (initialProducts.length === 0) {
+      const fetchProducts = async () => {
+        setLoading(true);
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api';
+          console.log('Fetching products client-side from:', apiUrl);
+
+          const res = await fetch(`${apiUrl}/products`);
+          if (res.ok) {
+            const data = await res.json();
+            // Transform data if needed, matching server action logic
+            const transformed = data.map((p: any) => ({
+              ...p,
+              id: p.slug,
+              mongoId: p._id,
+              specifications: [
+                p.seedColor && { id: 'seedColor', name: 'Seed Color', value: p.seedColor, category: 'Basic' },
+                p.morphologicalCharacters && { id: 'morph', name: 'Morphological Characters', value: p.morphologicalCharacters, category: 'Basic' },
+                p.flowerColor && { id: 'flowerColor', name: 'Flower Color', value: p.flowerColor, category: 'Basic' },
+                p.fruitShape && { id: 'fruitShape', name: 'Fruit Shape', value: p.fruitShape, category: 'Basic' },
+                p.plantHeight && { id: 'plantHeight', name: 'Plant Height', value: p.plantHeight, category: 'Basic' },
+              ].filter(Boolean),
+              images: p.images || [],
+              seasonality: p.seasonality || [],
+              seoMetadata: p.seoMetadata || { title: p.name, description: p.description, keywords: [] }
+            }));
+            setProducts(transformed);
+          }
+        } catch (error) {
+          console.error("Client-side fetch failed:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchProducts();
+    } else {
+      setProducts(initialProducts);
+    }
+  }, [initialProducts]);
+
   const {
     filters,
     sort,
@@ -177,7 +223,7 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
     setSort,
     clearFilters
   } = useProductFilter({
-    products: initialProducts
+    products: products
   })
 
   return (
@@ -185,13 +231,7 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
       <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 md:py-28 relative overflow-hidden animate-in fade-in duration-700">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:64px_64px]" />
         <div className="container relative z-10">
-          {/* DEBUG INFO */}
-          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
-            <p className="font-bold">Client Component Debug</p>
-            <p>Initial Products Received: {initialProducts ? initialProducts.length : 'undefined'}</p>
-            <p>Filtered Products Count: {filteredProducts.length}</p>
-            <p>Active Filters: {JSON.stringify(filters)}</p>
-          </div>
+
           <div className="mx-auto max-w-3xl text-center space-y-7 animate-in fade-in-50 slide-in-from-bottom-4 duration-700 delay-100">
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance leading-[1.1]">
               Our{" "}

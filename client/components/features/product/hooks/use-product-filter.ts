@@ -176,28 +176,29 @@ export function useProductFilter({
   }, [filters, sort])
 
   // Load filters from localStorage on mount
-  useEffect(() => {
-    // Skip localStorage in test environment
-    if (typeof window === 'undefined' || process.env.NODE_ENV === 'test') {
-      return
-    }
+  // Load filters from localStorage on mount - DISABLED per user request
+  // useEffect(() => {
+  //   // Skip localStorage in test environment
+  //   if (typeof window === 'undefined' || process.env.NODE_ENV === 'test') {
+  //     return
+  //   }
 
-    try {
-      const savedFilters = localStorage.getItem('productFilters')
-      const savedSort = localStorage.getItem('productSort')
+  //   try {
+  //     const savedFilters = localStorage.getItem('productFilters')
+  //     const savedSort = localStorage.getItem('productSort')
 
-      if (savedFilters) {
-        setFilters(JSON.parse(savedFilters))
-      }
+  //     if (savedFilters) {
+  //       setFilters(JSON.parse(savedFilters))
+  //     }
 
-      if (savedSort) {
-        setSort(JSON.parse(savedSort))
-      }
-    } catch (error) {
-      // Ignore localStorage errors
-      console.warn('Failed to load saved filters:', error)
-    }
-  }, [])
+  //     if (savedSort) {
+  //       setSort(JSON.parse(savedSort))
+  //     }
+  //   } catch (error) {
+  //     // Ignore localStorage errors
+  //     console.warn('Failed to load saved filters:', error)
+  //   }
+  // }, [])
 
   return {
     filters,
