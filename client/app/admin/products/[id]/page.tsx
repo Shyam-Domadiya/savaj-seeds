@@ -70,6 +70,11 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
 
     // Fetch Product
     useEffect(() => {
+        if (id === 'new') {
+            setLoading(false);
+            return;
+        }
+
         const fetchProduct = async () => {
             try {
                 const res = await fetch(`${getApiUrl()}/products/${id}`);
@@ -130,8 +135,17 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
         };
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products/${product._id}`, {
-                method: 'PUT',
+            const isNew = id === 'new';
+            const url = isNew
+                ? `${getApiUrl()}/products`
+                : `${getApiUrl()}/products/${product._id}`;
+
+            const method = isNew ? 'POST' : 'PUT';
+
+            console.log(`${method}ing product to:`, url);
+
+            const res = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                     ...getAuthHeader(),
@@ -142,7 +156,7 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
             if (res.ok) {
                 toast({
                     title: 'Success',
-                    description: 'Product updated',
+                    description: isNew ? 'Product created' : 'Product updated',
                 });
                 router.push('/admin/products');
             } else {
@@ -169,7 +183,7 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                         <ArrowLeft className="w-4 h-4" />
                     </Button>
                 </Link>
-                <h1 className="text-2xl font-bold">Edit Product</h1>
+                <h1 className="text-2xl font-bold">{id === 'new' ? 'Create Product' : 'Edit Product'}</h1>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border dark:border-gray-700">
