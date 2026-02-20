@@ -21,7 +21,7 @@ export default function AdminLogin() {
         setLoading(true);
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/login`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

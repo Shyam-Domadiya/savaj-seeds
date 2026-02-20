@@ -32,7 +32,7 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products`);
             if (!res.ok) throw new Error('Failed to fetch products');
             const data = await res.json();
             setProducts(data);
@@ -50,7 +50,7 @@ export default function AdminProducts() {
     const deleteHandler = async (id: string) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${id}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products/${id}`, {
                     method: 'DELETE',
                     headers: {
                         ...getAuthHeader(),
@@ -79,7 +79,7 @@ export default function AdminProducts() {
 
     const createProductHandler = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
