@@ -79,35 +79,7 @@ export default function AdminProducts() {
         }
     };
 
-    const createProductHandler = async () => {
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...getAuthHeader(),
-                },
-            });
 
-            if (res.ok) {
-                const data = await res.json();
-                router.push(`/admin/products/${data.slug || data._id}`); // Redirect to edit page
-                toast({
-                    title: 'Success',
-                    description: 'Product created successfully',
-                });
-            } else {
-                const data = await res.json();
-                throw new Error(data.message || 'Create failed');
-            }
-        } catch (error: any) {
-            toast({
-                title: 'Error',
-                description: error.message,
-                variant: 'destructive',
-            });
-        }
-    };
 
     useEffect(() => {
         fetchProducts();
@@ -125,10 +97,12 @@ export default function AdminProducts() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Products</h1>
-                <Button onClick={createProductHandler} className="bg-green-600 hover:bg-green-700">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Product
-                </Button>
+                <Link href="/admin/products/new">
+                    <Button className="bg-green-600 hover:bg-green-700">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Create Product
+                    </Button>
+                </Link>
             </div>
 
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700">
