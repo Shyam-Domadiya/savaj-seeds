@@ -28,7 +28,9 @@ export const getProducts = asyncHandler(async (req: Request, res: Response) => {
         Object.assign(filter, { featured: true });
     }
 
-    const products = await Product.find(filter as any);
+    const products = await Product.find(filter as any).select(
+        'name slug category cropName seedColor morphologicalCharacters flowerColor fruitShape plantHeight seasonality difficultyLevel images featured availability'
+    );
 
     res.json(products);
 });

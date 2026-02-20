@@ -200,6 +200,7 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
       }));
     },
     initialData: initialProducts.length > 0 ? initialProducts : undefined,
+    staleTime: 1000 * 60 * 5, // 5 minutes
     enabled: initialProducts.length === 0,
   });
 
@@ -260,8 +261,8 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
                     {filteredProducts.map((product, index) => (
                       <div
                         key={product.id}
-                        className="animate-in fade-in-50 slide-in-from-bottom-8 duration-700"
-                        style={{ animationDelay: `${index * 100}ms` }}
+                        className="animate-in fade-in-50 slide-in-from-bottom-4 duration-500"
+                        style={{ animationDelay: `${index * 50}ms` }}
                       >
                         <ProductCard product={product} />
                       </div>
