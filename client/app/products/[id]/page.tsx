@@ -19,6 +19,7 @@ import { getProductById } from "@/lib/actions/product"
 import { generateMetadata as generateSEOMetadata, generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo"
 import { Star, Download, Leaf, Clock, TrendingUp, Sprout, Wheat, Dna, Package } from "lucide-react"
 import { DownloadGuideButton } from "@/components/features/product/download-guide-button"
+import { ProductQR } from "@/components/features/product/product-qr"
 
 
 interface ProductPageProps {
@@ -156,6 +157,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <span className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Type</span>
                 <span className="font-semibold">{product.category}</span>
               </div>
+            </div>
+
+            {/* QR Code */}
+            <div className="flex justify-center">
+              <ProductQR />
             </div>
           </div>
 
