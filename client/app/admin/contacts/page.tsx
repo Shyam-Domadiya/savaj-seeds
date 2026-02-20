@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { getApiUrl } from '@/lib/api-config';
 import { getAuthHeader } from '@/lib/auth';
 import {
     Table,
@@ -30,10 +31,12 @@ export default function AdminContacts() {
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
 
+
+
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/contact`, {
+                const res = await fetch(`${getApiUrl()}/contact`, {
                     headers: {
                         ...getAuthHeader(),
                     },

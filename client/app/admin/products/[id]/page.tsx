@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '@/lib/api-config';
 import { useRouter } from 'next/navigation';
 import { use } from 'react';
 import { getAuthHeader } from '@/lib/auth';
@@ -65,11 +66,13 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
         featured: false,
     });
 
+
+
     // Fetch Product
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/products/${id}`);
+                const res = await fetch(`${getApiUrl()}/products/${id}`);
                 if (!res.ok) throw new Error('Product not found');
                 const data = await res.json();
                 setProduct(data);
