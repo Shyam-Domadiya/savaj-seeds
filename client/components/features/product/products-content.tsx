@@ -185,6 +185,13 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
       <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 md:py-28 relative overflow-hidden animate-in fade-in duration-700">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:64px_64px]" />
         <div className="container relative z-10">
+          {/* DEBUG INFO */}
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
+            <p className="font-bold">Client Component Debug</p>
+            <p>Initial Products Received: {initialProducts ? initialProducts.length : 'undefined'}</p>
+            <p>Filtered Products Count: {filteredProducts.length}</p>
+            <p>Active Filters: {JSON.stringify(filters)}</p>
+          </div>
           <div className="mx-auto max-w-3xl text-center space-y-7 animate-in fade-in-50 slide-in-from-bottom-4 duration-700 delay-100">
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance leading-[1.1]">
               Our{" "}

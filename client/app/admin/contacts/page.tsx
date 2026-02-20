@@ -33,7 +33,7 @@ export default function AdminContacts() {
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/contact`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/contact`, {
                     headers: {
                         ...getAuthHeader(),
                     },
