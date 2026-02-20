@@ -1,12 +1,13 @@
 "use client"
-
-import React from 'react'
 import QRCode from "react-qr-code"
 import { useQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 
 export function ProductQR() {
+    const pathname = usePathname()
+
     const { data: url } = useQuery({
-        queryKey: ['current-url'],
+        queryKey: ['current-url', pathname],
         queryFn: () => {
             if (typeof window !== 'undefined') {
                 return window.location.href;
@@ -14,6 +15,7 @@ export function ProductQR() {
             return '';
         },
         initialData: '',
+        refetchOnMount: 'always'
     });
 
     if (!url) return null
