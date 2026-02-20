@@ -1,3 +1,5 @@
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
 import { Breadcrumb } from "@/components/shared/breadcrumb"
@@ -364,18 +366,25 @@ export default function AboutPage() {
                 Join thousands of successful farmers who trust Savaj Seeds for their agricultural needs. Let's grow together toward a more prosperous future.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                <a
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-md bg-background text-primary px-8 py-3 text-base font-medium shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300"
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-background text-primary hover:bg-background/90 hover:scale-110 transition-all duration-300 shadow-xl hover:shadow-2xl h-12 px-8 text-base"
                 >
-                  Get in Touch
-                </a>
-                <a
-                  href="/products"
-                  className="inline-flex items-center justify-center rounded-md border border-primary-foreground/20 hover:bg-primary-foreground/10 bg-transparent text-primary-foreground hover:text-primary-foreground px-8 py-3 text-base font-medium hover:scale-110 transition-all duration-300 hover:shadow-lg"
+                  <Link href="/contact">
+                    Get in Touch
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground hover:scale-110 transition-all duration-300 shadow-none hover:shadow-lg h-12 px-8 text-base"
                 >
-                  Explore Our Products
-                </a>
+                  <Link href="/products">
+                    Explore Our Products
+                  </Link>
+                </Button>
               </div>
             </FadeIn>
           </div>
