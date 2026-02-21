@@ -1,4 +1,4 @@
-// ... (keeping imports)
+
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { SiteHeader } from "@/components/layout/site-header"
@@ -96,7 +96,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <SiteHeader />
 
       <div className="container py-6 flex items-center justify-between">
-        <Breadcrumb />
+        <Breadcrumb items={[
+          { label: "Home", href: "/" },
+          { label: "Products", href: "/products" },
+          { label: product.name },
+        ]} />
         <Button variant="ghost" size="sm" asChild className="rounded-full hover:bg-muted font-bold uppercase tracking-widest text-[10px]">
           <Link href="/products" className="flex items-center gap-2">
             <ArrowLeft className="h-3 w-3" /> Back to Products

@@ -7,6 +7,7 @@ import connectDB from './config/db';
 import contactRoutes from './routes/contactRoutes';
 import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
+import visitorRoutes from './routes/visitorRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 
 dotenv.config();
@@ -17,6 +18,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // Connect to Database
 connectDB();
+
+// Trust proxy for actual client IP when deployed on Render/Vercel
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(express.json());
@@ -62,6 +66,7 @@ app.use(session({
 app.use('/api/contact', contactRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/visitors', visitorRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('API is running...');

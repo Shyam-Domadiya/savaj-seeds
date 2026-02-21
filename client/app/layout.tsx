@@ -13,6 +13,7 @@ import { generateBusinessSchema, generateWebsiteSchema, generateOrganizationSche
 import { Providers } from "@/components/providers/providers"
 import { BottomNav } from "@/components/layout/bottom-nav"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { VisitorTracker } from "@/components/shared/visitor-tracker"
 import "./globals.css"
 
 const _geist = Geist({
@@ -210,6 +211,7 @@ export default function RootLayout({
 
           <ConsentBanner />
           <BottomNav />
+          <VisitorTracker />
           <SpeedInsights />
         </Providers>
 
