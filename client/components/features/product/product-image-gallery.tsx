@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import { LazyImage } from "@/components/shared/lazy-image"
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog"
@@ -112,7 +111,7 @@ export function ProductImageGallery({ images, productName, className }: ProductI
           onMouseMove={handleMouseMove}
           onClick={handleZoomIn}
         >
-          <LazyImage
+          <Image
             ref={imageRef}
             src={currentImage.url}
             alt={currentImage.altText}
@@ -214,7 +213,7 @@ export function ProductImageGallery({ images, productName, className }: ProductI
               }}
               aria-label={`View image ${index + 1}: ${image.altText}`}
             >
-              <LazyImage
+              <Image
                 src={image.url}
                 alt={image.altText}
                 fill
