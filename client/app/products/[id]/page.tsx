@@ -142,8 +142,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Type</span>
                 <span className="font-black text-xs md:text-sm">{product.category}</span>
               </Card>
-              <Card className="col-span-2 sm:col-span-1 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center bg-card/50 backdrop-blur-sm overflow-hidden">
-                <ProductQR hideLabel={true} className="w-full h-full p-1 rounded-xl border-0 shadow-none bg-transparent" />
+              <Card className="col-span-1 sm:col-span-1 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center bg-card/50 backdrop-blur-sm overflow-hidden p-2">
+                <div className="w-16 h-16 sm:w-full sm:h-full">
+                  <ProductQR hideLabel={true} className="w-full h-full rounded-lg border-0 shadow-none bg-transparent" />
+                </div>
               </Card>
             </div>
           </div>
