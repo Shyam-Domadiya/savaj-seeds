@@ -1,27 +1,23 @@
-import { ReactNode, ElementType } from "react"
+import React from "react"
 import { cn } from "@/lib/utils"
 
+type Tag = keyof React.JSX.IntrinsicElements
+
 interface ScreenReaderOnlyProps {
-  children: ReactNode
-  className?: string
-  as?: ElementType
+    children: React.ReactNode
+    as?: Tag
+    className?: string
 }
 
 export function ScreenReaderOnly({
-  children,
-  className,
-  as: Component = "span"
+    children,
+    as: Component = "span",
+    className,
 }: ScreenReaderOnlyProps) {
-  return (
-    <Component
-      className={cn(
-        "sr-only",
-        // Additional styles for better screen reader support
-        "absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0",
-        className
-      )}
-    >
-      {children}
-    </Component>
-  )
+    const El = Component as React.ElementType
+    return (
+        <El className={cn("sr-only", className)}>
+            {children}
+        </El>
+    )
 }

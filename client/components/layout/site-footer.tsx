@@ -13,6 +13,7 @@ import {
   Youtube,
   Linkedin
 } from "lucide-react"
+
 import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
 
 import { businessInfo } from "@/lib/data/team"

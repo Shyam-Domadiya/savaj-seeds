@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sprout, Leaf, Package, Users, ArrowRight, Award, ShieldCheck } from "lucide-react"
 
-export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode }) {
+export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }) {
     return (
         <>
             <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden animate-in fade-in duration-1000" aria-labelledby="hero-heading">
