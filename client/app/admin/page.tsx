@@ -1,29 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Package, MessageSquare, Users } from 'lucide-react';
 import { getApiUrl } from '@/lib/api-config';
 
 export default function AdminDashboard() {
-    const [visitorCount, setVisitorCount] = useState<number | null>(null);
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-        const fetchVisitors = async () => {
-            try {
-                const res = await fetch(`${getApiUrl()}/visitors`);
-                if (res.ok) {
-                    const data = await res.json();
-                    setVisitorCount(data.length);
-                }
-            } catch (err) {
-                console.error("Failed to fetch visitors:", err);
-            }
+    const { data: visitors, isLoading } = useQuery({
+        queryKey: ['visitors'],
+        queryFn: async () => {
+            const res = await fetch(`${getApiUrl()}/visitors`);
+            if (!res.ok) throw new Error('Failed to fetch visitors');
+            return res.json();
         }
-        fetchVisitors();
-    }, []);
+    });
     return (
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
@@ -62,7 +52,7 @@ export default function AdminDashboard() {
                         <div>
                             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Total Visitors</h2>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {!isMounted ? '...' : (visitorCount !== null ? `${visitorCount} unique IPs` : 'Failed to load.')}
+                                {isLoading ? '...' : (visitors ? `${visitors.length} unique IPs` : 'Failed to load.')}
                             </p>
                         </div>
                     </div>
