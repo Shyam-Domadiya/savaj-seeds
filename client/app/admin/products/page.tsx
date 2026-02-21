@@ -24,6 +24,7 @@ interface Product {
     category: string;
     price: number;
     countInStock: number;
+    pageViews?: number;
 }
 
 export default function AdminProducts() {
@@ -99,6 +100,7 @@ export default function AdminProducts() {
                         <TableRow>
                             <TableHead>Name</TableHead>
                             <TableHead>Category</TableHead>
+                            <TableHead>Views</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -107,6 +109,11 @@ export default function AdminProducts() {
                             <TableRow key={product._id}>
                                 <TableCell className="font-medium">{product.name}</TableCell>
                                 <TableCell>{product.category}</TableCell>
+                                <TableCell>
+                                    <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-blue-100 bg-blue-600 rounded-full">
+                                        {product.pageViews || 0}
+                                    </span>
+                                </TableCell>
                                 <TableCell className="text-right space-x-2">
                                     <Link href={`/admin/products/${product._id}`}>
                                         <Button variant="ghost" size="icon" className="hover:bg-gray-100 dark:hover:bg-gray-700">

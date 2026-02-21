@@ -2,7 +2,9 @@ import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
+import connectMongo from 'connect-mongo';
+
+const MongoStore = connectMongo(session);
 import connectDB from './config/db';
 import contactRoutes from './routes/contactRoutes';
 import productRoutes from './routes/productRoutes';
@@ -48,9 +50,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET || process.env.JWT_SECRET as string,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI as string,
-        collectionName: 'sessions',
+    store: new MongoStore({
+        url: process.env.MONGO_URI as string,
+        collection: 'sessions',
         ttl: 30 * 24 * 60 * 60, // 30 days in seconds
     }),
     cookie: {
