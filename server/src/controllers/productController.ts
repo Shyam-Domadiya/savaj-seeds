@@ -81,7 +81,7 @@ export const createProduct = asyncHandler(async (req: Request, res: Response) =>
         name: 'Sample Name',
         slug: 'sample-name-' + Date.now(),
         category: 'Vegetable Seeds',
-        images: [{ url: '/images/sample.jpg', altText: 'Sample Image', isPrimary: true }],
+        images: [{ url: '/logo.png', altText: 'Savaj Seeds Logo', isPrimary: true }],
         description: 'Sample description',
         seasonality: ['Rabi'],
     });

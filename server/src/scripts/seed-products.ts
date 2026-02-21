@@ -26,7 +26,7 @@ const products = [
         difficultyLevel: "Intermediate",
         images: [
             {
-                url: "/images/products/tomato-1.jpg",
+                url: "/images/product-tomato.jpg",
                 altText: "Savaj Hybrid Tomato S-101",
                 isPrimary: true
             }
@@ -55,7 +55,7 @@ const products = [
         difficultyLevel: "Beginner",
         images: [
             {
-                url: "/images/products/wheat-1.jpg",
+                url: "/images/product-wheat.jpg",
                 altText: "Savaj Premium Wheat W-45",
                 isPrimary: true
             }
@@ -85,7 +85,7 @@ const products = [
         difficultyLevel: "Advanced",
         images: [
             {
-                url: "/images/products/cotton-1.jpg",
+                url: "/images/category-crop.jpg",
                 altText: "Savaj Hybrid Cotton C-22",
                 isPrimary: true
             }
@@ -116,7 +116,7 @@ const products = [
         difficultyLevel: "Beginner",
         images: [
             {
-                url: "/images/products/okra-1.jpg",
+                url: "/images/category-vegetable.jpg",
                 altText: "Savaj Okra Green Star",
                 isPrimary: true
             }
@@ -146,7 +146,7 @@ const products = [
         difficultyLevel: "Intermediate",
         images: [
             {
-                url: "/images/products/cucumber-1.jpg",
+                url: "/images/product-pepper.jpg",
                 altText: "Savaj Cucumber Cool Green",
                 isPrimary: true
             }
@@ -175,7 +175,7 @@ const products = [
         difficultyLevel: "Intermediate",
         images: [
             {
-                url: "/images/products/maize-1.jpg",
+                url: "/images/category-crop.jpg",
                 altText: "Savaj Hybrid Maize M-55",
                 isPrimary: true
             }

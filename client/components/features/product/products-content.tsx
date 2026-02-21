@@ -16,6 +16,7 @@ import { getCategoryVisuals } from "@/lib/utils/product-visuals"
 import { ArrowRight, Info } from "lucide-react"
 
 import Image from "next/image"
+import { sanitizeImageUrl } from "@/lib/utils/image"
 
 function ProductCard({
   product,
@@ -33,7 +34,7 @@ function ProductCard({
 
         {/* Image / Visual Header */}
         <div className={`relative aspect-[4/3] w-full overflow-hidden ${visuals.gradient} flex items-center justify-center`}>
-          {product.images?.[0]?.url ? (
+          {sanitizeImageUrl(product.images?.[0]?.url) ? (
             <img
               src={product.images[0].url}
               alt={product.images[0].altText || product.name}
