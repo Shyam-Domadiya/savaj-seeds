@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Search, Sprout, FileText, ArrowRight, Package } from "lucide-react"
 
 import { Product } from "@/lib/types/product"
+import { cn } from "@/lib/utils"
 
 export function SearchResults({ initialProducts }: { initialProducts: Product[] }) {
     const searchParams = useSearchParams()
@@ -69,14 +70,24 @@ function ProductCard({ product }: { product: any }) {
     return (
         <Link href={`/products/${product.id}`} className="group">
             <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div className="relative h-48 bg-muted">
-                    <img
-                        src={product.images[0]?.url || '/images/product-tomato.png'}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-2 right-2">
-                        <Badge className="bg-white/90 text-foreground backdrop-blur hover:bg-white">{product.category}</Badge>
+                <div className="relative h-48 bg-muted/30 overflow-hidden flex items-center justify-center">
+                    {product.images[0]?.url ? (
+                        <img
+                            src={product.images[0].url}
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                    ) : (
+                        <div className="p-8 flex items-center justify-center">
+                            <img
+                                src="/icon.png"
+                                alt="Savaj Seeds Logo"
+                                className="w-32 h-32 object-contain opacity-50 grayscale transition-transform duration-500 group-hover:scale-105"
+                            />
+                        </div>
+                    )}
+                    <div className="absolute top-2 right-2 z-10">
+                        <Badge className="bg-white/90 text-foreground backdrop-blur hover:bg-white border-none shadow-sm">{product.category}</Badge>
                     </div>
                 </div>
                 <CardHeader>

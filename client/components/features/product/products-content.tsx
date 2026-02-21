@@ -38,15 +38,12 @@ function ProductCard({
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center text-center p-6 group-hover:scale-110 transition-transform duration-500">
-              {CategoryIcon ? (
-                <CategoryIcon className={`h-16 w-16 mb-4 ${visuals.iconColor} filter drop-shadow-md`} />
-              ) : (
-                <span className="text-6xl mb-4 filter drop-shadow-md">{visuals.icon as string}</span>
-              )}
-              <span className={`text-xs font-bold uppercase tracking-[0.2em] ${visuals.iconColor} opacity-80`}>
-                {visuals.label}
-              </span>
+            <div className="relative w-full h-full p-8 flex items-center justify-center bg-white/50 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
+              <img
+                src="/icon.png"
+                alt="Savaj Seeds Logo"
+                className="w-32 h-32 object-contain filter drop-shadow-lg opacity-80"
+              />
             </div>
           )}
 
