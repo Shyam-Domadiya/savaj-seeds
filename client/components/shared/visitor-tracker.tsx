@@ -24,6 +24,29 @@ export function VisitorTracker() {
         };
 
         logVisitor();
+
+        // Tracker Heartbeat - sends a ping every 10 seconds to accumulate time spent
+        const heartbeatInterval = setInterval(async () => {
+            try {
+                // only ping if we have successfully logged the session
+                if (sessionStorage.getItem('visitor_logged') === 'true') {
+                    await fetch(`${getApiUrl()}/visitors/time`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ timeSpent: 10 }), // Add 10 seconds
+                        keepalive: true
+                    });
+                }
+            } catch (error) {
+                // Silently ignore ping errors
+            }
+        }, 10000); // 10 seconds
+
+        return () => {
+            clearInterval(heartbeatInterval);
+        };
     }, []);
 
     return null;

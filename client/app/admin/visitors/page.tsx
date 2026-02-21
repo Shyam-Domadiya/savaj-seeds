@@ -14,7 +14,11 @@ interface Visitor {
     visitedAt: string;
     readableDateStr?: string;
     readableTimeStr?: string;
+    os?: string;
+    browser?: string;
+    device?: string;
     totalVisits: number;
+    totalTimeSpent?: number;
 }
 
 export default function VisitorsPage() {
@@ -41,12 +45,24 @@ export default function VisitorsPage() {
         fetchVisitors();
     }, []);
 
-    const getDeviceIcon = (userAgent: string) => {
-        const ua = userAgent.toLowerCase();
-        if (ua.includes('mobile') || ua.includes('android') || ua.includes('iphone')) {
-            return <Smartphone className="w-4 h-4 text-gray-500" />;
+    const getDeviceIcon = (deviceStr: string, userAgent: string) => {
+        const d = (deviceStr || '').toLowerCase();
+        const ua = (userAgent || '').toLowerCase();
+        if (d.includes('mobile') || ua.includes('mobile') || ua.includes('android') || ua.includes('iphone')) {
+            return <Smartphone className="w-4 h-4 text-gray-500 flex-shrink-0" />;
         }
-        return <Monitor className="w-4 h-4 text-gray-500" />;
+        return <Monitor className="w-4 h-4 text-gray-500 flex-shrink-0" />;
+    };
+
+    const formatTimeSpent = (seconds?: number) => {
+        if (!seconds) return '—';
+        if (seconds < 60) return `${seconds}s`;
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        if (minutes < 60) return `${minutes}m ${remainingSeconds}s`;
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+        return `${hours}h ${remainingMinutes}m ${remainingSeconds}s`;
     };
 
     if (isLoading) {
@@ -82,6 +98,7 @@ export default function VisitorsPage() {
                                 <TableRow>
                                     <TableHead>IP Address</TableHead>
                                     <TableHead>Visits</TableHead>
+                                    <TableHead>Total Time</TableHead>
                                     <TableHead>Last Visit Date</TableHead>
                                     <TableHead>Time</TableHead>
                                     <TableHead>Device/Browser</TableHead>
@@ -90,7 +107,7 @@ export default function VisitorsPage() {
                             <TableBody>
                                 {visitors.length === 0 ? (
                                     <TableRow>
-                                        <TableCell colSpan={5} className="text-center h-24 text-gray-500">
+                                        <TableCell colSpan={6} className="text-center h-24 text-gray-500">
                                             No visitors logged yet.
                                         </TableCell>
                                     </TableRow>
@@ -103,12 +120,24 @@ export default function VisitorsPage() {
                                                     {visitor.totalVisits}
                                                 </span>
                                             </TableCell>
+                                            <TableCell>
+                                                <span className="text-gray-600 font-medium">
+                                                    {formatTimeSpent(visitor.totalTimeSpent)}
+                                                </span>
+                                            </TableCell>
                                             <TableCell>{visitor.readableDateStr || new Date(visitor.visitedAt).toLocaleDateString()}</TableCell>
                                             <TableCell>{visitor.readableTimeStr || new Date(visitor.visitedAt).toLocaleTimeString()}</TableCell>
                                             <TableCell>
-                                                <div className="flex items-center gap-2 max-w-[200px] truncate" title={visitor.userAgent}>
-                                                    {getDeviceIcon(visitor.userAgent)}
-                                                    <span className="truncate text-xs text-gray-500">{visitor.userAgent}</span>
+                                                <div className="flex items-center gap-2 max-w-[250px]" title={visitor.userAgent}>
+                                                    {getDeviceIcon(visitor.device || '', visitor.userAgent)}
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                            {visitor.device || 'Unknown Device'}
+                                                        </span>
+                                                        <span className="truncate text-xs text-gray-500">
+                                                            {visitor.os ? `${visitor.os} • ${visitor.browser || 'Unknown'}` : visitor.userAgent}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </TableCell>
                                         </TableRow>
