@@ -51,6 +51,8 @@ export const getProductById = asyncHandler(async (req: Request, res: Response) =
     });
 
     if (product) {
+        // Increment view count atomically without changing timestamps
+        await Product.findByIdAndUpdate(product._id, { $inc: { pageViews: 1 } });
         res.json(product);
     } else {
         res.status(404);

@@ -48,6 +48,7 @@ export interface IProduct extends Document {
     // Metadata & SEO
     availability: boolean;
     featured: boolean;
+    pageViews?: number;
     seoMetadata?: {
         title?: string;
         description?: string;
@@ -107,6 +108,7 @@ const productSchema: Schema = new Schema(
         // Status & Meta
         availability: { type: Boolean, default: true },
         featured: { type: Boolean, default: false },
+        pageViews: { type: Number, default: 0 },
         seoMetadata: {
             title: String,
             description: String,

@@ -4,8 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { getApiUrl } from '@/lib/api-config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, Smartphone, Monitor } from 'lucide-react';
+import { AlertCircle, Smartphone, Monitor, Download } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { VisitorCharts } from '@/components/admin/VisitorCharts';
 
 interface Visitor {
     _id: string;
@@ -19,6 +21,8 @@ interface Visitor {
     device?: string;
     totalVisits: number;
     totalTimeSpent?: number;
+    country?: string;
+    city?: string;
 }
 
 export default function VisitorsPage() {
@@ -54,6 +58,38 @@ export default function VisitorsPage() {
         return `${hours}h ${remainingMinutes}m ${remainingSeconds}s`;
     };
 
+    const handleExportCSV = () => {
+        if (!visitors || visitors.length === 0) return;
+
+        const headers = ['IP Address', 'Country', 'City', 'Total Visits', 'Total Time Spent (s)', 'Date', 'Time', 'Device', 'Browser', 'OS'];
+        const csvContent = "data:text/csv;charset=utf-8,"
+            + headers.join(",") + "\n"
+            + visitors.map(v => {
+                const row = [
+                    v.ipAddress,
+                    v.country || 'Unknown',
+                    v.city || 'Unknown',
+                    v.totalVisits.toString(),
+                    (v.totalTimeSpent || 0).toString(),
+                    v.readableDateStr || new Date(v.visitedAt).toLocaleDateString(),
+                    v.readableTimeStr || new Date(v.visitedAt).toLocaleTimeString(),
+                    v.device || 'Unknown',
+                    v.browser || 'Unknown',
+                    v.os || 'Unknown'
+                ];
+                // Quote entries to handle commands natively
+                return row.map(str => `"${String(str).replace(/"/g, '""')}"`).join(",");
+            }).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `visitor_logs_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
@@ -74,7 +110,15 @@ export default function VisitorsPage() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Visitor Logs</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Visitor Logs</h1>
+                <Button onClick={handleExportCSV} variant="outline" className="gap-2 bg-white dark:bg-gray-800">
+                    <Download className="w-4 h-4" />
+                    Export CSV
+                </Button>
+            </div>
+
+            <VisitorCharts visitors={visitors || []} />
 
             <Card>
                 <CardHeader>
@@ -86,6 +130,7 @@ export default function VisitorsPage() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>IP Address</TableHead>
+                                    <TableHead>Location</TableHead>
                                     <TableHead>Visits</TableHead>
                                     <TableHead>Total Time</TableHead>
                                     <TableHead>Last Visit Date</TableHead>
@@ -96,7 +141,7 @@ export default function VisitorsPage() {
                             <TableBody>
                                 {!visitors || visitors.length === 0 ? (
                                     <TableRow>
-                                        <TableCell colSpan={6} className="text-center h-24 text-gray-500">
+                                        <TableCell colSpan={7} className="text-center h-24 text-gray-500">
                                             No visitors logged yet.
                                         </TableCell>
                                     </TableRow>
@@ -104,6 +149,12 @@ export default function VisitorsPage() {
                                     visitors.map((visitor) => (
                                         <TableRow key={visitor._id}>
                                             <TableCell className="font-medium">{visitor.ipAddress}</TableCell>
+                                            <TableCell>
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm text-gray-900 dark:text-gray-100">{visitor.country || 'Unknown'}</span>
+                                                    <span className="text-xs text-gray-500">{visitor.city || 'Unknown'}</span>
+                                                </div>
+                                            </TableCell>
                                             <TableCell>
                                                 <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">
                                                     {visitor.totalVisits}

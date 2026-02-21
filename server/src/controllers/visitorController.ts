@@ -3,6 +3,8 @@ import asyncHandler from 'express-async-handler';
 import { UAParser } from 'ua-parser-js';
 import Visitor from '../models/Visitor';
 
+import geoip from 'geoip-lite';
+
 // @desc    Log a visitor's IP address
 // @route   POST /api/visitors
 // @access  Public
@@ -22,6 +24,18 @@ export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
     // Parse User-Agent for real device data
     const parser = new UAParser(userAgent);
     const parsedObj = parser.getResult();
+
+    // Parse IP for Geolocation
+    let country = 'Unknown';
+    let city = 'Unknown';
+
+    if (actualIp && actualIp !== '127.0.0.1' && actualIp !== '::1' && actualIp !== 'Unknown IP') {
+        const geo = geoip.lookup(actualIp as string);
+        if (geo) {
+            country = geo.country || 'Unknown';
+            city = geo.city || 'Unknown';
+        }
+    }
 
     // Fallback logic for device/browser/os
     const os = parsedObj.os.name
@@ -58,6 +72,8 @@ export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
             existingVisitor.os = os;
             existingVisitor.browser = browser;
             existingVisitor.device = deviceName;
+            existingVisitor.country = country;
+            existingVisitor.city = city;
             existingVisitor.totalVisits += 1;
             await existingVisitor.save();
         }
@@ -69,6 +85,8 @@ export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
             os,
             browser,
             device: deviceName,
+            country,
+            city,
             visitedAt: now,
             readableDateStr,
             readableTimeStr,

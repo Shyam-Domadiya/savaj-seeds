@@ -63,4 +63,20 @@ const getContacts = asyncHandler(async (req: Request, res: Response) => {
     res.json(contacts);
 });
 
-export { submitContactForm, getContacts };
+// @desc    Mark a contact message as read
+// @route   PUT /api/contact/:id/read
+// @access  Private/Admin
+const markContactAsRead = asyncHandler(async (req: Request, res: Response) => {
+    const contact = await Contact.findById(req.params.id);
+
+    if (contact) {
+        contact.isRead = !contact.isRead; // Toggle read status
+        const updatedContact = await contact.save();
+        res.json(updatedContact);
+    } else {
+        res.status(404);
+        throw new Error('Contact message not found');
+    }
+});
+
+export { submitContactForm, getContacts, markContactAsRead };

@@ -6,6 +6,8 @@ export interface IVisitor extends Document {
     os?: string; // e.g. "Windows 10" or "Android 12"
     browser?: string; // e.g. "Chrome"
     device?: string; // e.g. "Mobile" or "Desktop"
+    country?: string;
+    city?: string;
     visitedAt: Date;
     totalTimeSpent?: number; // Time spent on the site in seconds
     readableDateStr?: string; // e.g. "21-Feb-2026"
@@ -30,6 +32,8 @@ const visitorSchema = new Schema<IVisitor>({
     device: {
         type: String,
     },
+    country: { type: String },
+    city: { type: String },
     totalTimeSpent: {
         type: Number,
         default: 0,

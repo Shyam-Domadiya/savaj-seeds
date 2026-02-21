@@ -7,6 +7,7 @@ export interface IContact extends Document {
     category: string;
     subject: string;
     message: string;
+    isRead?: boolean;
     createdAt: Date;
 }
 
@@ -34,6 +35,10 @@ const contactSchema: Schema = new Schema(
         message: {
             type: String,
             required: true,
+        },
+        isRead: {
+            type: Boolean,
+            default: false,
         },
     },
     {
