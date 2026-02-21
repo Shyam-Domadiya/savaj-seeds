@@ -18,7 +18,7 @@ import { ArrowRight, Info } from "lucide-react"
 import Image from "next/image"
 import { sanitizeImageUrl } from "@/lib/utils/image"
 
-function ProductCard({
+export function ProductCard({
   product,
 }: {
   product: Product

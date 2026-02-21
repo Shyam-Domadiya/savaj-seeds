@@ -14,18 +14,19 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
-import { getProductById } from "@/lib/actions/product"
+import { getProductById, getAllProducts } from "@/lib/actions/product"
 import { generateMetadata as generateSEOMetadata, generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo"
 import { DownloadGuideButton } from "@/components/features/product/download-guide-button"
 import { ProductQR } from "@/components/features/product/product-qr"
 import { getCategoryVisuals } from "@/lib/utils/product-visuals"
 import { Clock, Leaf, ArrowLeft, ArrowRight } from "lucide-react"
-import { getAllProducts } from "@/lib/actions/product"
+import { ProductCard } from "@/components/features/product/products-content"
+import { sanitizeImageUrl } from "@/lib/utils/image"
 
 // Hard-coded ProductCard for Related Products (to avoid circular dependency or complex extraction)
 // Alternatively, we can import it if we are careful about organization.
 // Let's try importing a simplified version or just the real one if products-content doesn't import page.tsx.
-import { ProductsContent } from "@/components/features/product/products-content"
+// Product Card is now imported from products-content
 // We need the Card component for related products
 
 
@@ -52,7 +53,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
     keywords: product.seoMetadata.keywords,
     url: `/products/${id}`,
     type: 'website',
-    image: product.images[0]?.url || '/images/logo.png',
+    image: sanitizeImageUrl(product.images[0]?.url) || '/images/logo.png',
   })
 }
 
@@ -78,7 +79,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const productSchema = generateProductSchema({
     name: product.name,
     description: product.description,
-    image: product.images[0]?.url || '/images/logo.png',
+    image: sanitizeImageUrl(product.images[0]?.url) || '/images/logo.png',
     category: product.category,
     brand: 'Savaj Seeds',
     sku: product.id,
@@ -110,7 +111,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* Visual Column */}
           <div className="lg:col-span-5 space-y-6">
             <div className={`aspect-square sm:aspect-[4/3] lg:aspect-square relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 ${visuals.gradient} flex items-center justify-center group bg-white dark:bg-card`}>
-              {product.images?.[0]?.url ? (
+              {product.images?.some(img => sanitizeImageUrl(img.url)) ? (
                 <ProductImageGallery images={product.images} productName={product.name} />
               ) : (
                 <div className="flex flex-col items-center justify-center text-center p-12 transition-transform duration-700 group-hover:scale-105">
@@ -249,28 +250,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
               {relatedProducts.map(p => (
-                <Link key={p.id} href={`/products/${p.id}`} className="group block h-full">
-                  <Card className="h-full border-border/50 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden rounded-[2rem] bg-card/50 backdrop-blur-sm flex flex-col">
-                    <div className="aspect-[4/3] overflow-hidden relative">
-                      {p.images?.[0]?.url ? (
-                        <img src={p.images[0].url} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-50">🌱</div>
-                      )}
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                        <span className="bg-white text-black font-black text-[10px] uppercase tracking-[0.2em] px-6 py-3 rounded-full shadow-2xl scale-90 group-hover:scale-100 transition-transform duration-500">View Seed</span>
-                      </div>
-                    </div>
-                    <div className="p-6 flex flex-col flex-1">
-                      <div className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/70 mb-2">{p.category}</div>
-                      <h3 className="font-black text-xl leading-tight group-hover:text-primary transition-colors text-balance">{p.name}</h3>
-                      <div className="mt-auto pt-6 flex items-center justify-between border-t border-border/40 grayscale group-hover:grayscale-0 transition-all">
-                        <span className="text-[10px] font-bold text-muted-foreground uppercase">{p.seasonality[0]}</span>
-                        <ArrowRight className="h-4 w-4 text-primary" />
-                      </div>
-                    </div>
-                  </Card>
-                </Link>
+                <ProductCard key={p.id} product={p} />
               ))}
             </div>
           </section>
