@@ -36,7 +36,7 @@ export function BackToTop() {
             variant="secondary"
             size="icon"
             className={cn(
-                "fixed bottom-20 right-4 z-50 h-10 w-10 rounded-full shadow-lg transition-all duration-300 md:bottom-8 md:right-8",
+                "fixed bottom-28 right-4 z-50 h-10 w-10 rounded-full shadow-lg transition-all duration-300 md:bottom-8 md:right-8",
                 isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
             )}
             onClick={scrollToTop}

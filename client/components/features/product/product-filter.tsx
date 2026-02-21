@@ -92,27 +92,49 @@ export function ProductFilter({
   return (
     <div className={className}>
       {/* Mobile Filter Toggle */}
-      <div className="lg:hidden mb-4">
+      <div className="lg:hidden mb-6 flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold">Filter Products</h2>
+          {activeFilterCount > 0 && (
+            <Button
+              variant="link"
+              size="sm"
+              onClick={onClearFilters}
+              className="h-auto p-0 text-primary font-bold"
+            >
+              Clear All
+            </Button>
+          )}
+        </div>
         <Button
           variant="outline"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full justify-between"
+          className={cn(
+            "w-full justify-between h-12 px-4 shadow-sm border-primary/20 bg-background hover:bg-muted/50 transition-all",
+            isOpen && "border-primary ring-1 ring-primary/20"
+          )}
         >
           <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            Filters
+            <Filter className={cn("h-4 w-4", activeFilterCount > 0 ? "text-primary" : "text-muted-foreground")} />
+            <span className="font-semibold">
+              {isOpen ? "Hide Filters" : "Show Filters"}
+            </span>
             {activeFilterCount > 0 && (
-              <Badge variant="secondary" className="ml-2">
+              <Badge className="ml-2 bg-primary text-primary-foreground font-black px-2 py-0.5">
                 {activeFilterCount}
               </Badge>
             )}
           </div>
-          <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
+          <ChevronDown className={cn("h-4 w-4 transition-transform duration-300", isOpen && "rotate-180")} />
         </Button>
       </div>
 
       {/* Filter Panel */}
-      <div className={cn("space-y-4", "lg:block", !isOpen && "hidden lg:block")}>
+      <div className={cn(
+        "space-y-4 animate-in fade-in slide-in-from-top-2 duration-300",
+        "lg:block",
+        !isOpen && "hidden lg:block"
+      )}>
         {/* Sort Controls */}
         <Card>
           <CardHeader className="pb-3">

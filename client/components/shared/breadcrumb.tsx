@@ -68,27 +68,27 @@ export function Breadcrumb({ className, customTitle }: BreadcrumbProps) {
     <nav
       aria-label="Breadcrumb"
       className={cn(
-        "flex items-center space-x-1 text-sm text-muted-foreground py-4",
+        "flex items-center overflow-x-auto no-scrollbar py-3 md:py-5 -mx-4 px-4 sm:mx-0 sm:px-0",
         className
       )}
     >
-      <ol className="flex items-center space-x-1">
+      <ol className="flex items-center whitespace-nowrap">
         {breadcrumbs.map((breadcrumb, index) => (
           <li key={breadcrumb.href} className="flex items-center">
             {index > 0 && (
               <ChevronRight
-                className="h-4 w-4 mx-2 text-muted-foreground/60"
+                className="h-3.5 w-3.5 mx-1.5 md:mx-2 text-muted-foreground/50 flex-shrink-0"
                 aria-hidden="true"
               />
             )}
             {index === breadcrumbs.length - 1 ? (
               // Current page - not a link
               <span
-                className="font-medium text-foreground flex items-center gap-1"
+                className="font-bold text-foreground flex items-center gap-1.5 text-[13px] md:text-sm"
                 aria-current="page"
               >
-                {index === 0 && <Home className="h-4 w-4" />}
-                <span className="truncate max-w-[200px] md:max-w-[300px]">
+                {index === 0 && <Home className="h-3.5 w-3.5" />}
+                <span className="truncate max-w-[150px] sm:max-w-[200px] md:max-w-[300px]">
                   {breadcrumb.label}
                 </span>
               </span>
@@ -96,9 +96,9 @@ export function Breadcrumb({ className, customTitle }: BreadcrumbProps) {
               // Link to previous pages
               <Link
                 href={breadcrumb.href}
-                className="hover:text-foreground transition-colors duration-200 flex items-center gap-1 hover:underline underline-offset-4"
+                className="text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center gap-1.5 text-[13px] md:text-sm font-medium"
               >
-                {index === 0 && <Home className="h-4 w-4" />}
+                {index === 0 && <Home className="h-3.5 w-3.5" />}
                 {breadcrumb.label}
               </Link>
             )}

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
 
-import { MobileNav } from "@/components/layout/mobile-nav"
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 

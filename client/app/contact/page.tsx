@@ -44,7 +44,7 @@ export default function ContactPage() {
       </div>
 
       <main className="flex-1">
-        <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden animate-in fade-in duration-700">
+        <section className="relative min-h-[40vh] md:min-h-[50vh] flex items-center justify-center overflow-hidden animate-in fade-in duration-700">
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-black/60 z-10" />
             <Image
@@ -55,28 +55,28 @@ export default function ContactPage() {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="container relative z-20 text-center text-white space-y-7 animate-in fade-in-50 slide-in-from-bottom-4 duration-700 delay-100 min-h-[40vh] flex flex-col items-center justify-center">
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance leading-[1.1] drop-shadow-lg">
+          <div className="container relative z-20 text-center text-white space-y-6 md:space-y-7 animate-in fade-in-50 slide-in-from-bottom-4 duration-700 delay-100 min-h-[30vh] md:min-h-[40vh] flex flex-col items-center justify-center px-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-balance leading-[1.1] drop-shadow-lg">
               Get in{" "}
               <span className="text-primary-foreground bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-300">Touch</span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed font-light drop-shadow-md max-w-2xl">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed font-light drop-shadow-md max-w-2xl px-2">
               Have questions about our seeds or need expert advice? {"We're"} here to help you grow your success.
             </p>
           </div>
         </section>
 
         {/* Multiple Contact Methods Section */}
-        <section className="py-20 md:py-28">
-          <div className="container">
+        <section className="py-16 md:py-28">
+          <div className="container px-4 sm:px-6">
             <MultiContactMethods />
           </div>
         </section>
 
         {/* Contact Form and Business Info Section */}
-        <section className="py-20 md:py-28 bg-muted/40">
-          <div className="container">
-            <div className="grid lg:grid-cols-2 gap-12">
+        <section className="py-16 md:py-28 bg-muted/40">
+          <div className="container px-4 sm:px-6">
+            <div className="grid lg:grid-cols-2 gap-10 md:gap-12">
               <EnhancedContactForm />
 
               <div className="space-y-8">
@@ -88,20 +88,20 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="py-20 md:py-28 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 cursor-pointer">
-          <div className="container">
+        <section className="py-16 md:py-28 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 cursor-pointer">
+          <div className="container px-4 sm:px-6">
             <div className="mx-auto max-w-4xl animate-in fade-in-50 slide-in-from-bottom-8 duration-700">
-              <div className="aspect-video rounded-2xl bg-gradient-to-br from-primary/15 via-accent/10 to-secondary/15 flex items-center justify-center shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-500 group">
-                <div className="text-center space-y-5">
-                  <MapPin className="h-20 w-20 text-primary mx-auto group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-500" />
-                  <p className="text-2xl font-bold group-hover:text-primary transition-colors duration-300">
+              <div className="aspect-video sm:aspect-[21/9] md:aspect-video rounded-2xl bg-gradient-to-br from-primary/15 via-accent/10 to-secondary/15 flex items-center justify-center shadow-lg hover:shadow-2xl hover:scale-[1.02] md:hover:scale-105 transition-all duration-500 group">
+                <div className="text-center space-y-4 md:space-y-5 px-6">
+                  <MapPin className="h-12 w-12 md:h-20 md:w-20 text-primary mx-auto group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-500" />
+                  <p className="text-xl md:text-2xl font-bold group-hover:text-primary transition-colors duration-300">
                     Visit Our Office
                   </p>
-                  <p className="text-muted-foreground text-lg">123, Agricultural Complex, GIDC Estate<br />Ahmedabad, Gujarat 380015</p>
+                  <p className="text-muted-foreground text-sm md:text-lg">123, Agricultural Complex, GIDC Estate<br />Ahmedabad, Gujarat 380015</p>
                   <Button
                     variant="outline"
                     size="lg"
-                    className="mt-4"
+                    className="mt-2 md:mt-4 h-10 md:h-12"
                     onClick={() => window.open("https://maps.google.com/?q=Savaj+Seeds+Ahmedabad")}
                   >
                     <MapPin className="w-4 h-4 mr-2" />
