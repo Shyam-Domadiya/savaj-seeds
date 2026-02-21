@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { getAuthHeader } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
 import {
     Table,
@@ -44,9 +43,7 @@ export default function AdminProducts() {
         mutationFn: async (id: string) => {
             const res = await fetch(`${getApiUrl()}/products/${id}`, {
                 method: 'DELETE',
-                headers: {
-                    ...getAuthHeader(),
-                },
+                credentials: 'include', // Auth via HttpOnly cookie
             });
             if (!res.ok) {
                 const data = await res.json();

@@ -1,7 +1,7 @@
 export interface IAdmin {
     _id: string;
     email: string;
-    token: string;
+    // token is intentionally not stored here — it lives in an HttpOnly cookie
 }
 
 export const getAdminUser = (): IAdmin | null => {
@@ -26,10 +26,8 @@ export const removeAdminUser = () => {
     }
 };
 
+// No longer sends Authorization header — auth is via HttpOnly cookie
+// Use `credentials: 'include'` in all authenticated fetch calls instead
 export const getAuthHeader = (): Record<string, string> => {
-    const admin = getAdminUser();
-    if (admin && admin.token) {
-        return { Authorization: `Bearer ${admin.token}` };
-    }
     return {};
 };

@@ -1,18 +1,16 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
+import express, { Request } from 'express';
 import Admin from '../models/Admin';
-import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
-// Generate JWT
-const generateToken = (id: string) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET as string, {
-        expiresIn: '30d',
-    });
-};
+// Extend session type to include adminId
+declare module 'express-session' {
+    interface SessionData {
+        adminId?: string;
+    }
+}
 
-// @desc    Auth admin & get token
+// @desc    Auth admin & create session
 // @route   POST /api/auth/login
 // @access  Public
 router.post('/login', async (req, res) => {
@@ -21,10 +19,13 @@ router.post('/login', async (req, res) => {
     const admin = await Admin.findOne({ email });
 
     if (admin && (await admin.matchPassword(password))) {
+        // Store admin ID in the session (persisted to MongoDB via MongoStore)
+        req.session.adminId = (admin._id as unknown) as string;
+
         res.json({
             _id: admin._id,
             email: admin.email,
-            token: generateToken((admin._id as unknown) as string),
+            // No token — auth is now session-based
         });
     } else {
         res.status(401);
@@ -32,10 +33,24 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// @desc    Logout admin & destroy session
+// @route   POST /api/auth/logout
+// @access  Public
+router.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).json({ message: 'Logout failed' });
+        }
+        res.clearCookie('savaj.sid');
+        res.json({ message: 'Logged out successfully' });
+    });
+});
+
 // @desc    Get admin profile
 // @route   GET /api/auth/profile
 // @access  Private
-router.get('/profile', protect, async (req: any, res) => {
+router.get('/profile', async (req: any, res) => {
     const admin = await Admin.findById(req.admin._id);
 
     if (admin) {

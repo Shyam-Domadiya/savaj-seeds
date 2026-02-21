@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import Admin, { IAdmin } from '../models/Admin';
 
@@ -7,30 +6,26 @@ interface AuthRequest extends Request {
 }
 
 const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
-    let token;
-
-    if (
-        req.headers.authorization &&
-        req.headers.authorization.startsWith('Bearer')
-    ) {
-        try {
-            token = req.headers.authorization.split(' ')[1];
-
-            const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: string };
-
-            req.admin = await Admin.findById(decoded.id).select('-password') as IAdmin;
-
-            next();
-        } catch (error) {
-            console.error(error);
-            res.status(401);
-            throw new Error('Not authorized, token failed');
-        }
+    // Check if session exists and has adminId
+    if (!req.session || !req.session.adminId) {
+        res.status(401);
+        throw new Error('Not authorized, no session');
     }
 
-    if (!token) {
+    try {
+        const admin = await Admin.findById(req.session.adminId).select('-password') as IAdmin;
+
+        if (!admin) {
+            res.status(401);
+            throw new Error('Not authorized, admin not found');
+        }
+
+        req.admin = admin;
+        next();
+    } catch (error) {
+        console.error(error);
         res.status(401);
-        throw new Error('Not authorized, no token');
+        throw new Error('Not authorized, session invalid');
     }
 };
 

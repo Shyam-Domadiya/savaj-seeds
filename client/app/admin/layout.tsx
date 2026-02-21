@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { getAdminUser, removeAdminUser } from '@/lib/auth';
+import { getApiUrl } from '@/lib/api-config';
 import { Button } from '@/components/ui/button';
 import {
     LayoutDashboard,
@@ -32,7 +33,15 @@ export default function AdminLayout({
         }
     }, [router, pathname]);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        try {
+            await fetch(`${getApiUrl()}/auth/logout`, {
+                method: 'POST',
+                credentials: 'include', // Required to clear the HttpOnly cookie
+            });
+        } catch {
+            // Proceed with local logout even if server call fails
+        }
         removeAdminUser();
         router.push('/admin/login');
     };
