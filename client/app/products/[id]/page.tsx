@@ -259,9 +259,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <SiteFooter />
 
-      {/* Sticky Bottom Mobile CTA - Hidden since we have BottomNav floating or adjusted */}
-      {/* We can keep it but adjust its position to not overlap or just use the primary button in the page */}
-      <div className="fixed bottom-24 left-4 right-4 z-40 sm:hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+      {/* Sticky Bottom Mobile CTA - Adjusted to sit above BottomNav */}
+      <div className="fixed bottom-32 left-4 right-4 z-40 sm:hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
         <Button className="w-full h-14 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl shadow-primary/20 bg-primary/90 backdrop-blur-md border border-white/20" asChild>
           <Link href={`/contact?subject=Order Request for ${product.name}`}>
             Request Quote

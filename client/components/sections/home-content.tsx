@@ -24,23 +24,23 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                 </div>
 
                 <div className="container relative z-20">
-                    <div className="mx-auto max-w-4xl text-center space-y-6 md:space-y-8">
-                        <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-100 drop-shadow-lg">
+                    <div className="mx-auto max-w-4xl text-center space-y-6 md:space-y-8 px-4 sm:px-0">
+                        <h1 id="hero-heading" className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.1] animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-100 drop-shadow-lg">
                             Happiness from the{" "}
                             <span className="text-primary-foreground bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-300">
                                 Farmer's Field
                             </span>
                         </h1>
-                        <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light max-w-2xl mx-auto animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-200 drop-shadow-md px-4">
+                        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed font-light max-w-2xl mx-auto animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-200 drop-shadow-md px-2">
                             Premium quality seeds that transform agriculture. Grow better, harvest more, and cultivate success with Savaj Seeds.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center pt-8 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-300 px-6 sm:px-0">
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center pt-6 md:pt-8 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 delay-300 px-4 sm:px-0">
                             <Button
                                 asChild
                                 size="lg"
-                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white rounded-full"
+                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white rounded-full font-bold"
                             >
-                                <Link href="/products">
+                                <Link href="/products" className="flex items-center">
                                     View Our Products
                                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                                 </Link>
@@ -49,7 +49,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                                 asChild
                                 size="lg"
                                 variant="outline"
-                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-md hover:scale-105 transition-all duration-300 rounded-full"
+                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-md hover:scale-105 transition-all duration-300 rounded-full font-bold"
                             >
                                 <Link href="/contact">Contact Us</Link>
                             </Button>
@@ -58,21 +58,21 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                 </div>
             </section>
 
-            <section className="py-12 md:py-28 lg:py-32 relative overflow-hidden" aria-labelledby="features-heading">
+            <section className="py-16 md:py-28 lg:py-32 relative overflow-hidden" aria-labelledby="features-heading">
                 <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-background -z-10" />
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
                 <div className="container relative">
-                    <div className="mx-auto max-w-3xl text-center mb-20 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
-                        <h2 id="features-heading" className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">
+                    <div className="mx-auto max-w-3xl text-center mb-12 md:mb-20 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
+                        <h2 id="features-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-balance leading-tight">
                             Why Choose <span className="text-primary">Savaj Seeds</span>?
                         </h2>
-                        <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-light">
+                        <p className="text-muted-foreground text-base md:text-xl leading-relaxed font-light px-2">
                             We combine traditional agricultural wisdom with modern scientific advancements.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                         {[
                             {
                                 title: "High Germination",
@@ -110,19 +110,19 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                             <Link
                                 key={index}
                                 href={feature.href}
-                                className="group block relative bg-white/60 dark:bg-card/40 backdrop-blur-md border border-white/20 dark:border-white/10 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in fade-in-50 slide-in-from-bottom-8 fill-mode-backwards cursor-pointer"
+                                className="group block relative bg-white/60 dark:bg-card/40 backdrop-blur-md border border-white/20 dark:border-white/10 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in fade-in-50 slide-in-from-bottom-8 fill-mode-backwards cursor-pointer"
                                 style={{ animationDelay: `${index * 100}ms` }}
                             >
                                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
 
                                 <div className="relative z-10">
-                                    <div className={`inline-flex items-center justify-center h-14 w-14 rounded-xl bg-white dark:bg-white/10 shadow-sm dark:shadow-none mb-6 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                                        <feature.icon className="h-7 w-7" />
+                                    <div className={`inline-flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-xl bg-white dark:bg-white/10 shadow-sm dark:shadow-none mb-4 md:mb-6 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                                        <feature.icon className="h-6 w-6 md:h-7 md:w-7" />
                                     </div>
-                                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                                    <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-muted-foreground leading-relaxed">
+                                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                                         {feature.description}
                                     </p>
                                 </div>
@@ -134,18 +134,18 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
 
             {cropCalendar}
 
-            <section className="py-12 md:py-28 lg:py-32 bg-muted/30">
+            <section className="py-16 md:py-28 lg:py-32 bg-muted/30">
                 <div className="container">
-                    <div className="mx-auto max-w-3xl text-center mb-16 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">Our Seed Categories</h2>
-                        <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-light">
+                    <div className="mx-auto max-w-3xl text-center mb-12 md:mb-16 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-balance leading-tight">Our Seed Categories</h2>
+                        <p className="text-muted-foreground text-base md:text-xl leading-relaxed font-light px-2">
                             Discover our comprehensive range of premium seeds for every farming need.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         {/* Vegetable Seeds Card */}
-                        <Link href="/products?category=vegetable" className="group relative h-[300px] sm:h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-100">
+                        <Link href="/products?category=vegetable" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-100">
                             <div className="absolute inset-0">
                                 <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                 <Image
@@ -157,16 +157,16 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                                 />
                             </div>
 
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
                                 <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-green-600/90 backdrop-blur-sm text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <Sprout className="h-7 w-7" />
+                                    <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-green-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                        <Sprout className="h-6 w-6 md:h-7 md:w-7" />
                                     </div>
-                                    <h3 className="text-3xl font-bold mb-3 text-white">Vegetable Seeds</h3>
-                                    <p className="text-white/90 mb-6 font-medium leading-relaxed drop-shadow-md">
+                                    <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Vegetable Seeds</h3>
+                                    <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
                                         Premium vegetable seeds including tomatoes, peppers, cucumbers.
                                     </p>
-                                    <span className="inline-flex items-center text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
+                                    <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
                                         Explore Collection <ArrowRight className="ml-2 h-4 w-4" />
                                     </span>
                                 </div>
@@ -174,7 +174,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                         </Link>
 
                         {/* Crop Seeds Card */}
-                        <Link href="/products?category=crop" className="group relative h-[300px] sm:h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-200">
+                        <Link href="/products?category=crop" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-200">
                             <div className="absolute inset-0">
                                 <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                 <Image
@@ -186,16 +186,16 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                                 />
                             </div>
 
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
                                 <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-600/90 backdrop-blur-sm text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <Leaf className="h-7 w-7" />
+                                    <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-amber-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                        <Leaf className="h-6 w-6 md:h-7 md:w-7" />
                                     </div>
-                                    <h3 className="text-3xl font-bold mb-3 text-white">Crop Seeds</h3>
-                                    <p className="text-white/90 mb-6 font-medium leading-relaxed drop-shadow-md">
+                                    <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Crop Seeds</h3>
+                                    <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
                                         High-yielding seeds for wheat, rice, maize optimized for Indian climate.
                                     </p>
-                                    <span className="inline-flex items-center text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
+                                    <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
                                         View Crops <ArrowRight className="ml-2 h-4 w-4" />
                                     </span>
                                 </div>
@@ -203,7 +203,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                         </Link>
 
                         {/* Hybrid Seeds Card */}
-                        <Link href="/products?category=hybrid" className="group relative h-[300px] sm:h-[400px] overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-300">
+                        <Link href="/products?category=hybrid" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-300">
                             <div className="absolute inset-0">
                                 <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                 <Image
@@ -215,16 +215,16 @@ export function HomeContent({ cropCalendar }: { cropCalendar: React.ReactNode })
                                 />
                             </div>
 
-                            <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
                                 <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600/90 backdrop-blur-sm text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <Package className="h-7 w-7" />
+                                    <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-blue-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                        <Package className="h-6 w-6 md:h-7 md:w-7" />
                                     </div>
-                                    <h3 className="text-3xl font-bold mb-3 text-white">Hybrid Seeds</h3>
-                                    <p className="text-white/90 mb-6 font-medium leading-relaxed drop-shadow-md">
+                                    <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Hybrid Seeds</h3>
+                                    <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
                                         Advanced hybrids offering superior disease resistance and productivity.
                                     </p>
-                                    <span className="inline-flex items-center text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
+                                    <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
                                         Discover Hybrids <ArrowRight className="ml-2 h-4 w-4" />
                                     </span>
                                 </div>

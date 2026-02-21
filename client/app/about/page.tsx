@@ -114,13 +114,13 @@ export default function AboutPage() {
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <StaggerItem key={index}>
-                  <Card className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full">
-                    <CardContent className="p-6">
-                      <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <stat.icon className="w-6 h-6" />
+                  <Card className="text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full border-border/50 bg-card/50 backdrop-blur-sm">
+                    <CardContent className="p-4 md:p-6">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300 ring-1 ring-primary/20">
+                        <stat.icon className="w-5 h-5 md:w-6 md:h-6" />
                       </div>
-                      <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
-                      <div className="text-sm text-muted-foreground">{stat.label}</div>
+                      <div className="text-xl md:text-3xl font-black text-primary mb-1 md:mb-2 tracking-tight">{stat.value}</div>
+                      <div className="text-[10px] md:text-sm font-bold text-muted-foreground uppercase tracking-wider leading-tight">{stat.label}</div>
                     </CardContent>
                   </Card>
                 </StaggerItem>

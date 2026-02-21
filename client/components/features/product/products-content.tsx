@@ -68,45 +68,45 @@ export function ProductCard({
           )}
         </div>
 
-        <div className="flex flex-col flex-1 p-4 md:p-6 space-y-4 md:space-y-5">
+        <div className="flex flex-col flex-1 p-3 md:p-6 space-y-3 md:space-y-5">
           {/* Title & basic info */}
           <div className="space-y-1">
-            <div className={`text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${visuals.iconColor}`}>
+            <div className={`text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${visuals.iconColor}`}>
               {product.subcategory !== 'General' ? product.subcategory : product.category}
             </div>
-            <CardTitle className="text-lg md:text-xl font-black leading-tight group-hover:text-primary transition-colors duration-300 text-balance lg:text-2xl">
+            <CardTitle className="text-base md:text-xl font-black leading-tight group-hover:text-primary transition-colors duration-300 text-balance lg:text-2xl">
               {product.name}
             </CardTitle>
           </div>
 
           {/* Key Attributes - Aesthetic Refinement */}
-          <div className="grid grid-cols-2 gap-2 md:gap-3 pb-2">
-            <div className="bg-muted/40 p-2 md:p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
-              <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Maturity</span>
-              <span className="font-bold text-[10px] md:text-xs truncate max-w-full">{product.maturityTime}</span>
+          <div className="grid grid-cols-2 gap-2 md:gap-3 pb-1 md:pb-2">
+            <div className="bg-muted/40 p-2 md:p-3 rounded-lg md:rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
+              <span className="text-[8px] md:text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-0.5 md:mb-1">Maturity</span>
+              <span className="font-bold text-[9px] md:text-xs truncate max-w-full">{product.maturityTime}</span>
             </div>
-            <div className="bg-muted/40 p-2 md:p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
-              <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Yield</span>
-              <span className="font-bold text-[10px] md:text-xs truncate max-w-full">{product.yieldExpectation}</span>
+            <div className="bg-muted/40 p-2 md:p-3 rounded-lg md:rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
+              <span className="text-[8px] md:text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-0.5 md:mb-1">Yield</span>
+              <span className="font-bold text-[9px] md:text-xs truncate max-w-full">{product.yieldExpectation}</span>
             </div>
           </div>
 
           {/* Morphological Characters - Subtle Detail */}
           {product.morphologicalCharacters && (
-            <div className="flex gap-2 items-start bg-primary/5 p-2 md:p-3 rounded-xl border border-primary/10">
-              <Info className={`h-3.5 w-3.5 md:h-4 md:w-4 mt-0.5 flex-shrink-0 ${visuals.iconColor}`} />
-              <p className="text-[10px] md:text-xs leading-relaxed text-foreground/80 font-medium line-clamp-2 italic">
+            <div className="flex gap-2 items-start bg-primary/5 p-2 md:p-3 rounded-lg md:rounded-xl border border-primary/10">
+              <Info className={`h-3 w-3 md:h-4 md:w-4 mt-0.5 flex-shrink-0 ${visuals.iconColor}`} />
+              <p className="text-[9px] md:text-xs leading-relaxed text-foreground/80 font-medium line-clamp-2 italic">
                 {product.morphologicalCharacters}
               </p>
             </div>
           )}
 
-          <div className="mt-auto pt-3 md:pt-4 flex items-center justify-between border-t border-border/50">
+          <div className="mt-auto pt-2 md:pt-4 flex items-center justify-between border-t border-border/50">
             <div className="flex gap-1 md:gap-1.5 font-bold">
-              <Badge variant="outline" className="text-[8px] md:text-[10px] h-5 md:h-6 px-1.5 md:px-2 bg-background/50 border-border/50 rounded-md">
+              <Badge variant="outline" className="text-[7px] md:text-[10px] h-4 md:h-6 px-1 md:px-2 bg-background/50 border-border/50 rounded-md">
                 {product.seasonality[0]}
               </Badge>
-              <Badge variant="outline" className="text-[8px] md:text-[10px] h-5 md:h-6 px-1.5 md:px-2 bg-background/50 border-border/50 rounded-md">
+              <Badge variant="outline" className="text-[7px] md:text-[10px] h-4 md:h-6 px-1 md:px-2 bg-background/50 border-border/50 rounded-md">
                 {product.difficultyLevel}
               </Badge>
             </div>
@@ -169,30 +169,28 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
 
   return (
     <>
-      <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 md:py-28 relative overflow-hidden animate-in fade-in duration-700">
+      <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 py-16 md:py-28 relative overflow-hidden animate-in fade-in duration-700">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:64px_64px]" />
-        <div className="container relative z-10">
+        <div className="container relative z-10 px-4 sm:px-0">
 
-          <div className="mx-auto max-w-3xl text-center space-y-7 animate-in fade-in-50 slide-in-from-bottom-4 duration-700 delay-100">
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance leading-[1.1]">
+          <div className="mx-auto max-w-3xl text-center space-y-5 md:space-y-7 animate-in fade-in-50 slide-in-from-bottom-4 duration-700 delay-100">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-balance leading-[1.1]">
               Our{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Seed Collection
               </span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed font-light">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed font-light px-2">
               Discover premium quality seeds carefully selected and tested for optimal performance in diverse growing
               conditions.
             </p>
-            <div className="flex items-center justify-center gap-4">
-            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-        <div className="container">
-          <div className="grid lg:grid-cols-4 gap-8">
+      <section className="py-12 md:py-28">
+        <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Filter Sidebar */}
             <div className="lg:col-span-1">
               <ProductFilter
@@ -208,7 +206,7 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
             <div className="lg:col-span-3">
               <div className="space-y-8">
                 {filteredProducts.length > 0 ? (
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                     {filteredProducts.map((product, index) => (
                       <div
                         key={product.id}

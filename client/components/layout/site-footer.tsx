@@ -33,16 +33,16 @@ export function SiteFooter() {
           Footer Navigation and Contact Information
         </ScreenReaderOnly>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-12 lg:gap-16">
           {/* Company Info */}
-          <div className="space-y-5 lg:col-span-2 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
+          <div className="space-y-5 sm:col-span-2 lg:col-span-2 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
             <Link href="/" aria-label="Savaj Seeds - Go to homepage">
               <Image
                 src="/images/logo.png"
                 alt="Savaj Seeds logo"
-                width={200}
-                height={132}
-                className="h-14 w-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
+                width={180}
+                height={120}
+                className="h-12 md:h-14 w-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
               />
             </Link>
             <p className="text-[15px] text-muted-foreground leading-relaxed max-w-sm">
