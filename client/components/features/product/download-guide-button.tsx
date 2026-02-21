@@ -28,7 +28,7 @@ export function DownloadGuideButton({ product }: DownloadGuideButtonProps) {
     return (
         <PDFDownloadLink
             document={<ProductGuidePDF product={product} />}
-            fileName={`${product.name.replace(/\s+/g, '-').toLowerCase()}-guide.pdf`}
+            fileName={`${(product.name || 'product').replace(/\s+/g, '-').toLowerCase()}-guide.pdf`}
         >
             {({ blob, url, loading, error }: { blob: Blob | null; url: string | null; loading: boolean; error: any }) => (
                 <Button variant="outline" size="lg" disabled={loading}>

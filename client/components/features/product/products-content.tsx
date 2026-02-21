@@ -12,92 +12,23 @@ import { Button } from "@/components/ui/button"
 // import { sampleProducts } from "@/lib/data/products"
 import { useProductFilter } from "@/components/features/product/hooks/use-product-filter"
 import { Product } from "@/lib/types/product"
+import { getCategoryVisuals } from "@/lib/utils/product-visuals"
+import { ArrowRight, Info } from "lucide-react"
 
 function ProductCard({
   product,
 }: {
   product: Product
 }) {
-  // Determine placeholder gradient/icon based on category
-  const getCategoryVisuals = (category: string) => {
-    const lowerCat = category.toLowerCase();
-
-    // Vegetables
-    if (lowerCat.includes('vegetable')) {
-      return {
-        gradient: "bg-gradient-to-br from-green-100 to-emerald-200 dark:from-green-900/30 dark:to-emerald-800/30",
-        icon: "🥬",
-        color: "text-emerald-600 dark:text-emerald-400"
-      };
-    }
-
-    // Cotton
-    if (lowerCat.includes('cotton')) {
-      return {
-        gradient: "bg-gradient-to-br from-slate-100 to-gray-200 dark:from-slate-800/30 dark:to-gray-700/30",
-        icon: "☁️",
-        color: "text-slate-600 dark:text-slate-400"
-      };
-    }
-
-    // Wheat
-    if (lowerCat.includes('wheat')) {
-      return {
-        gradient: "bg-gradient-to-br from-amber-100 to-yellow-200 dark:from-amber-900/30 dark:to-yellow-800/30",
-        icon: "🌾",
-        color: "text-amber-600 dark:text-amber-400"
-      };
-    }
-
-    // Groundnut
-    if (lowerCat.includes('groundnut')) {
-      return {
-        gradient: "bg-gradient-to-br from-orange-100 to-amber-200 dark:from-orange-900/30 dark:to-amber-800/30",
-        icon: "🥜",
-        color: "text-orange-600 dark:text-orange-400"
-      };
-    }
-
-    // Cumin / Sesame / Coriander (Spices)
-    if (lowerCat.includes('cumin') || lowerCat.includes('sesame') || lowerCat.includes('coriander')) {
-      return {
-        gradient: "bg-gradient-to-br from-yellow-100 to-orange-200 dark:from-yellow-900/30 dark:to-orange-800/30",
-        icon: "🧂",
-        color: "text-yellow-600 dark:text-yellow-400"
-      };
-    }
-
-    // Castor
-    if (lowerCat.includes('castor')) {
-      return {
-        gradient: "bg-gradient-to-br from-lime-100 to-green-200 dark:from-lime-900/30 dark:to-green-800/30",
-        icon: "🌿",
-        color: "text-lime-600 dark:text-lime-400"
-      };
-    }
-
-    // Maize / Millet
-    if (lowerCat.includes('maize') || lowerCat.includes('millet')) {
-      return {
-        gradient: "bg-gradient-to-br from-yellow-100 to-amber-200 dark:from-yellow-900/30 dark:to-amber-800/30",
-        icon: "🌽",
-        color: "text-yellow-600 dark:text-yellow-400"
-      };
-    }
-
-    // Default / Crop
-    return {
-      gradient: "bg-gradient-to-br from-stone-100 to-stone-200 dark:from-stone-800/30 dark:to-stone-700/30",
-      icon: "🌱",
-      color: "text-stone-600 dark:text-stone-400"
-    };
-  };
-
   const visuals = getCategoryVisuals(product.category);
+  const CategoryIcon = typeof visuals.icon !== 'string' ? visuals.icon : null;
 
   return (
     <Link href={`/products/${product.id}`} className="block h-full group">
-      <Card className="h-full flex flex-col hover:shadow-xl transition-all duration-300 border-border/50 hover:-translate-y-1 cursor-pointer overflow-hidden bg-card">
+      <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-border/50 hover:-translate-y-2 cursor-pointer overflow-hidden bg-card/60 backdrop-blur-sm relative group">
+        {/* Visual Polish: Background Glow */}
+        <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl opacity-20 ${visuals.iconColor} group-hover:opacity-30 transition-opacity duration-500`} />
+
         {/* Image / Visual Header */}
         <div className={`relative aspect-[4/3] w-full overflow-hidden ${visuals.gradient} flex items-center justify-center`}>
           {product.images?.[0]?.url ? (
@@ -108,60 +39,78 @@ function ProductCard({
             />
           ) : (
             <div className="flex flex-col items-center justify-center text-center p-6 group-hover:scale-110 transition-transform duration-500">
-              <span className="text-6xl mb-2 filter drop-shadow-sm">{visuals.icon}</span>
-              <span className={`text-sm font-semibold uppercase tracking-wider ${visuals.color} opacity-80`}>
-                {product.category}
+              {CategoryIcon ? (
+                <CategoryIcon className={`h-16 w-16 mb-4 ${visuals.iconColor} filter drop-shadow-md`} />
+              ) : (
+                <span className="text-6xl mb-4 filter drop-shadow-md">{visuals.icon as string}</span>
+              )}
+              <span className={`text-xs font-bold uppercase tracking-[0.2em] ${visuals.iconColor} opacity-80`}>
+                {visuals.label}
               </span>
             </div>
           )}
 
+          {/* Quick View Overlay */}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-            <span className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 shadow-lg translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-              View Details
+            <span className="inline-flex items-center justify-center rounded-full text-sm font-bold bg-white text-black hover:bg-primary hover:text-white h-11 px-6 shadow-2xl translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-professional">
+              View Details <ArrowRight className="ml-2 h-4 w-4" />
             </span>
           </div>
 
           {product.featured && (
-            <div className="absolute top-3 right-3">
-              <Badge className="bg-primary/90 hover:bg-primary shadow-sm backdrop-blur-md">
-                Featured
+            <div className="absolute top-4 left-4 z-20">
+              <Badge className="bg-primary/95 hover:bg-primary shadow-lg backdrop-blur-md px-3 py-1 text-xs font-bold ring-2 ring-white/20">
+                Premium
               </Badge>
             </div>
           )}
         </div>
 
-        <div className="flex flex-col flex-1 p-5 space-y-4">
+        <div className="flex flex-col flex-1 p-6 space-y-5">
           {/* Title & basic info */}
-          <div>
-            <div className="text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wide">
+          <div className="space-y-1">
+            <div className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${visuals.iconColor}`}>
               {product.subcategory !== 'General' ? product.subcategory : product.category}
             </div>
-            <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-200 text-balance">
+            <CardTitle className="text-xl font-black leading-tight group-hover:text-primary transition-colors duration-300 text-balance lg:text-2xl">
               {product.name}
             </CardTitle>
           </div>
 
-          {/* Excel Data Fields - Highlighted */}
-          <div className="space-y-3 bg-muted/30 p-3 rounded-lg border border-border/50">
-            {product.morphologicalCharacters && (
-              <div className="space-y-1">
-                <p className="text-sm leading-snug text-foreground/90 font-medium line-clamp-2" title={product.morphologicalCharacters}>
-                  {product.morphologicalCharacters}
-                </p>
-              </div>
-            )}
-
-            {product.seedColor && (
-              <div className="flex items-center gap-2 text-sm border-t border-border/40 pt-2 mt-2">
-                <span className="text-muted-foreground text-xs font-medium">Color:</span>
-                <span className="font-medium text-foreground">{product.seedColor}</span>
-              </div>
-            )}
+          {/* Key Attributes - Aesthetic Refinement */}
+          <div className="grid grid-cols-2 gap-3 pb-2">
+            <div className="bg-muted/40 p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
+              <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Maturity</span>
+              <span className="font-bold text-xs truncate max-w-full">{product.maturityTime}</span>
+            </div>
+            <div className="bg-muted/40 p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
+              <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Yield</span>
+              <span className="font-bold text-xs truncate max-w-full">{product.yieldExpectation}</span>
+            </div>
           </div>
 
-          <div className="mt-auto pt-2 flex flex-wrap gap-2">
-            <Badge variant="outline" className="bg-background/50">{product.seasonality[0]}</Badge>
-            <Badge variant="outline" className="bg-background/50">{product.difficultyLevel}</Badge>
+          {/* Morphological Characters - Subtle Detail */}
+          {product.morphologicalCharacters && (
+            <div className="flex gap-2 items-start bg-primary/5 p-3 rounded-xl border border-primary/10">
+              <Info className={`h-4 w-4 mt-0.5 flex-shrink-0 ${visuals.iconColor}`} />
+              <p className="text-xs leading-relaxed text-foreground/80 font-medium line-clamp-2 italic">
+                {product.morphologicalCharacters}
+              </p>
+            </div>
+          )}
+
+          <div className="mt-auto pt-4 flex items-center justify-between border-t border-border/50">
+            <div className="flex gap-1.5 font-bold">
+              <Badge variant="outline" className="text-[10px] h-6 px-2 bg-background/50 border-border/50 rounded-md">
+                {product.seasonality[0]}
+              </Badge>
+              <Badge variant="outline" className="text-[10px] h-6 px-2 bg-background/50 border-border/50 rounded-md">
+                {product.difficultyLevel}
+              </Badge>
+            </div>
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+              Explore
+            </span>
           </div>
         </div>
       </Card>

@@ -84,10 +84,13 @@ export function SearchComponent({ className, placeholder = "Search products...",
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 300))
 
-    const filteredResults = searchData.filter(item =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase())
-    ).slice(0, 6) // Limit to 6 results
+    const filteredResults = searchData.filter(item => {
+      const lowerQuery = searchQuery.toLowerCase()
+      return (
+        item.title?.toLowerCase().includes(lowerQuery) ||
+        item.description?.toLowerCase().includes(lowerQuery)
+      )
+    }).slice(0, 6)
 
     setResults(filteredResults)
     setIsLoading(false)
