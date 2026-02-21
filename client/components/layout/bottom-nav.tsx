@@ -16,8 +16,8 @@ export function BottomNav() {
     const pathname = usePathname()
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border h-16 pb-safe md:hidden shadow-[0_-5px_10px_rgba(0,0,0,0.05)]">
-            <div className="grid grid-cols-4 h-full">
+        <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[400px] md:hidden">
+            <div className="bg-background/80 backdrop-blur-xl border border-border/50 rounded-full h-16 shadow-[0_8px_32px_rgba(0,0,0,0.12)] grid grid-cols-4 h-full items-center px-2">
                 {navItems.map((item) => {
                     const isActive = pathname === item.href
                     const Icon = item.icon
@@ -27,24 +27,29 @@ export function BottomNav() {
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex flex-col items-center justify-center gap-1 relative transition-colors duration-200",
-                                isActive ? "text-primary" : "text-muted-foreground hover:text-primary/70"
+                                "flex flex-col items-center justify-center gap-1 relative h-full transition-all duration-300",
+                                isActive ? "text-primary translate-y-[-4px]" : "text-muted-foreground hover:text-primary/70"
                             )}
                         >
                             {isActive && (
-                                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full animate-in fade-in zoom-in duration-300" />
+                                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-in fade-in zoom-in duration-500" />
                             )}
 
-                            <Icon
-                                className={cn(
-                                    "h-6 w-6 transition-transform duration-200",
-                                    isActive ? "scale-110" : "scale-100"
-                                )}
-                                strokeWidth={isActive ? 2.5 : 2}
-                            />
+                            <div className={cn(
+                                "p-2 rounded-full transition-all duration-300",
+                                isActive ? "bg-primary/10 shadow-inner" : ""
+                            )}>
+                                <Icon
+                                    className={cn(
+                                        "h-5 w-5 transition-transform duration-300",
+                                        isActive ? "scale-110" : "scale-100"
+                                    )}
+                                    strokeWidth={isActive ? 2.5 : 2}
+                                />
+                            </div>
                             <span className={cn(
-                                "text-[10px] font-medium transition-all duration-200",
-                                isActive ? "font-bold" : "font-medium"
+                                "text-[9px] font-bold transition-all duration-300 uppercase tracking-tighter",
+                                isActive ? "opacity-100" : "opacity-60"
                             )}>
                                 {item.label}
                             </span>
