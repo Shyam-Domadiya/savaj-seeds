@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import Image from "next/image"
 
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
@@ -46,9 +47,11 @@ export default function ContactPage() {
         <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden animate-in fade-in duration-700">
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-black/60 z-10" />
-            <img
+            <Image
               src="/images/contact-hero.jpg"
               alt="Partnership in agriculture"
+              fill
+              priority
               className="w-full h-full object-cover"
             />
           </div>
