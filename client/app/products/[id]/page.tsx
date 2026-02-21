@@ -130,18 +130,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
               )}
             </div>
 
-            {/* Quick stats for Mobile/Tablet (Stacked below image) */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-card p-4 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center">
-                <Clock className="h-6 w-6 text-primary mb-2" />
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Maturity</span>
-                <span className="font-bold text-sm">{product.maturityTime}</span>
-              </div>
-              <div className="bg-card p-4 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center">
-                <Leaf className="h-6 w-6 text-primary mb-2" />
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Type</span>
-                <span className="font-bold text-sm">{product.category}</span>
-              </div>
+            {/* Quick stats Grid (Maturity, Type, QR) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <Card className="p-4 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center bg-card/50 backdrop-blur-sm">
+                <Clock className="h-5 w-5 md:h-6 md:w-6 text-primary mb-2" />
+                <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Maturity</span>
+                <span className="font-black text-xs md:text-sm">{product.maturityTime}</span>
+              </Card>
+              <Card className="p-4 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center bg-card/50 backdrop-blur-sm">
+                <Leaf className="h-5 w-5 md:h-6 md:w-6 text-primary mb-2" />
+                <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Type</span>
+                <span className="font-black text-xs md:text-sm">{product.category}</span>
+              </Card>
+              <Card className="col-span-2 sm:col-span-1 p-2 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center bg-card/50 backdrop-blur-sm overflow-hidden min-h-[100px] sm:min-h-0">
+                <ProductQR hideLabel={false} className="h-full w-full max-w-[70px] sm:max-w-none border-0 shadow-none bg-transparent p-0" />
+              </Card>
             </div>
           </div>
 
@@ -184,10 +187,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       Request Quote
                     </Link>
                   </Button>
-                  <DownloadGuideButton product={product} />
-                  <div className="hidden sm:block">
-                    <ProductQR hideLabel={true} className="h-16 w-16" />
-                  </div>
                 </div>
               </div>
             </div>
@@ -259,14 +258,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <SiteFooter />
 
-      {/* Sticky Bottom Mobile CTA - Adjusted to sit above BottomNav */}
-      <div className="fixed bottom-32 left-4 right-4 z-40 sm:hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <Button className="w-full h-14 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl shadow-primary/20 bg-primary/90 backdrop-blur-md border border-white/20" asChild>
-          <Link href={`/contact?subject=Order Request for ${product.name}`}>
-            Request Quote
-          </Link>
-        </Button>
-      </div>
     </div>
   )
 }
