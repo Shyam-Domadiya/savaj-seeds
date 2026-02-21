@@ -7,8 +7,10 @@ import { getApiUrl } from '@/lib/api-config';
 
 export default function AdminDashboard() {
     const [visitorCount, setVisitorCount] = useState<number | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
         const fetchVisitors = async () => {
             try {
                 const res = await fetch(`${getApiUrl()}/visitors`);
@@ -60,7 +62,7 @@ export default function AdminDashboard() {
                         <div>
                             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Total Visitors</h2>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {visitorCount !== null ? `${visitorCount} unique IPs` : 'Loading...'}
+                                {!isMounted ? '...' : (visitorCount !== null ? `${visitorCount} unique IPs` : 'Failed to load.')}
                             </p>
                         </div>
                     </div>
