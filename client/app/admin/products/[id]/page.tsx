@@ -5,7 +5,6 @@ import { getApiUrl } from '@/lib/api-config';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { use } from 'react';
-import { getAuthHeader } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -151,8 +150,8 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                 method,
                 headers: {
                     'Content-Type': 'application/json',
-                    ...getAuthHeader(),
                 },
+                credentials: 'include', // Auth via HttpOnly cookie
                 body: JSON.stringify(cleanedProduct),
             });
 

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getApiUrl } from '@/lib/api-config';
-import { getAuthHeader } from '@/lib/auth';
 import {
     Table,
     TableBody,
@@ -32,9 +31,7 @@ export default function AdminContacts() {
         queryKey: ['contacts'],
         queryFn: async () => {
             const res = await fetch(`${getApiUrl()}/contact`, {
-                headers: {
-                    ...getAuthHeader(),
-                },
+                credentials: 'include', // Auth via HttpOnly cookie
             });
             if (!res.ok) throw new Error('Failed to fetch messages');
             return res.json();

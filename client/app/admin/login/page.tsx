@@ -17,8 +17,6 @@ export default function AdminLogin() {
     const router = useRouter();
     const { toast } = useToast();
 
-
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -30,12 +28,14 @@ export default function AdminLogin() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
+                credentials: 'include', // Required to receive the HttpOnly cookie
             });
 
             const data = await res.json();
 
             if (res.ok) {
-                setAdminUser(data);
+                // Only store display info (not the token — it's in the HttpOnly cookie)
+                setAdminUser({ _id: data._id, email: data.email });
                 toast({
                     title: 'Login Successful',
                     description: 'Welcome back, Admin!',
