@@ -1,8 +1,9 @@
 import express from 'express';
-import { logVisitor } from '../controllers/visitorController';
+import { logVisitor, getVisitors } from '../controllers/visitorController';
 
 const router = express.Router();
 
 router.post('/', logVisitor);
+router.get('/', getVisitors);
 
 export default router;

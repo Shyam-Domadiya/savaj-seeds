@@ -1,9 +1,29 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { Package, MessageSquare, Users } from 'lucide-react';
+import { getApiUrl } from '@/lib/api-config';
 
 export default function AdminDashboard() {
+    const [visitorCount, setVisitorCount] = useState<number | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        const fetchVisitors = async () => {
+            try {
+                const res = await fetch(`${getApiUrl()}/visitors`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setVisitorCount(data.length);
+                }
+            } catch (err) {
+                console.error("Failed to fetch visitors:", err);
+            }
+        }
+        fetchVisitors();
+    }, []);
     return (
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
@@ -33,15 +53,17 @@ export default function AdminDashboard() {
                     </div>
                 </Link>
 
-                {/* Placeholder for future User Management */}
-                <div className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm opacity-60 cursor-not-allowed">
+                {/* Visitor Management */}
+                <div className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-full">
                             <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Users</h2>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">Coming Soon</p>
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Total Visitors</h2>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                {!isMounted ? '...' : (visitorCount !== null ? `${visitorCount} unique IPs` : 'Failed to load.')}
+                            </p>
                         </div>
                     </div>
                 </div>
