@@ -54,7 +54,7 @@ export default function AdminDashboard() {
                 </Link>
 
                 {/* Visitor Management */}
-                <div className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                <Link href="/admin/visitors" className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-full">
                             <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
@@ -66,7 +66,7 @@ export default function AdminDashboard() {
                             </p>
                         </div>
                     </div>
-                </div>
+                </Link>
             </div>
 
             <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
