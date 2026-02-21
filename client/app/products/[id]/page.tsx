@@ -16,9 +16,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import { getProductById } from "@/lib/actions/product"
 import { generateMetadata as generateSEOMetadata, generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo"
-import { Star, Download, Leaf, Clock, TrendingUp, Sprout, Wheat, Dna, Package } from "lucide-react"
 import { DownloadGuideButton } from "@/components/features/product/download-guide-button"
 import { ProductQR } from "@/components/features/product/product-qr"
+import { getCategoryVisuals } from "@/lib/utils/product-visuals"
+import { Clock, Leaf, ArrowLeft, ArrowRight } from "lucide-react"
+import { getAllProducts } from "@/lib/actions/product"
+
+// Hard-coded ProductCard for Related Products (to avoid circular dependency or complex extraction)
+// Alternatively, we can import it if we are careful about organization.
+// Let's try importing a simplified version or just the real one if products-content doesn't import page.tsx.
+import { ProductsContent } from "@/components/features/product/products-content"
+// We need the Card component for related products
 
 
 interface ProductPageProps {
@@ -56,45 +64,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound()
   }
 
-  const basicSpecs = product.specifications.filter(spec => spec.category === 'Basic')
-  const growingSpecs = product.specifications.filter(spec => spec.category === 'Growing')
-  const harvestSpecs = product.specifications.filter(spec => spec.category === 'Harvest')
+  const allProducts = await getAllProducts()
+  const relatedProducts = allProducts
+    .filter(p => p.id !== product.id && (p.category === product.category || p.subcategory === product.subcategory))
+    .slice(0, 4)
 
-  // Visual Logic (Same as Card)
-  const getCategoryVisuals = (category: string) => {
-    const lowerCat = category.toLowerCase();
-    if (lowerCat.includes('vegetable')) {
-      return {
-        gradient: "bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-950/40 dark:to-emerald-900/40",
-        accent: "text-emerald-600 bg-emerald-100/50 border-emerald-200",
-        icon: Sprout,
-        iconColor: "text-emerald-600"
-      };
-    } else if (lowerCat.includes('crop')) {
-      return {
-        gradient: "bg-gradient-to-br from-amber-50 to-yellow-100 dark:from-amber-950/40 dark:to-yellow-900/40",
-        accent: "text-amber-600 bg-amber-100/50 border-amber-200",
-        icon: Wheat,
-        iconColor: "text-amber-600"
-      };
-    } else if (lowerCat.includes('hybrid')) {
-      return {
-        gradient: "bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-950/40 dark:to-pink-900/40",
-        accent: "text-purple-600 bg-purple-100/50 border-purple-200",
-        icon: Dna,
-        iconColor: "text-purple-600"
-      };
-    }
-    return {
-      gradient: "bg-gradient-to-br from-gray-50 to-slate-100 dark:from-gray-950/40 dark:to-slate-900/40",
-      accent: "text-gray-600 bg-gray-100/50 border-gray-200",
-      icon: Leaf,
-      iconColor: "text-gray-600"
-    };
-  };
+  const basicSpecs = product.specifications.filter(spec => spec.category === 'Basic')
 
   const visuals = getCategoryVisuals(product.category);
-  const CategoryIcon = visuals.icon;
+  const CategoryIcon = typeof visuals.icon !== 'string' ? visuals.icon : null;
 
   // Generate structured data for the product
   const productSchema = generateProductSchema({
@@ -118,35 +96,41 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <StructuredData data={[productSchema, breadcrumbSchema]} />
       <SiteHeader />
 
-      <div className="container py-6">
+      <div className="container py-6 flex items-center justify-between">
         <Breadcrumb />
+        <Button variant="ghost" size="sm" asChild className="rounded-full hover:bg-muted font-bold uppercase tracking-widest text-[10px]">
+          <Link href="/products" className="flex items-center gap-2">
+            <ArrowLeft className="h-3 w-3" /> Back to Products
+          </Link>
+        </Button>
       </div>
 
       <main className="flex-1 container pb-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
-
           {/* Visual Column */}
           <div className="lg:col-span-5 space-y-6">
-            <div className={`aspect-square sm:aspect-[4/3] lg:aspect-square relative rounded-3xl overflow-hidden shadow-xl border border-border/50 ${visuals.gradient} flex items-center justify-center group`}>
+            <div className={`aspect-square sm:aspect-[4/3] lg:aspect-square relative rounded-[2rem] overflow-hidden shadow-2xl border border-border/50 ${visuals.gradient} flex items-center justify-center group bg-white dark:bg-card`}>
               {product.images?.[0]?.url ? (
                 <ProductImageGallery images={product.images} productName={product.name} />
               ) : (
-                <div className="flex flex-col items-center justify-center text-center p-8 transition-transform duration-700 group-hover:scale-105">
-                  <div className={`h-32 w-32 rounded-full bg-white/60 dark:bg-black/20 backdrop-blur-md flex items-center justify-center shadow-lg mb-6 ${visuals.iconColor}`}>
-                    <CategoryIcon className="h-16 w-16" />
+                <div className="flex flex-col items-center justify-center text-center p-12 transition-transform duration-700 group-hover:scale-105">
+                  <div className={`h-40 w-40 rounded-full bg-white/80 dark:bg-black/20 backdrop-blur-xl flex items-center justify-center shadow-2xl mb-8 ${visuals.iconColor} ring-1 ring-white/20`}>
+                    {CategoryIcon ? (
+                      <CategoryIcon className="h-20 w-20" />
+                    ) : (
+                      <span className="text-7xl">{visuals.icon as string}</span>
+                    )}
                   </div>
-                  <h2 className={`text-4xl font-black tracking-tight ${visuals.iconColor} opacity-90`}>
-                    {product.category}
+                  <h2 className={`text-5xl font-black tracking-tighter ${visuals.iconColor} opacity-90 mb-2`}>
+                    {visuals.label}
                   </h2>
-                  <p className="text-muted-foreground font-medium uppercase tracking-widest mt-2 text-sm">premium series</p>
+                  <p className="text-muted-foreground font-black uppercase tracking-[0.3em] text-xs">Premium Agricultural Series</p>
                 </div>
               )}
             </div>
 
-
             {/* Quick stats for Mobile/Tablet (Stacked below image) */}
-            {/* Quick stats for Mobile/Tablet (Stacked below image) */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <div className="bg-card p-4 rounded-xl border border-border/50 shadow-sm flex flex-col justify-center items-center text-center">
                 <Clock className="h-6 w-6 text-primary mb-2" />
                 <span className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Maturity</span>
@@ -157,94 +141,152 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <span className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Type</span>
                 <span className="font-semibold text-sm">{product.category}</span>
               </div>
-              <div className="flex items-stretch">
-                <ProductQR className="w-full h-full" hideLabel={false} />
-              </div>
             </div>
           </div>
 
           {/* Info Column (Card Style) */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="bg-card rounded-3xl p-6 md:p-10 shadow-lg border border-border/50 relative overflow-hidden">
-              <div className={`absolute top-0 right-0 p-6 opacity-10 -rotate-12 transform translate-x-4 -translate-y-4 pointer-events-none`}>
-                <CategoryIcon className="h-48 w-48 text-primary" />
+          <div className="lg:col-span-7 space-y-10">
+            <div className="bg-card rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-border/50 relative overflow-hidden">
+              {/* Abstract decorative element */}
+              <div className={`absolute -top-20 -right-20 w-64 h-64 rounded-full blur-[100px] opacity-20 ${visuals.iconColor}`} />
+
+              <div className={`absolute top-0 right-0 p-8 opacity-5 -rotate-12 transform translate-x-8 -translate-y-8 pointer-events-none transition-transform duration-1000 group-hover:rotate-0`}>
+                {CategoryIcon && <CategoryIcon className="h-64 w-64" />}
               </div>
 
               {/* Header info */}
-              <div className="relative z-10 space-y-6">
-                <div className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary" className={`px-3 py-1 text-sm font-medium ${visuals.accent}`}>
+              <div className="relative z-10 space-y-8">
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-3">
+                    <Badge variant="secondary" className={`px-4 py-1.5 text-xs font-black uppercase tracking-widest ${visuals.accent} rounded-full`}>
                       {product.subcategory !== 'General' ? product.subcategory : product.category}
                     </Badge>
                     {product.featured && (
-                      <Badge className="bg-gradient-to-r from-primary to-accent text-white border-0 shadow-sm">
+                      <Badge className="bg-gradient-to-r from-primary to-emerald-500 text-white border-0 shadow-lg px-4 py-1.5 text-xs font-black uppercase tracking-widest rounded-full">
                         Featured Collection
                       </Badge>
                     )}
                   </div>
 
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-[1.1]">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground leading-[1] text-balance">
                     {product.name}
                   </h1>
 
+                  <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl">
+                    {product.description}
+                  </p>
                 </div>
 
-
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button size="lg" className="h-14 px-8 rounded-full text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 bg-primary text-primary-foreground flex-1" asChild>
+                <div className="flex flex-col sm:flex-row gap-4 pt-6">
+                  <Button size="lg" className="h-16 px-10 rounded-full text-lg font-black uppercase tracking-wider shadow-2xl hover:shadow-primary/40 transition-all hover:scale-105 bg-primary text-primary-foreground flex-1" asChild>
                     <Link href={`/contact?subject=Order Request for ${product.name}`}>
-                      Request Quote / Order
+                      Request Quote
                     </Link>
                   </Button>
                   <DownloadGuideButton product={product} />
+                  <div className="hidden sm:block">
+                    <ProductQR hideLabel={true} className="h-16 w-16" />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Specifications Section (Directly visible, no tabs) */}
-            <div className="space-y-6 animate-in fade-in-50 slide-in-from-bottom-4 duration-500">
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader><CardTitle>Traits & Characteristics</CardTitle></CardHeader>
-                  <CardContent className="space-y-4">
-                    {basicSpecs.map(spec => (
-                      <div key={spec.id} className="grid grid-cols-2 gap-4 py-2 border-b border-border/40 last:border-0">
-                        <span className="text-muted-foreground font-medium text-sm">{spec.name}</span>
-                        <span className="font-semibold text-sm text-right capitalize">{spec.value}</span>
-                      </div>
-                    ))}
-                    {product.seasonality && (
-                      <div className="grid grid-cols-2 gap-4 py-2 border-b border-border/40 last:border-0">
-                        <span className="text-muted-foreground font-medium text-sm">Season</span>
-                        <div className="flex flex-wrap justify-end gap-1">
-                          {product.seasonality.map(s => <span key={s} className="text-xs bg-muted px-2 py-1 rounded capitalize">{s}</span>)}
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader><CardTitle>Cultivation Specs</CardTitle></CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4 py-2 border-b border-border/40">
-                      <span className="text-muted-foreground font-medium text-sm">Maturity Time</span>
-                      <span className="font-semibold text-sm text-right capitalize">{product.maturityTime}</span>
+            {/* Specifications Section */}
+            <div className="grid md:grid-cols-2 gap-6 pb-2">
+              <Card className="rounded-3xl border-border/50 shadow-lg overflow-hidden">
+                <CardHeader className="bg-muted/30 pb-4">
+                  <CardTitle className="text-xl font-black uppercase tracking-widest text-primary/80">Traits</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-4">
+                  {basicSpecs.map(spec => (
+                    <div key={spec.id} className="flex justify-between items-center py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-xs uppercase tracking-widest">{spec.name}</span>
+                      <span className="font-black text-sm group-hover:text-primary transition-colors">{spec.value}</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 py-2 border-b border-border/40">
-                      <span className="text-muted-foreground font-medium text-sm">Yield Potential</span>
-                      <span className="font-semibold text-sm text-right capitalize">{product.yieldExpectation}</span>
+                  ))}
+                  {product.seedColor && (
+                    <div className="flex justify-between items-center py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-xs uppercase tracking-widest">Seed Color</span>
+                      <span className="font-black text-sm group-hover:text-primary transition-colors">{product.seedColor}</span>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+                  )}
+                </CardContent>
+              </Card>
 
+              <Card className="rounded-3xl border-border/50 shadow-lg overflow-hidden h-full">
+                <CardHeader className="bg-muted/30 pb-4">
+                  <CardTitle className="text-xl font-black uppercase tracking-widest text-primary/80">Cultivation</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-4">
+                  <div className="flex justify-between items-center py-3 border-b border-border/40 group">
+                    <span className="text-muted-foreground font-bold text-xs uppercase tracking-widest">Maturity</span>
+                    <span className="font-black text-sm group-hover:text-primary transition-colors">{product.maturityTime}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-3 border-b border-border/40 group">
+                    <span className="text-muted-foreground font-bold text-xs uppercase tracking-widest">Yield</span>
+                    <span className="font-black text-sm group-hover:text-primary transition-colors">{product.yieldExpectation}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
+
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <section className="mt-24 border-t border-border/50 pt-24">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <div className="space-y-4">
+                <Badge variant="secondary" className={`px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] ${visuals.accent} rounded-full`}>
+                  Discovery
+                </Badge>
+                <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Similar <span className="text-primary italic">Varieties</span></h2>
+              </div>
+              <Button variant="outline" asChild className="rounded-full h-14 px-10 font-black uppercase tracking-widest text-xs border-2 hover:bg-primary hover:text-white hover:border-primary transition-all">
+                <Link href="/products">View All Seeds</Link>
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+              {relatedProducts.map(p => (
+                <Link key={p.id} href={`/products/${p.id}`} className="group block h-full">
+                  <Card className="h-full border-border/50 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden rounded-[2rem] bg-card/50 backdrop-blur-sm flex flex-col">
+                    <div className="aspect-[4/3] overflow-hidden relative">
+                      {p.images?.[0]?.url ? (
+                        <img src={p.images[0].url} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-50">🌱</div>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <span className="bg-white text-black font-black text-[10px] uppercase tracking-[0.2em] px-6 py-3 rounded-full shadow-2xl scale-90 group-hover:scale-100 transition-transform duration-500">View Seed</span>
+                      </div>
+                    </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/70 mb-2">{p.category}</div>
+                      <h3 className="font-black text-xl leading-tight group-hover:text-primary transition-colors text-balance">{p.name}</h3>
+                      <div className="mt-auto pt-6 flex items-center justify-between border-t border-border/40 grayscale group-hover:grayscale-0 transition-all">
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase">{p.seasonality[0]}</span>
+                        <ArrowRight className="h-4 w-4 text-primary" />
+                      </div>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <SiteFooter />
+
+      {/* Sticky Bottom Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-xl border-t border-border/50 z-40 sm:hidden">
+        <Button className="w-full h-16 rounded-full text-base font-black uppercase tracking-widest shadow-2xl shadow-primary/40 bg-primary" asChild>
+          <Link href={`/contact?subject=Order Request for ${product.name}`}>
+            Request Quote
+          </Link>
+        </Button>
+      </div>
     </div>
   )
 }

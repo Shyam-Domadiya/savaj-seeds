@@ -34,7 +34,7 @@ export function useProductFilter({
       if (filters.categories.length > 0) {
         // Allow partial matches (e.g. "Vegetable" filter matches "Vegetable Seeds" product)
         const hasMatchingCategory = filters.categories.some(category =>
-          product.category.includes(category) || category.includes(product.category)
+          (product.category && product.category.includes(category)) || category.includes(product.category || '')
         )
         if (!hasMatchingCategory) return false
       }
@@ -140,7 +140,8 @@ export function useProductFilter({
     }, {} as Record<string, number>)
 
     const difficultyStats = products.reduce((acc, product) => {
-      acc[product.difficultyLevel] = (acc[product.difficultyLevel] || 0) + 1
+      const difficulty = product.difficultyLevel || 'Unknown'
+      acc[difficulty] = (acc[difficulty] || 0) + 1
       return acc
     }, {} as Record<string, number>)
 

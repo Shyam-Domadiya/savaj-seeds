@@ -21,9 +21,9 @@ export function SearchResults({ initialProducts }: { initialProducts: Product[] 
     const filteredProducts = initialProducts.filter(product => {
         const searchTerm = query.toLowerCase()
         return (
-            product.name.toLowerCase().includes(searchTerm) ||
-            product.description.toLowerCase().includes(searchTerm) ||
-            product.category.toLowerCase().includes(searchTerm)
+            product.name?.toLowerCase().includes(searchTerm) ||
+            product.description?.toLowerCase().includes(searchTerm) ||
+            product.category?.toLowerCase().includes(searchTerm)
         )
     })
 
