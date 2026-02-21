@@ -15,6 +15,11 @@ const navItems = [
 export function BottomNav() {
     const pathname = usePathname()
 
+    // Hide bottom navigation on admin routes
+    if (pathname?.startsWith('/admin')) {
+        return null;
+    }
+
     return (
         <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-[420px] md:hidden pointer-events-none">
             <div className="bg-background/60 backdrop-blur-2xl border border-white/20 rounded-full h-16 shadow-[0_12px_40px_rgba(0,0,0,0.15)] grid grid-cols-4 items-center px-1.5 pointer-events-auto ring-1 ring-black/5">
