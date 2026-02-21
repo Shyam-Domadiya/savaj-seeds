@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { ProductImage } from "@/lib/types/product"
 import { cn } from "@/lib/utils"
+import { sanitizeImageUrl } from "@/lib/utils/image"
 
 interface ProductImageGalleryProps {
   images: ProductImage[]
@@ -23,12 +24,14 @@ export function ProductImageGallery({ images, productName, className }: ProductI
   const imageRef = useRef<HTMLImageElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Sort images by sortOrder, with primary image first
-  const sortedImages = [...images].sort((a, b) => {
-    if (a.isPrimary) return -1
-    if (b.isPrimary) return 1
-    return a.sortOrder - b.sortOrder
-  })
+  // Filter and Sort images by sortOrder, with primary image first
+  const sortedImages = images
+    .filter(img => sanitizeImageUrl(img.url))
+    .sort((a, b) => {
+      if (a.isPrimary) return -1
+      if (b.isPrimary) return 1
+      return a.sortOrder - b.sortOrder
+    })
 
   const currentImage = sortedImages[currentImageIndex]
 

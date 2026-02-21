@@ -13,6 +13,7 @@ import { Search, Sprout, FileText, ArrowRight, Package } from "lucide-react"
 
 import { Product } from "@/lib/types/product"
 import { cn } from "@/lib/utils"
+import { sanitizeImageUrl } from "@/lib/utils/image"
 
 export function SearchResults({ initialProducts }: { initialProducts: Product[] }) {
     const searchParams = useSearchParams()
@@ -72,7 +73,7 @@ function ProductCard({ product }: { product: any }) {
         <Link href={`/products/${product.id}`} className="group">
             <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300">
                 <div className="relative h-48 bg-muted/30 overflow-hidden flex items-center justify-center">
-                    {product.images[0]?.url ? (
+                    {sanitizeImageUrl(product.images[0]?.url) ? (
                         <img
                             src={product.images[0].url}
                             alt={product.name}

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
@@ -80,9 +81,11 @@ export default function AboutPage() {
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-black/60 z-10" />
-            <img
+            <Image
               src="/images/about-hero.jpg"
               alt="Diverse group of farmers and experts"
+              fill
+              priority
               className="w-full h-full object-cover animate-zoom-in duration-700"
             />
           </div>
@@ -139,9 +142,10 @@ export default function AboutPage() {
 
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <FadeIn direction="right" className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
-                  <img
+                  <Image
                     src="/images/our-story.jpg"
                     alt="Founder teaching younger farmer"
+                    fill
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
