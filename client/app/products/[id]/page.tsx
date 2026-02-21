@@ -142,8 +142,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Type</span>
                 <span className="font-black text-xs md:text-sm">{product.category}</span>
               </Card>
-              <Card className="col-span-2 sm:col-span-1 p-2 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center bg-card/50 backdrop-blur-sm overflow-hidden min-h-[100px] sm:min-h-0">
-                <ProductQR hideLabel={false} className="h-full w-full max-w-[70px] sm:max-w-none border-0 shadow-none bg-transparent p-0" />
+              <Card className="col-span-2 sm:col-span-1 rounded-2xl border border-border/50 shadow-sm flex flex-col justify-center items-center bg-card/50 backdrop-blur-sm overflow-hidden">
+                <ProductQR hideLabel={true} className="w-full h-full p-1 rounded-xl border-0 shadow-none bg-transparent" />
               </Card>
             </div>
           </div>
@@ -187,6 +187,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       Request Quote
                     </Link>
                   </Button>
+                  <DownloadGuideButton product={product} />
                 </div>
               </div>
             </div>

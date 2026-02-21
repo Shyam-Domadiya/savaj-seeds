@@ -2,6 +2,7 @@
 import QRCode from "react-qr-code"
 import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
+import { cn } from "@/lib/utils"
 
 interface ProductQRProps {
     className?: string;
@@ -26,7 +27,10 @@ export function ProductQR({ className, hideLabel = false }: ProductQRProps) {
     if (!url) return null
 
     return (
-        <div className={`flex flex-col items-center justify-center gap-2 p-2 bg-white rounded-xl shadow-sm border border-border/50 ${className}`}>
+        <div className={cn(
+            "flex flex-col items-center justify-center gap-2 p-2 bg-white rounded-xl shadow-sm border border-border/50",
+            className
+        )}>
             <QRCode
                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                 value={url}
