@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
+
 
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -36,9 +36,9 @@ export function SiteHeader() {
             className="h-8 md:h-14 w-auto dark:brightness-0 dark:invert"
             priority
           />
-          <ScreenReaderOnly>
+          <span className="sr-only">
             Savaj Seeds - Happiness from the Farmer's Field
-          </ScreenReaderOnly>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

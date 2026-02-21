@@ -15,11 +15,6 @@ import {
   Youtube,
   Linkedin,
   Clock,
-  MapPin,
-  Headphones,
-  MessageSquare,
-  Video,
-  Calendar
 } from "lucide-react"
 import { businessInfo } from "@/lib/data/team"
 
@@ -64,37 +59,6 @@ export function MultiContactMethods() {
       action: () => window.open(`mailto:${businessInfo.contact.email[0]}`),
       availability: "24/7",
       responseTime: "Within 4 hours",
-    },
-    {
-      id: "video-call",
-      name: "Video Consultation",
-      description: "Face-to-face consultation with experts",
-      icon: <Video className="w-5 h-5" />,
-      action: () => window.open("https://calendly.com/savajseeds/consultation"),
-      availability: "By appointment",
-      responseTime: "Schedule within 24 hours",
-    },
-    {
-      id: "live-chat",
-      name: "Live Chat",
-      description: "Instant messaging on our website",
-      icon: <MessageSquare className="w-5 h-5" />,
-      action: () => {
-        // This would trigger the live chat widget
-        const event = new CustomEvent('openLiveChat')
-        window.dispatchEvent(event)
-      },
-      availability: "Mon-Fri 9AM-6PM",
-      responseTime: "Within 2 minutes",
-    },
-    {
-      id: "callback",
-      name: "Request Callback",
-      description: "We'll call you at your preferred time",
-      icon: <Headphones className="w-5 h-5" />,
-      action: () => window.open("/contact#callback-form"),
-      availability: "Schedule anytime",
-      responseTime: "Within 1 hour",
     },
   ]
 
@@ -178,60 +142,6 @@ export function MultiContactMethods() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Office Visit */}
-      <Card className="bg-gradient-to-br from-primary/5 to-accent/5">
-        <CardHeader>
-          <CardTitle className="text-xl flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-primary" />
-            Visit Our Office
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold mb-2">Address</h4>
-              <p className="text-muted-foreground mb-4">
-                {businessInfo.address.street}<br />
-                {businessInfo.address.city}, {businessInfo.address.state}<br />
-                {businessInfo.address.pincode}, {businessInfo.address.country}
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => window.open("https://maps.google.com/?q=Savaj+Seeds+Ahmedabad")}
-              >
-                <MapPin className="w-4 h-4 mr-2" />
-                Get Directions
-              </Button>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2">Office Hours</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Monday - Friday</span>
-                  <span className="text-muted-foreground">{businessInfo.businessHours.weekdays}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday</span>
-                  <span className="text-muted-foreground">{businessInfo.businessHours.saturday}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday</span>
-                  <span className="text-muted-foreground">{businessInfo.businessHours.sunday}</span>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                className="mt-4"
-                onClick={() => window.open("https://calendly.com/savajseeds/office-visit")}
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                Schedule Visit
-              </Button>
-            </div>
           </div>
         </CardContent>
       </Card>

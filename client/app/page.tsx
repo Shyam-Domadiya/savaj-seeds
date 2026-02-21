@@ -1,6 +1,5 @@
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
-import { CropCalendar } from "@/components/sections/resources/CropCalendar"
 import { ScreenReaderOnly } from "@/components/shared/screen-reader-only"
 import { HomeContent } from "@/components/sections/home-content"
 
@@ -14,11 +13,12 @@ export default function HomePage() {
           Savaj Seeds - Premium Quality Seeds for Optimal Farming Growth
         </ScreenReaderOnly>
 
-        <HomeContent cropCalendar={<CropCalendar />} />
+        <HomeContent />
       </main>
 
       <SiteFooter />
     </div >
   )
 }
+
 
