@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getApiUrl } from '@/lib/api-config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -22,28 +22,17 @@ interface Visitor {
 }
 
 export default function VisitorsPage() {
-    const [visitors, setVisitors] = useState<Visitor[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchVisitors = async () => {
-            try {
-                const res = await fetch(`${getApiUrl()}/visitors`, { cache: 'no-store' });
-                if (!res.ok) {
-                    throw new Error('Failed to fetch visitor logs');
-                }
-                const data = await res.json();
-                setVisitors(data);
-            } catch (err: any) {
-                setError(err.message || 'Something went wrong');
-            } finally {
-                setIsLoading(false);
+    const { data: visitors, isLoading, error } = useQuery<Visitor[]>({
+        queryKey: ['visitors'],
+        queryFn: async () => {
+            const res = await fetch(`${getApiUrl()}/visitors`, { cache: 'no-store' });
+            if (!res.ok) {
+                throw new Error('Failed to fetch visitor logs');
             }
-        };
-
-        fetchVisitors();
-    }, []);
+            return res.json();
+        },
+        refetchInterval: 10000, // Refresh every 10 seconds to watch people browse
+    });
 
     const getDeviceIcon = (deviceStr: string, userAgent: string) => {
         const d = (deviceStr || '').toLowerCase();
@@ -78,7 +67,7 @@ export default function VisitorsPage() {
             <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription>{error.message}</AlertDescription>
             </Alert>
         );
     }
@@ -89,7 +78,7 @@ export default function VisitorsPage() {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Total Tracked Visitors ({visitors.length})</CardTitle>
+                    <CardTitle>Total Tracked Visitors ({visitors?.length || 0})</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="rounded-md border">
@@ -105,7 +94,7 @@ export default function VisitorsPage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {visitors.length === 0 ? (
+                                {!visitors || visitors.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={6} className="text-center h-24 text-gray-500">
                                             No visitors logged yet.
