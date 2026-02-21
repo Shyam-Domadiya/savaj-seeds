@@ -61,8 +61,6 @@ export function SiteHeader() {
 
         {/* Header Actions */}
         <div className="flex items-center gap-2">
-
-
           <Link href="/search">
             <div className="inline-flex items-center justify-center h-10 w-10 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors">
               <Search className="h-5 w-5" />
@@ -73,9 +71,6 @@ export function SiteHeader() {
             <Link href="/contact">Get in Touch</Link>
           </Button>
         </div>
-
-        {/* Mobile Navigation */}
-        <MobileNav />
       </div>
     </header>
   )

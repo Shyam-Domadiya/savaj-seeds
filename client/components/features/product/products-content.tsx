@@ -68,49 +68,49 @@ export function ProductCard({
           )}
         </div>
 
-        <div className="flex flex-col flex-1 p-6 space-y-5">
+        <div className="flex flex-col flex-1 p-4 md:p-6 space-y-4 md:space-y-5">
           {/* Title & basic info */}
           <div className="space-y-1">
-            <div className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${visuals.iconColor}`}>
+            <div className={`text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${visuals.iconColor}`}>
               {product.subcategory !== 'General' ? product.subcategory : product.category}
             </div>
-            <CardTitle className="text-xl font-black leading-tight group-hover:text-primary transition-colors duration-300 text-balance lg:text-2xl">
+            <CardTitle className="text-lg md:text-xl font-black leading-tight group-hover:text-primary transition-colors duration-300 text-balance lg:text-2xl">
               {product.name}
             </CardTitle>
           </div>
 
           {/* Key Attributes - Aesthetic Refinement */}
-          <div className="grid grid-cols-2 gap-3 pb-2">
-            <div className="bg-muted/40 p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
-              <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Maturity</span>
-              <span className="font-bold text-xs truncate max-w-full">{product.maturityTime}</span>
+          <div className="grid grid-cols-2 gap-2 md:gap-3 pb-2">
+            <div className="bg-muted/40 p-2 md:p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
+              <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Maturity</span>
+              <span className="font-bold text-[10px] md:text-xs truncate max-w-full">{product.maturityTime}</span>
             </div>
-            <div className="bg-muted/40 p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
-              <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Yield</span>
-              <span className="font-bold text-xs truncate max-w-full">{product.yieldExpectation}</span>
+            <div className="bg-muted/40 p-2 md:p-3 rounded-xl border border-border/50 flex flex-col items-center justify-center text-center group-hover:bg-muted/60 transition-colors">
+              <span className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Yield</span>
+              <span className="font-bold text-[10px] md:text-xs truncate max-w-full">{product.yieldExpectation}</span>
             </div>
           </div>
 
           {/* Morphological Characters - Subtle Detail */}
           {product.morphologicalCharacters && (
-            <div className="flex gap-2 items-start bg-primary/5 p-3 rounded-xl border border-primary/10">
-              <Info className={`h-4 w-4 mt-0.5 flex-shrink-0 ${visuals.iconColor}`} />
-              <p className="text-xs leading-relaxed text-foreground/80 font-medium line-clamp-2 italic">
+            <div className="flex gap-2 items-start bg-primary/5 p-2 md:p-3 rounded-xl border border-primary/10">
+              <Info className={`h-3.5 w-3.5 md:h-4 md:w-4 mt-0.5 flex-shrink-0 ${visuals.iconColor}`} />
+              <p className="text-[10px] md:text-xs leading-relaxed text-foreground/80 font-medium line-clamp-2 italic">
                 {product.morphologicalCharacters}
               </p>
             </div>
           )}
 
-          <div className="mt-auto pt-4 flex items-center justify-between border-t border-border/50">
-            <div className="flex gap-1.5 font-bold">
-              <Badge variant="outline" className="text-[10px] h-6 px-2 bg-background/50 border-border/50 rounded-md">
+          <div className="mt-auto pt-3 md:pt-4 flex items-center justify-between border-t border-border/50">
+            <div className="flex gap-1 md:gap-1.5 font-bold">
+              <Badge variant="outline" className="text-[8px] md:text-[10px] h-5 md:h-6 px-1.5 md:px-2 bg-background/50 border-border/50 rounded-md">
                 {product.seasonality[0]}
               </Badge>
-              <Badge variant="outline" className="text-[10px] h-6 px-2 bg-background/50 border-border/50 rounded-md">
+              <Badge variant="outline" className="text-[8px] md:text-[10px] h-5 md:h-6 px-1.5 md:px-2 bg-background/50 border-border/50 rounded-md">
                 {product.difficultyLevel}
               </Badge>
             </div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0 hidden md:block">
               Explore
             </span>
           </div>
