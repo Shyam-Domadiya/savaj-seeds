@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
+import mongoose from 'mongoose';
 
 const MongoStore = connectMongo(session);
 import connectDB from './config/db';
@@ -51,7 +52,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-        url: process.env.MONGO_URI as string,
+        mongooseConnection: mongoose.connection,
         collection: 'sessions',
         ttl: 30 * 24 * 60 * 60, // 30 days in seconds
     }),
