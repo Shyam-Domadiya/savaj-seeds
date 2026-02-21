@@ -15,6 +15,8 @@ import { Product } from "@/lib/types/product"
 import { getCategoryVisuals } from "@/lib/utils/product-visuals"
 import { ArrowRight, Info } from "lucide-react"
 
+import Image from "next/image"
+
 function ProductCard({
   product,
 }: {
@@ -39,9 +41,11 @@ function ProductCard({
             />
           ) : (
             <div className="relative w-full h-full p-8 flex items-center justify-center bg-white/50 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
-              <img
-                src="/icon.png"
+              <Image
+                src="/logo.png"
                 alt="Savaj Seeds Logo"
+                width={128}
+                height={128}
                 className="w-32 h-32 object-contain filter drop-shadow-lg opacity-80"
               />
             </div>

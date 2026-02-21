@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -79,9 +80,11 @@ function ProductCard({ product }: { product: any }) {
                         />
                     ) : (
                         <div className="p-8 flex items-center justify-center">
-                            <img
-                                src="/icon.png"
+                            <Image
+                                src="/logo.png"
                                 alt="Savaj Seeds Logo"
+                                width={128}
+                                height={128}
                                 className="w-32 h-32 object-contain opacity-50 grayscale transition-transform duration-500 group-hover:scale-105"
                             />
                         </div>

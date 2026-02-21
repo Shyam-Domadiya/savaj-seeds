@@ -89,7 +89,7 @@ export function ProductImageGallery({ images, productName, className }: ProductI
       <div className={cn("aspect-square bg-muted/30 rounded-lg flex items-center justify-center p-12", className)}>
         <div className="relative w-full h-full opacity-50">
           <Image
-            src="/icon.png"
+            src="/logo.png"
             alt="Savaj Seeds Placeholder"
             fill
             className="object-contain filter grayscale opacity-40"
