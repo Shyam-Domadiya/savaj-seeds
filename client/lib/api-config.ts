@@ -1,11 +1,14 @@
 export const getApiUrl = () => {
+    // On the client, route through the Next.js proxy
+    if (typeof window !== 'undefined') {
+        return '/api';
+    }
+
+    // On the server, use the absolute URL
     const envUrl = process.env.NEXT_PUBLIC_API_URL;
     const fallbackUrl = 'https://savaj-seeds-server.onrender.com/api';
 
-    // If envUrl is missing or accidentally set to the frontend itself, use fallback
-    if (!envUrl || envUrl.includes('vercel.app') || envUrl.includes('localhost:3000')) {
-        return fallbackUrl;
-    }
+    if (!envUrl) return fallbackUrl;
 
     const cleanUrl = envUrl.replace(/\/$/, '');
 
