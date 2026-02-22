@@ -8,12 +8,10 @@ import { BackToTop } from "@/components/layout/back-to-top"
 import { SkipNav } from "@/components/layout/skip-nav"
 import { StructuredData } from "@/components/providers/structured-data"
 
-import { ConsentBanner } from "@/components/providers/consent-banner"
 import { generateBusinessSchema, generateWebsiteSchema, generateOrganizationSchema, generateServiceSchema } from "@/lib/seo"
 import { Providers } from "@/components/providers/providers"
 import { BottomNav } from "@/components/layout/bottom-nav"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { VisitorTracker } from "@/components/shared/visitor-tracker"
 import { ApolloWrapper } from "@/components/ApolloWrapper"
 import "./globals.css"
 
@@ -218,9 +216,7 @@ export default function RootLayout({
 
           <Toaster />
 
-          <ConsentBanner />
           <BottomNav />
-          <VisitorTracker />
           <SpeedInsights />
         </Providers>
 

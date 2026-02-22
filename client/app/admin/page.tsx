@@ -6,14 +6,6 @@ import { Package, MessageSquare, Users } from 'lucide-react';
 import { getApiUrl } from '@/lib/api-config';
 
 export default function AdminDashboard() {
-    const { data: visitors, isLoading } = useQuery({
-        queryKey: ['visitors'],
-        queryFn: async () => {
-            const res = await fetch(`${getApiUrl()}/visitors`);
-            if (!res.ok) throw new Error('Failed to fetch visitors');
-            return res.json();
-        }
-    });
     return (
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
@@ -43,20 +35,6 @@ export default function AdminDashboard() {
                     </div>
                 </Link>
 
-                {/* Visitor Management */}
-                <Link href="/admin/visitors" className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex items-center space-x-4">
-                        <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-full">
-                            <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                        </div>
-                        <div>
-                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Total Visitors</h2>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {isLoading ? '...' : (visitors ? `${visitors.length} unique IPs` : 'Failed to load.')}
-                            </p>
-                        </div>
-                    </div>
-                </Link>
             </div>
 
             <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm">

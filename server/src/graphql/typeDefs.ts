@@ -52,24 +52,6 @@ export const typeDefs = `#graphql
     updatedAt: String!
   }
 
-  type Visitor {
-    _id: ID!
-    ipAddress: String!
-    userAgent: String
-    os: String
-    browser: String
-    device: String
-    country: String
-    city: String
-    visitedAt: String!
-    totalTimeSpent: Int
-    readableDateStr: String
-    readableTimeStr: String
-    totalVisits: Int!
-    createdAt: String!
-    updatedAt: String!
-  }
-
   type Contact {
     _id: ID!
     name: String!
@@ -88,13 +70,10 @@ export const typeDefs = `#graphql
     getProductBySlug(slug: String!): Product
     getFeaturedProducts: [Product!]!
     
-    getVisitors: [Visitor!]!
-    
     getContacts: [Contact!]!
   }
 
   type Mutation {
-    trackVisitor(ipAddress: String!, userAgent: String, timeSpent: Int): Visitor!
     createContact(name: String!, email: String!, phone: String, category: String!, subject: String!, message: String!): Contact!
     markContactRead(id: ID!): Contact!
   }
