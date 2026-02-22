@@ -42,14 +42,6 @@ export default function AdminContacts() {
         },
     });
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-64">
-                <Loader2 className="w-8 h-8 animate-spin text-green-600" />
-            </div>
-        );
-    }
-
     const toggleReadMutation = useMutation({
         mutationFn: async (id: string) => {
             const res = await fetch(`${getApiUrl()}/contact/${id}/read`, {
@@ -70,6 +62,14 @@ export default function AdminContacts() {
             });
         },
     });
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-64">
+                <Loader2 className="w-8 h-8 animate-spin text-green-600" />
+            </div>
+        );
+    }
 
     const handleToggleRead = (id: string) => {
         toggleReadMutation.mutate(id);
