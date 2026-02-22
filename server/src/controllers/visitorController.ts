@@ -9,17 +9,21 @@ import geoip from 'geoip-lite';
 // @route   POST /api/visitors
 // @access  Public
 export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
-    const ipAddress =
-        req.headers['x-forwarded-for'] ||
-        req.socket.remoteAddress ||
-        req.ip ||
-        'Unknown IP';
+    // Express req.ip is the most reliable when 'trust proxy' is set
+    const rawIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown IP';
 
-    const actualIp = Array.isArray(ipAddress)
-        ? ipAddress[0]
-        : (typeof ipAddress === 'string' ? ipAddress.split(',')[0].trim() : ipAddress);
+    let actualIp = Array.isArray(rawIp)
+        ? rawIp[0]
+        : (typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : rawIp);
+
+    // Normalize IPv6 localhost/loopback
+    if (actualIp === '::1' || actualIp === '::ffff:127.0.0.1') {
+        actualIp = '127.0.0.1';
+    }
 
     const userAgent = req.headers['user-agent'] || 'Unknown';
+
+    console.log(`[VisitorTracker] New request from IP: ${actualIp}`);
 
     // Parse User-Agent for real device data
     const parser = new UAParser(userAgent);
@@ -29,12 +33,16 @@ export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
     let country = 'Unknown';
     let city = 'Unknown';
 
-    if (actualIp && actualIp !== '127.0.0.1' && actualIp !== '::1' && actualIp !== 'Unknown IP') {
-        const geo = geoip.lookup(actualIp as string);
-        if (geo) {
-            country = geo.country || 'Unknown';
-            city = geo.city || 'Unknown';
+    try {
+        if (actualIp && actualIp !== '127.0.0.1' && actualIp !== 'Unknown IP') {
+            const geo = geoip.lookup(actualIp as string);
+            if (geo) {
+                country = geo.country || 'Unknown';
+                city = geo.city || 'Unknown';
+            }
         }
+    } catch (geoError) {
+        console.error('[VisitorTracker] Geolocation error:', geoError);
     }
 
     // Fallback logic for device/browser/os
@@ -55,43 +63,47 @@ export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
     const now = new Date();
 
     // Format the time directly into Indian Standard Time (IST) strings to store in the DB
-    // Since India is UTC +5:30
     const readableDateStr = now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' });
     const readableTimeStr = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true });
 
-    // Try to find if this IP already exists
-    const existingVisitor = await Visitor.findOne({ ipAddress: actualIp as string });
+    try {
+        // Try to find if this IP already exists
+        if (actualIp !== 'Unknown IP') {
+            const existingVisitor = await Visitor.findOne({ ipAddress: actualIp as string });
 
-    if (existingVisitor && actualIp !== 'Unknown IP') {
-        // Only update 'visitedAt' if last visit was more than 1 hour ago
-        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-        if (existingVisitor.visitedAt < oneHourAgo) {
-            existingVisitor.visitedAt = now;
-            existingVisitor.readableDateStr = readableDateStr;
-            existingVisitor.readableTimeStr = readableTimeStr;
-            existingVisitor.os = os;
-            existingVisitor.browser = browser;
-            existingVisitor.device = deviceName;
-            existingVisitor.country = country;
-            existingVisitor.city = city;
-            existingVisitor.totalVisits += 1;
-            await existingVisitor.save();
+            if (existingVisitor) {
+                // ALWAYS update for a new session (trusting client-side logic)
+                existingVisitor.visitedAt = now;
+                existingVisitor.readableDateStr = readableDateStr;
+                existingVisitor.readableTimeStr = readableTimeStr;
+                existingVisitor.os = os;
+                existingVisitor.browser = browser;
+                existingVisitor.device = deviceName;
+                existingVisitor.country = country;
+                existingVisitor.city = city;
+                existingVisitor.totalVisits += 1;
+                await existingVisitor.save();
+                console.log(`[VisitorTracker] Incremented visits for: ${actualIp} (Total: ${existingVisitor.totalVisits})`);
+            } else {
+                // First time visitor
+                await Visitor.create({
+                    ipAddress: actualIp as string,
+                    userAgent,
+                    os,
+                    browser,
+                    device: deviceName,
+                    country,
+                    city,
+                    visitedAt: now,
+                    readableDateStr,
+                    readableTimeStr,
+                    totalVisits: 1
+                });
+                console.log(`[VisitorTracker] Logged brand new visitor: ${actualIp} [${deviceName} | ${browser} | ${os}]`);
+            }
         }
-    } else if (actualIp !== 'Unknown IP') {
-        // First time visitor
-        await Visitor.create({
-            ipAddress: actualIp as string,
-            userAgent,
-            os,
-            browser,
-            device: deviceName,
-            country,
-            city,
-            visitedAt: now,
-            readableDateStr,
-            readableTimeStr,
-            totalVisits: 1
-        });
+    } catch (dbError) {
+        console.error('[VisitorTracker] Database error:', dbError);
     }
 
     res.status(200).json({ success: true, message: 'Visitor logged' });
