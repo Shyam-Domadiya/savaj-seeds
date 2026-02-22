@@ -58,8 +58,8 @@ app.use(session({
     }),
     cookie: {
         httpOnly: true,
-        secure: isProduction,               // HTTPS only in production
-        sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin (Vercel <-> Render)
+        secure: true,                      // HTTPS only required for sameSite: 'none'
+        sameSite: 'none',                  // 'none' required for cross-origin (Vercel <-> Render)
         maxAge: 30 * 24 * 60 * 60 * 1000,  // 30 days in ms
     },
     name: 'savaj.sid', // custom cookie name
