@@ -23,7 +23,7 @@ const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
         req.admin = admin;
         next();
     } catch (error) {
-        console.error(error);
+        console.error('Auth check error:', error);
         res.status(401);
         throw new Error('Not authorized, session invalid');
     }
