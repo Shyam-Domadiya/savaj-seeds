@@ -10,11 +10,19 @@ export function VisitorTracker() {
                 // Only log once per session in the frontend to avoid strict mode double calls
                 const logged = sessionStorage.getItem('visitor_logged');
                 if (!logged) {
+                    console.log('VisitorTracker: Sending log request...');
                     const response = await fetch(`${getApiUrl()}/visitors`, {
                         method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
                     });
                     if (response.ok) {
+                        console.log('VisitorTracker: Successfully logged');
                         sessionStorage.setItem('visitor_logged', 'true');
+                    } else {
+                        console.error('VisitorTracker: Failed to log', response.status);
                     }
                 }
             } catch (error) {
