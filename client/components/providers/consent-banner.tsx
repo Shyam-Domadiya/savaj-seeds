@@ -78,7 +78,7 @@ export function ConsentBanner() {
   if (!showBanner) return null
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-sm border-t border-border shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 z-[70] p-4 pb-24 md:pb-4 bg-background/95 backdrop-blur-sm border-t border-border shadow-lg">
       <div className="container mx-auto">
         {!showSettings ? (
           <Card className="border-0 shadow-none bg-transparent">
