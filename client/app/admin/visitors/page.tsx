@@ -1,7 +1,7 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getApiUrl } from '@/lib/api-config';
+import { useQuery } from '@apollo/client/react';
+import { gql } from '@apollo/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { AlertCircle, Smartphone, Monitor, Download } from 'lucide-react';
@@ -9,7 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { VisitorCharts } from '@/components/admin/VisitorCharts';
 
-interface Visitor {
+export interface Visitor {
     _id: string;
     ipAddress: string;
     userAgent: string;
@@ -25,18 +25,33 @@ interface Visitor {
     city?: string;
 }
 
+const GET_VISITORS = gql`
+  query GetVisitors {
+    getVisitors {
+      _id
+      ipAddress
+      userAgent
+      visitedAt
+      readableDateStr
+      readableTimeStr
+      os
+      browser
+      device
+      totalVisits
+      totalTimeSpent
+      country
+      city
+    }
+  }
+`;
+
 export default function VisitorsPage() {
-    const { data: visitors, isLoading, error } = useQuery<Visitor[]>({
-        queryKey: ['visitors'],
-        queryFn: async () => {
-            const res = await fetch(`${getApiUrl()}/visitors`, { cache: 'no-store' });
-            if (!res.ok) {
-                throw new Error('Failed to fetch visitor logs');
-            }
-            return res.json();
-        },
-        refetchInterval: 10000, // Refresh every 10 seconds to watch people browse
+    const { data, loading: isLoading, error } = useQuery<{ getVisitors: Visitor[] }>(GET_VISITORS, {
+        pollInterval: 10000,
+        fetchPolicy: 'network-only',
     });
+
+    const visitors = data?.getVisitors;
 
     const getDeviceIcon = (deviceStr: string, userAgent: string) => {
         const d = (deviceStr || '').toLowerCase();
