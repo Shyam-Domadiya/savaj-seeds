@@ -113,15 +113,13 @@ export const logVisitor = asyncHandler(async (req: Request, res: Response) => {
 // @route   PUT /api/visitors/time
 // @access  Public
 export const updateVisitorTime = asyncHandler(async (req: Request, res: Response) => {
-    const ipAddress =
-        req.headers['x-forwarded-for'] ||
-        req.socket.remoteAddress ||
-        req.ip ||
-        'Unknown IP';
+    const rawIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown IP';
+    let actualIp = Array.isArray(rawIp) ? rawIp[0] : (typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : rawIp);
 
-    const actualIp = Array.isArray(ipAddress)
-        ? ipAddress[0]
-        : (typeof ipAddress === 'string' ? ipAddress.split(',')[0].trim() : ipAddress);
+    // Normalize IPv6 localhost/loopback
+    if (actualIp === '::1' || actualIp === '::ffff:127.0.0.1') {
+        actualIp = '127.0.0.1';
+    }
 
     // time increment in seconds, usually 5-10s heartbeats
     const { timeSpent } = req.body;

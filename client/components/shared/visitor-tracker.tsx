@@ -19,7 +19,8 @@ export function VisitorTracker() {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ timeSpent: 10 }), // Add 10 seconds
-                        keepalive: true
+                        keepalive: true,
+                        credentials: 'include'
                     });
                 }
             } catch (error) {
