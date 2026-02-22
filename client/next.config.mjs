@@ -53,6 +53,14 @@ const nextConfig = {
   },
   compress: true,
   trailingSlash: false,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/:path*`,
+      },
+    ]
+  },
   async headers() {
     return [
       {
