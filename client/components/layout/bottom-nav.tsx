@@ -16,7 +16,7 @@ export function BottomNav() {
     const pathname = usePathname()
 
     // Hide bottom navigation on admin routes
-    if (pathname?.startsWith('/admin')) {
+    if (pathname?.toLowerCase().startsWith('/admin') || pathname?.split('/')[1]?.toLowerCase() === 'admin') {
         return null;
     }
 
