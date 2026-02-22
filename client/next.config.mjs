@@ -54,10 +54,15 @@ const nextConfig = {
   compress: true,
   trailingSlash: false,
   async rewrites() {
+    const apiBase = process.env.NEXT_PUBLIC_BASE_URL || 'https://savaj-seeds-server.onrender.com';
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'https://savaj-seeds-server.onrender.com/api'}/:path*`,
+        destination: `${apiBase}/api/:path*`,
+      },
+      {
+        source: '/graphql',
+        destination: `${apiBase}/graphql`,
       },
     ]
   },
