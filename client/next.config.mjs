@@ -32,7 +32,6 @@ const nextConfig = {
     optimizePackageImports: [
       'lucide-react',
       '@radix-ui/react-icons',
-      'recharts',
       'date-fns',
       'framer-motion',
       '@radix-ui/react-alert-dialog',
