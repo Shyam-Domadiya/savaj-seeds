@@ -24,24 +24,22 @@ const submitContactForm = asyncHandler(async (req: Request, res: Response) => {
     });
 
     if (contact) {
-        // Send auto-reply email
-        try {
-            await sendEmail({
-                email: contact.email,
-                subject: `We've received your message: ${contact.subject}`,
-                message: `
-                    <h1>Hi ${contact.name},</h1>
-                    <p>Thank you for reaching out to Savaj Seeds.</p>
-                    <p>We have received your message regarding "<strong>${contact.subject}</strong>" and our team will get back to you shortly.</p>
-                    <p>Your Request ID: ${contact._id}</p>
-                    <br>
-                    <p>Best Regards,</p>
-                    <p>Savaj Seeds Team</p>
-                `,
-            });
-        } catch (error) {
+        // Send auto-reply email (non-blocking)
+        sendEmail({
+            email: contact.email,
+            subject: `We've received your message: ${contact.subject}`,
+            message: `
+                <h1>Hi ${contact.name},</h1>
+                <p>Thank you for reaching out to Savaj Seeds.</p>
+                <p>We have received your message regarding "<strong>${contact.subject}</strong>" and our team will get back to you shortly.</p>
+                <p>Your Request ID: ${contact._id}</p>
+                <br>
+                <p>Best Regards,</p>
+                <p>Savaj Seeds Team</p>
+            `,
+        }).catch(error => {
             console.error('Email send failed:', error);
-        }
+        });
 
         res.status(201).json({
             _id: contact._id,
