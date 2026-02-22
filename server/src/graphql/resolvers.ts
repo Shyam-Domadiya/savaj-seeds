@@ -1,6 +1,7 @@
 import Product from '../models/Product';
 import Visitor from '../models/Visitor';
 import Contact from '../models/Contact';
+import { Context } from './context';
 
 export const resolvers = {
     Query: {
@@ -8,21 +9,21 @@ export const resolvers = {
         getProducts: async () => {
             return await Product.find({});
         },
-        getProductBySlug: async (_: any, { slug }: { slug: string }) => {
+        getProductBySlug: async (_: any, { slug }: { slug: string }, context: Context) => {
             return await Product.findOne({ slug });
         },
-        getFeaturedProducts: async () => {
+        getFeaturedProducts: async (_: any, __: any, context: Context) => {
             return await Product.find({ featured: true });
         },
-        getVisitors: async () => {
+        getVisitors: async (_: any, __: any, context: Context) => {
             return await Visitor.find({}).sort({ visitedAt: -1 });
         },
-        getContacts: async () => {
+        getContacts: async (_: any, __: any, context: Context) => {
             return await Contact.find({}).sort({ createdAt: -1 });
         },
     },
     Mutation: {
-        trackVisitor: async (_: any, { ipAddress, userAgent, timeSpent }: { ipAddress: string, userAgent?: string, timeSpent?: number }) => {
+        trackVisitor: async (_: any, { ipAddress, userAgent, timeSpent }: { ipAddress: string, userAgent?: string, timeSpent?: number }, context: Context) => {
             const visitor = await Visitor.findOneAndUpdate(
                 { ipAddress },
                 {
@@ -34,11 +35,11 @@ export const resolvers = {
             );
             return visitor;
         },
-        createContact: async (_: any, args: any) => {
+        createContact: async (_: any, args: any, context: Context) => {
             const contact = new Contact({ ...args });
             return await contact.save();
         },
-        markContactRead: async (_: any, { id }: { id: string }) => {
+        markContactRead: async (_: any, { id }: { id: string }, context: Context) => {
             const contact = await Contact.findById(id);
             if (contact) {
                 contact.isRead = true;

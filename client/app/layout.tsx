@@ -137,6 +137,12 @@ export const metadata: Metadata = {
     apple: "/icon.png",
   },
   manifest: "/site.webmanifest",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    viewportFit: 'cover',
+  },
   other: {
     'theme-color': '#22c55e',
     'color-scheme': 'light',

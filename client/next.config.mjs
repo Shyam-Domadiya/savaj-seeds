@@ -26,7 +26,6 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [75, 90],
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
     optimizeCss: false, // Disabled due to missing critters dependency
