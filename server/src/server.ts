@@ -13,14 +13,17 @@ import authRoutes from './routes/authRoutes';
 import visitorRoutes from './routes/visitorRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { ApolloServer } from '@apollo/server';
-// @ts-ignore: expressMiddleware from @as-integrations/express5 is correctly typed
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { expressMiddleware } from '@as-integrations/express5';
+import http from 'http';
 import { typeDefs } from './graphql/typeDefs';
 import { resolvers } from './graphql/resolvers';
+import { createContext } from './graphql/context';
 
 dotenv.config();
 
 const app: Application = express();
+const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -85,6 +88,7 @@ const startServer = async () => {
     const apolloServer = new ApolloServer({
         typeDefs,
         resolvers,
+        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     });
 
     await apolloServer.start();
@@ -92,7 +96,7 @@ const startServer = async () => {
     app.use(
         '/graphql',
         expressMiddleware(apolloServer, {
-            context: async ({ req }: { req: any }) => ({ req }),
+            context: createContext,
         })
     );
 
@@ -100,7 +104,7 @@ const startServer = async () => {
     app.use(notFound);
     app.use(errorHandler);
 
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
         console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
         console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
     });
