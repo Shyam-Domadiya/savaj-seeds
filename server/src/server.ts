@@ -12,6 +12,11 @@ import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
 import visitorRoutes from './routes/visitorRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
+import { ApolloServer } from '@apollo/server';
+// @ts-ignore: Next.js/TS submodule export issue
+import { expressMiddleware } from '@apollo/server/express4';
+import { typeDefs } from './graphql/typeDefs';
+import { resolvers } from './graphql/resolvers';
 
 dotenv.config();
 
@@ -72,14 +77,33 @@ app.use('/api/auth', authRoutes);
 app.use('/api/visitors', visitorRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('API is running...');
+    res.send('API and GraphQL Server is running...');
 });
 
-// Error Handling
-app.use(notFound);
-app.use(errorHandler);
+// Start Apollo Server & Express
+const startServer = async () => {
+    const apolloServer = new ApolloServer({
+        typeDefs,
+        resolvers,
+    });
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+    await apolloServer.start();
+
+    app.use(
+        '/graphql',
+        expressMiddleware(apolloServer, {
+            context: async ({ req }: { req: any }) => ({ req }),
+        })
+    );
+
+    // Error Handling (Must be after GraphQL if we want it to apply to REST routes)
+    app.use(notFound);
+    app.use(errorHandler);
+
+    app.listen(PORT, () => {
+        console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+        console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
+    });
+};
+
+startServer();
