@@ -13,8 +13,8 @@ import authRoutes from './routes/authRoutes';
 import visitorRoutes from './routes/visitorRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { ApolloServer } from '@apollo/server';
-// @ts-ignore: ESM dynamic import resolution issue in TS
-import { expressMiddleware } from '@apollo/server/express4';
+// @ts-ignore: expressMiddleware from @as-integrations/express5 is correctly typed
+import { expressMiddleware } from '@as-integrations/express5';
 import { typeDefs } from './graphql/typeDefs';
 import { resolvers } from './graphql/resolvers';
 
