@@ -5,33 +5,8 @@ import { getApiUrl } from '@/lib/api-config';
 
 export function VisitorTracker() {
     useEffect(() => {
-        const logVisitor = async () => {
-            try {
-                // Only log once per session in the frontend to avoid strict mode double calls
-                const logged = sessionStorage.getItem('visitor_logged');
-                if (!logged) {
-                    console.log('VisitorTracker: Sending log request...');
-                    const response = await fetch(`${getApiUrl()}/visitors`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({})
-                    });
-                    if (response.ok) {
-                        console.log('VisitorTracker: Successfully logged');
-                        sessionStorage.setItem('visitor_logged', 'true');
-                    } else {
-                        console.error('VisitorTracker: Failed to log', response.status);
-                    }
-                }
-            } catch (error) {
-                // Silent fail for analytics
-                console.error('Failed to log visitor:', error);
-            }
-        };
-
-        logVisitor();
+        // Initial log is now handled automatically by server middleware!
+        sessionStorage.setItem('visitor_logged', 'true');
 
         // Tracker Heartbeat - sends a ping every 10 seconds to accumulate time spent
         const heartbeatInterval = setInterval(async () => {

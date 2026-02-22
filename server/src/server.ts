@@ -11,6 +11,7 @@ import contactRoutes from './routes/contactRoutes';
 import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
 import visitorRoutes from './routes/visitorRoutes';
+import { visitorMiddleware } from './middleware/visitorMiddleware';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -58,7 +59,7 @@ app.use(cors({
 app.use(session({
     secret: process.env.SESSION_SECRET || process.env.JWT_SECRET as string,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: new MongoStore({
         mongooseConnection: mongoose.connection,
         collection: 'sessions',
@@ -72,6 +73,9 @@ app.use(session({
     },
     name: 'savaj.sid', // custom cookie name
 }));
+
+// Auto-log visitors on every request (guest or admin)
+app.use(visitorMiddleware);
 
 // Routes
 app.use('/api/contact', contactRoutes);
