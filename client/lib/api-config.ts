@@ -5,10 +5,10 @@ export const getApiUrl = () => {
     }
 
     // On the server, use the absolute URL
-    const envUrl = process.env.NEXT_PUBLIC_API_URL;
-    const fallbackUrl = 'https://savaj-seeds-server.onrender.com/api';
+    const envUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_API_URL;
+    const fallbackUrl = 'https://savaj-seeds-server.onrender.com';
 
-    if (!envUrl) return fallbackUrl;
+    if (!envUrl) return `${fallbackUrl}/api`;
 
     const cleanUrl = envUrl.replace(/\/$/, '');
 
