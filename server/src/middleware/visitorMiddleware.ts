@@ -12,7 +12,7 @@ declare module 'express-session' {
 
 export const visitorMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     // Only track if it's the first time in this session and not a static asset or API call to visitors
-    if (req.session && !req.session.visitorLogged && !req.path.startsWith('/api/visitors')) {
+    if (req.session && !req.session.visitorLogged) {
         try {
             const rawIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown IP';
             let actualIp = Array.isArray(rawIp) ? rawIp[0] : (typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : rawIp);

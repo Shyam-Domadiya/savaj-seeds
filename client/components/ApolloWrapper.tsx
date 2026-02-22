@@ -6,7 +6,12 @@ import { getApiUrl } from "@/lib/api-config";
 
 // Setup Apollo Client pointing to our new GraphQL backend
 const client = new ApolloClient({
-    link: new HttpLink({ uri: `${getApiUrl().replace('/api', '')}/graphql` }),
+    link: new HttpLink({
+        uri: `${getApiUrl().replace('/api', '')}/graphql`,
+        fetchOptions: {
+            credentials: 'include',
+        },
+    }),
     cache: new InMemoryCache(),
 });
 
