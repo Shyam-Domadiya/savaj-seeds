@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import { Toaster } from "@/components/ui/toaster"
@@ -129,28 +129,9 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     capable: true,
   },
-  category: 'Agriculture',
-  classification: 'Agriculture, Seeds, Farming',
-  icons: {
-    icon: "/icon.png",
-    apple: "/icon.png",
-  },
-  manifest: "/site.webmanifest",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    viewportFit: 'cover',
-  },
   other: {
-    'theme-color': '#22c55e',
-    'color-scheme': 'light',
-    'mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': 'Savaj Seeds',
+    'google-site-verification': process.env.GOOGLE_SITE_VERIFICATION || '',
     'application-name': 'Savaj Seeds',
-    'msapplication-TileColor': '#22c55e',
     'msapplication-config': '/browserconfig.xml',
     'geo.region': 'IN-GJ',
     'geo.placename': 'Ahmedabad, Gujarat, India',
@@ -172,6 +153,15 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#22c55e',
+  colorScheme: 'light',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -188,18 +178,8 @@ export default function RootLayout({
         <StructuredData data={[businessSchema, websiteSchema, organizationSchema, serviceSchema]} />
 
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
         <meta name="HandheldFriendly" content="true" />
-        <meta name="MobileOptimized" content="width" />
-
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Savaj Seeds" />
-        <meta name="application-name" content="Savaj Seeds" />
-        <meta name="msapplication-TileColor" content="#22c55e" />
-        <meta name="theme-color" content="#22c55e" />
-        <meta name="color-scheme" content="light" />
       </head>
       <body className={`font-sans antialiased pb-16 md:pb-0`}>
 
