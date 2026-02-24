@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 
 export interface SEOConfig {
   title: string
@@ -156,20 +156,24 @@ export function generateMetadata(config: SEOConfig): Metadata {
     classification: 'Agriculture, Seeds, Farming',
     other: {
       'google-site-verification': process.env.GOOGLE_SITE_VERIFICATION || '',
-      'theme-color': '#22c55e',
-      'color-scheme': 'light dark',
-      'mobile-web-app-capable': 'yes',
-      'apple-mobile-web-app-capable': 'yes',
-      'apple-mobile-web-app-status-bar-style': 'default',
-      'apple-mobile-web-app-title': 'Savaj Seeds',
       'application-name': 'Savaj Seeds',
-      'msapplication-TileColor': '#22c55e',
       'msapplication-config': '/browserconfig.xml',
       'geo.region': 'IN-GJ',
       'geo.placename': 'Ahmedabad, Gujarat, India',
       'geo.position': '23.0225;72.5714',
       'ICBM': '23.0225, 72.5714',
     },
+  }
+}
+
+export function generateViewport(): Viewport {
+  return {
+    themeColor: '#22c55e',
+    colorScheme: 'light dark',
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    viewportFit: 'cover',
   }
 }
 
