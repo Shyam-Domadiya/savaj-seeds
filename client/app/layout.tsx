@@ -12,6 +12,7 @@ import { generateBusinessSchema, generateWebsiteSchema, generateOrganizationSche
 import { Providers } from "@/components/providers/providers"
 import { BottomNav } from "@/components/layout/bottom-nav"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 import { ApolloWrapper } from "@/components/ApolloWrapper"
 import { PageTransition } from "@/components/providers/page-transition"
 import "./globals.css"
@@ -201,6 +202,7 @@ export default function RootLayout({
 
           <BottomNav />
           <SpeedInsights />
+          <Analytics />
         </Providers>
 
       </body>
