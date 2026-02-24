@@ -129,6 +129,12 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     capable: true,
   },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  manifest: "/site.webmanifest",
+  category: 'Agriculture',
   other: {
     'google-site-verification': process.env.GOOGLE_SITE_VERIFICATION || '',
     'application-name': 'Savaj Seeds',
