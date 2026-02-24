@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, Info, Package, Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { motion, AnimatePresence } from "framer-motion"
 
 const navItems = [
     { href: "/", label: "Home", icon: Home },
@@ -32,28 +33,38 @@ export function BottomNav() {
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex flex-col items-center justify-center gap-1 relative h-full transition-all duration-500 ease-professional",
-                                isActive ? "text-primary scale-105" : "text-muted-foreground hover:text-primary/70"
+                                "flex flex-col items-center justify-center gap-1 relative h-full transition-colors duration-300",
+                                isActive ? "text-primary" : "text-muted-foreground hover:text-primary/70"
                             )}
                         >
-                            {isActive && (
-                                <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-full shadow-[0_0_12px_rgba(34,197,94,0.8)] animate-in fade-in zoom-in duration-500" />
-                            )}
+                            <AnimatePresence>
+                                {isActive && (
+                                    <motion.span
+                                        layoutId="active-indicator"
+                                        className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-full shadow-[0_0_12px_rgba(34,197,94,0.8)]"
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.5 }}
+                                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                    />
+                                )}
+                            </AnimatePresence>
 
-                            <div className={cn(
-                                "p-2.5 rounded-full transition-all duration-500 ease-professional",
-                                isActive ? "bg-primary/15 shadow-[inset_0_0_10px_rgba(34,197,94,0.1)]" : "bg-transparent"
-                            )}>
+                            <motion.div
+                                animate={isActive ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                                className={cn(
+                                    "p-2.5 rounded-full transition-colors duration-300",
+                                    isActive ? "bg-primary/15 shadow-[inset_0_0_10px_rgba(34,197,94,0.1)]" : "bg-transparent"
+                                )}
+                            >
                                 <Icon
-                                    className={cn(
-                                        "h-5 w-5 transition-all duration-500",
-                                        isActive ? "scale-110 rotate-[5deg]" : "scale-100"
-                                    )}
+                                    className="h-5 w-5"
                                     strokeWidth={isActive ? 2.5 : 2}
                                 />
-                            </div>
+                            </motion.div>
                             <span className={cn(
-                                "text-[10px] font-black transition-all duration-500 uppercase tracking-widest",
+                                "text-[10px] font-black transition-all duration-300 uppercase tracking-widest",
                                 isActive ? "opacity-100 translate-y-[-1px]" : "opacity-50"
                             )}>
                                 {item.label}

@@ -186,7 +186,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 md:pt-6">
-                  <Button size="lg" className="h-14 md:h-16 px-8 md:px-10 rounded-full text-base md:text-lg font-black uppercase tracking-wider shadow-xl md:shadow-2xl hover:shadow-primary/40 transition-all hover:scale-105 bg-primary text-primary-foreground flex-1" asChild>
+                  <Button size="lg" className="h-14 md:h-16 px-8 md:px-10 rounded-full text-base md:text-lg font-black uppercase tracking-wider shadow-xl md:shadow-2xl transition-all bg-primary text-primary-foreground flex-1" asChild>
                     <Link href={`/contact?subject=Order Request for ${product.name}`}>
                       Request Quote
                     </Link>
