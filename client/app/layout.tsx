@@ -210,7 +210,9 @@ export default function RootLayout({
         >
           <SkipNav />
           <ApolloWrapper>
-            {children}
+            <div className="animate-fade-in duration-700">
+              {children}
+            </div>
           </ApolloWrapper>
           <BackToTop />
 
