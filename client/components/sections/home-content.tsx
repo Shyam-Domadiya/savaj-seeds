@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sprout, Leaf, Package, Users, ArrowRight, Award, ShieldCheck } from "lucide-react"
+import { EntranceAnimation } from "@/components/shared/entrance-animation"
 
 export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }) {
     return (
@@ -107,26 +108,26 @@ export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }
                                 href: "/contact"
                             }
                         ].map((feature, index) => (
-                            <Link
-                                key={index}
-                                href={feature.href}
-                                className="group block relative bg-white/60 dark:bg-card/40 backdrop-blur-md border border-white/20 dark:border-white/10 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in fade-in-50 slide-in-from-bottom-8 fill-mode-backwards cursor-pointer"
-                                style={{ animationDelay: `${index * 100}ms` }}
-                            >
-                                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
+                            <EntranceAnimation key={index} delay={index * 0.1}>
+                                <Link
+                                    href={feature.href}
+                                    className="group block relative bg-white/60 dark:bg-card/40 backdrop-blur-md border border-white/20 dark:border-white/10 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full"
+                                >
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
 
-                                <div className="relative z-10">
-                                    <div className={`inline-flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-xl bg-white dark:bg-white/10 shadow-sm dark:shadow-none mb-4 md:mb-6 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}>
-                                        <feature.icon className="h-6 w-6 md:h-7 md:w-7" />
+                                    <div className="relative z-10">
+                                        <div className={`inline-flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-xl bg-white dark:bg-white/10 shadow-sm dark:shadow-none mb-4 md:mb-6 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                                            <feature.icon className="h-6 w-6 md:h-7 md:w-7" />
+                                        </div>
+                                        <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
+                                            {feature.title}
+                                        </h3>
+                                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                                            {feature.description}
+                                        </p>
                                     </div>
-                                    <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                                        {feature.description}
-                                    </p>
-                                </div>
-                            </Link>
+                                </Link>
+                            </EntranceAnimation>
                         ))}
                     </div>
                 </div>
@@ -145,91 +146,97 @@ export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         {/* Vegetable Seeds Card */}
-                        <Link href="/products?category=vegetable" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-100">
-                            <div className="absolute inset-0">
-                                <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
-                                <Image
-                                    src="/images/category-vegetable.jpg"
-                                    alt="Vegetable Seeds"
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                    sizes="(max-width: 768px) 100vw, 33vw"
-                                />
-                            </div>
-
-                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
-                                <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-green-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <Sprout className="h-6 w-6 md:h-7 md:w-7" />
-                                    </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Vegetable Seeds</h3>
-                                    <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
-                                        Premium vegetable seeds including tomatoes, peppers, cucumbers.
-                                    </p>
-                                    <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
-                                        Explore Collection <ArrowRight className="ml-2 h-4 w-4" />
-                                    </span>
+                        <EntranceAnimation delay={0.1}>
+                            <Link href="/products?category=vegetable" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 block h-full">
+                                <div className="absolute inset-0">
+                                    <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
+                                    <Image
+                                        src="/images/category-vegetable.jpg"
+                                        alt="Vegetable Seeds"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                    />
                                 </div>
-                            </div>
-                        </Link>
+
+                                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
+                                    <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                        <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-green-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                            <Sprout className="h-6 w-6 md:h-7 md:w-7" />
+                                        </div>
+                                        <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Vegetable Seeds</h3>
+                                        <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
+                                            Premium vegetable seeds including tomatoes, peppers, cucumbers.
+                                        </p>
+                                        <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
+                                            Explore Collection <ArrowRight className="ml-2 h-4 w-4" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </Link>
+                        </EntranceAnimation>
 
                         {/* Crop Seeds Card */}
-                        <Link href="/products?category=crop" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-200">
-                            <div className="absolute inset-0">
-                                <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
-                                <Image
-                                    src="/images/category-crop.jpg"
-                                    alt="Crop Seeds"
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                    sizes="(max-width: 768px) 100vw, 33vw"
-                                />
-                            </div>
-
-                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
-                                <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-amber-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <Leaf className="h-6 w-6 md:h-7 md:w-7" />
-                                    </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Crop Seeds</h3>
-                                    <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
-                                        High-yielding seeds for wheat, rice, maize optimized for Indian climate.
-                                    </p>
-                                    <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
-                                        View Crops <ArrowRight className="ml-2 h-4 w-4" />
-                                    </span>
+                        <EntranceAnimation delay={0.2}>
+                            <Link href="/products?category=crop" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 block h-full">
+                                <div className="absolute inset-0">
+                                    <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
+                                    <Image
+                                        src="/images/category-crop.jpg"
+                                        alt="Crop Seeds"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                    />
                                 </div>
-                            </div>
-                        </Link>
+
+                                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
+                                    <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                        <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-amber-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                            <Leaf className="h-6 w-6 md:h-7 md:w-7" />
+                                        </div>
+                                        <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Crop Seeds</h3>
+                                        <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
+                                            High-yielding seeds for wheat, rice, maize optimized for Indian climate.
+                                        </p>
+                                        <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
+                                            View Crops <ArrowRight className="ml-2 h-4 w-4" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </Link>
+                        </EntranceAnimation>
 
                         {/* Hybrid Seeds Card */}
-                        <Link href="/products?category=hybrid" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 animate-in fade-in-50 slide-in-from-bottom-8 delay-300">
-                            <div className="absolute inset-0">
-                                <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
-                                <Image
-                                    src="/images/category-hybrid.jpg"
-                                    alt="Hybrid Seeds"
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                    sizes="(max-width: 768px) 100vw, 33vw"
-                                />
-                            </div>
-
-                            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
-                                <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-blue-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <Package className="h-6 w-6 md:h-7 md:w-7" />
-                                    </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Hybrid Seeds</h3>
-                                    <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
-                                        Advanced hybrids offering superior disease resistance and productivity.
-                                    </p>
-                                    <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
-                                        Discover Hybrids <ArrowRight className="ml-2 h-4 w-4" />
-                                    </span>
+                        <EntranceAnimation delay={0.3}>
+                            <Link href="/products?category=hybrid" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 block h-full">
+                                <div className="absolute inset-0">
+                                    <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
+                                    <Image
+                                        src="/images/category-hybrid.jpg"
+                                        alt="Hybrid Seeds"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                    />
                                 </div>
-                            </div>
-                        </Link>
+
+                                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
+                                    <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                        <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-blue-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                            <Package className="h-6 w-6 md:h-7 md:w-7" />
+                                        </div>
+                                        <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Hybrid Seeds</h3>
+                                        <p className="text-sm md:text-base text-white/90 mb-4 md:mb-6 font-medium leading-relaxed drop-shadow-md line-clamp-2">
+                                            Advanced hybrids offering superior disease resistance and productivity.
+                                        </p>
+                                        <span className="inline-flex items-center text-xs md:text-sm font-bold text-white group-hover:translate-x-2 transition-transform duration-300 uppercase tracking-wide">
+                                            Discover Hybrids <ArrowRight className="ml-2 h-4 w-4" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </Link>
+                        </EntranceAnimation>
                     </div>
                 </div>
             </section>

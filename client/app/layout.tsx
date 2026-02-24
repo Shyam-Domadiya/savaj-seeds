@@ -13,6 +13,7 @@ import { Providers } from "@/components/providers/providers"
 import { BottomNav } from "@/components/layout/bottom-nav"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ApolloWrapper } from "@/components/ApolloWrapper"
+import { PageTransition } from "@/components/providers/page-transition"
 import "./globals.css"
 
 const _geist = Geist({
@@ -210,9 +211,9 @@ export default function RootLayout({
         >
           <SkipNav />
           <ApolloWrapper>
-            <div className="animate-fade-in duration-700">
+            <PageTransition>
               {children}
-            </div>
+            </PageTransition>
           </ApolloWrapper>
           <BackToTop />
 
