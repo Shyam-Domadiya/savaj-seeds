@@ -21,7 +21,10 @@ const transformProduct = (p: any): Product => {
         id: p.slug, // Use slug as the main ID for clean URLs
         mongoId: p._id, // Keep reference to real ID just in case
         specifications: specifications, // Add the constructed specifications
-        images: p.images || [], // Ensure array
+        images: (p.images || []).map((img: any) => ({
+            ...img,
+            id: img._id || img.url // Ensure id exists for frontend keys
+        })),
         seasonality: p.seasonality || [], // Ensure array
         seoMetadata: p.seoMetadata || { title: p.name, description: p.description, keywords: [] } // Ensure object
     };

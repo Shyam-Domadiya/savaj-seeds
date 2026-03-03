@@ -111,23 +111,40 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
         setProduct((prev) => ({ ...prev, images: newImages }));
     };
 
-    const handleFileUpload = async (index: number, file: File) => {
-        setUploadingIndex(index);
+    const handleFileUpload = async (files: FileList | File[]) => {
+        setUploadingIndex(product.images.length); // Indicate upload started at the end of current list
         try {
-            const formData = new FormData();
-            formData.append('image', file);
-            const res = await fetch(`${getApiUrl()}/upload`, {
-                method: 'POST',
-                credentials: 'include',
-                body: formData,
-            });
-            if (!res.ok) {
-                const err = await res.json();
-                throw new Error(err.message || 'Upload failed');
+            const newUploadedImages: { url: string, altText: string, isPrimary: boolean }[] = [];
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const formData = new FormData();
+                formData.append('image', file);
+                const res = await fetch(`${getApiUrl()}/upload`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: formData,
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || 'Upload failed');
+                }
+                const data = await res.json();
+
+                // Keep track of new uploads
+                newUploadedImages.push({
+                    url: data.url,
+                    altText: '',
+                    isPrimary: product.images.length === 0 && i === 0 // Make first image primary if none exist
+                });
             }
-            const data = await res.json();
-            // data.url is like /uploads/filename.jpg — Next.js rewrites proxy this to the backend
-            handleImageChange(index, 'url', data.url);
+
+            // Append all new images at once to state
+            setProduct((prev) => ({
+                ...prev,
+                images: [...prev.images, ...newUploadedImages]
+            }));
+
         } catch (err: any) {
             toast({ title: 'Upload Error', description: err.message, variant: 'destructive' });
         } finally {
@@ -330,17 +347,20 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                                     <input
                                         type="file"
                                         accept="image/*"
+                                        multiple
                                         className="hidden"
                                         onChange={(e) => {
-                                            const file = e.target.files?.[0];
-                                            if (file) handleFileUpload(index, file);
+                                            const files = e.target.files;
+                                            if (files && files.length > 0) {
+                                                handleFileUpload(files);
+                                            }
                                         }}
                                     />
                                     <span className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-dashed border-gray-400 dark:border-gray-500 bg-white dark:bg-gray-800 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-                                        {uploadingIndex === index ? (
+                                        {uploadingIndex !== null ? (
                                             <><Loader2 className="w-4 h-4 animate-spin" /> Uploading...</>
                                         ) : (
-                                            <><Upload className="w-4 h-4" /> Choose Image File</>
+                                            <><Upload className="w-4 h-4" /> Choose Image File(s)</>
                                         )}
                                     </span>
                                 </label>
