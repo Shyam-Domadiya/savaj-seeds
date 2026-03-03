@@ -130,8 +130,17 @@ const productSchema: Schema = new Schema(
     }
 );
 
+import slugify from 'slugify';
+
 // Add text index for search functionality
 productSchema.index({ name: 'text', description: 'text', cropName: 'text', morphologicalCharacters: 'text' });
+
+productSchema.pre('validate', function (next: any) {
+    if (this.name && (!this.slug || this.isModified('name'))) {
+        this.slug = (slugify as any)(this.name, { lower: true, strict: true });
+    }
+    if (next) next();
+});
 
 const Product = mongoose.model<IProduct>('Product', productSchema);
 export default Product;

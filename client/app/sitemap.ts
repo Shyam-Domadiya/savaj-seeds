@@ -1,5 +1,8 @@
 import type { MetadataRoute } from 'next'
-import { getApiUrl } from '@/lib/api-config'
+import { getAllProducts } from '@/lib/actions/product'
+import { getAllBlogs } from '@/lib/actions/blog'
+
+export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://savajseeds.com'
@@ -9,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '',
         '/about',
         '/products',
+        '/blog',
         '/contact',
         '/certifications',
         '/privacy-policy',
@@ -24,22 +28,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic products
     let productRoutes: MetadataRoute.Sitemap = []
     try {
-        const res = await fetch(`${getApiUrl()}/products/active`, {
-            next: { revalidate: 3600 } // Revalidate every hour
-        })
-        if (res.ok) {
-            const data = await res.json()
-            const products = data.data || []
-            productRoutes = products.map((product: any) => ({
-                url: `${baseUrl}/products/${product._id}`,
-                lastModified: new Date(product.updatedAt || new Date()),
-                changeFrequency: 'weekly' as const,
-                priority: 0.6,
-            }))
-        }
+        const products = await getAllProducts()
+        productRoutes = products.map((product) => ({
+            url: `${baseUrl}/products/${product.id || product.slug}`,
+            lastModified: new Date(), // using current date since updatedAt isn't always available in Product interface, or we can add it later
+            changeFrequency: 'weekly' as const,
+            priority: 0.6,
+        }))
     } catch (error) {
         console.error('Failed to fetch products for sitemap:', error)
     }
 
-    return [...staticRoutes, ...productRoutes]
+    // Fetch dynamic blogs
+    let blogRoutes: MetadataRoute.Sitemap = []
+    try {
+        const blogs = await getAllBlogs()
+        blogRoutes = blogs.map((blog) => ({
+            url: `${baseUrl}/blog/${blog.slug}`,
+            lastModified: new Date(blog.publishedAt || new Date()),
+            changeFrequency: 'weekly' as const,
+            priority: 0.7,
+        }))
+    } catch (error) {
+        console.error('Failed to fetch blogs for sitemap:', error)
+    }
+
+    return [...staticRoutes, ...productRoutes, ...blogRoutes]
 }

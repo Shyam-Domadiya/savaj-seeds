@@ -1135,3 +1135,42 @@ export function generateEventSchema(event: {
     inLanguage: ['en-IN', 'hi-IN', 'gu-IN'],
   }
 }
+
+// Article Schema for Blog Posts
+export function generateArticleSchema(article: {
+  title: string
+  description: string
+  image: string
+  datePublished: string
+  dateModified?: string
+  authorName: string
+  url: string
+}) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://savajseeds.com'
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    image: article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`,
+    datePublished: article.datePublished,
+    dateModified: article.dateModified || article.datePublished,
+    author: {
+      '@type': 'Person',
+      name: article.authorName,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Savaj Seeds',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/images/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': article.url.startsWith('http') ? article.url : `${baseUrl}${article.url}`,
+    },
+  }
+}

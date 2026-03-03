@@ -11,6 +11,7 @@ import contactRoutes from './routes/contactRoutes';
 import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
 import uploadRoutes from './routes/uploadRoutes';
+import blogRoutes from './routes/blogRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -19,6 +20,8 @@ import http from 'http';
 import { typeDefs } from './graphql/typeDefs';
 import { resolvers } from './graphql/resolvers';
 import { createContext } from './graphql/context';
+import compression from 'compression';
+import helmet from 'helmet';
 
 dotenv.config();
 
@@ -35,22 +38,30 @@ app.set('trust proxy', 1);
 
 // Middleware
 app.use(express.json());
+app.use(compression());
+app.use(helmet({
+    crossOriginResourcePolicy: false, // Ensure image uploads aren't blocked cross-origin
+}));
 
 // Serve uploaded images as static files
 app.use('/uploads', express.static(require('path').join(process.cwd(), 'uploads')));
 
 const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:3001',
     'https://savaj-seeds.vercel.app',
+    'https://savajseeds.com',
+    'https://www.savajseeds.com',
     process.env.CLIENT_URL
 ].filter(Boolean) as string[];
 
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app') || origin.startsWith('http://localhost:')) {
             callback(null, true);
         } else {
+            console.error(`CORS Blocked: ${origin}`); // Helpful for debugging
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -81,6 +92,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/blogs', blogRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('API and GraphQL Server is running...');
