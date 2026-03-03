@@ -81,6 +81,7 @@ export interface Product {
   seedColor?: string;
   morphologicalCharacters?: string;
   cropName?: string;
+  varietyType?: string;
 
   category: ProductCategory;
   subcategory: string;
@@ -94,6 +95,10 @@ export interface Product {
   difficultyLevel: DifficultyLevel;
   yieldExpectation: string;
   maturityTime: string;
+  sowingTime?: string;
+  harvestTime?: string;
+  soilType?: string;
+  waterRequirement?: string;
   plantingInstructions: string;
   careInstructions: string;
   harvestingTips: string;

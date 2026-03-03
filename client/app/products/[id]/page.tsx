@@ -209,12 +209,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{spec.value}</span>
                     </div>
                   ))}
-                  {product.seedColor && (
+                  {product.varietyType && (
                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Seed Color</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.seedColor}</span>
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Variety Type</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.varietyType}</span>
                     </div>
                   )}
+                  {product.seasonality?.length > 0 && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Season</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.seasonality.join(', ')}</span>
+                    </div>
+                  )}
+
                 </CardContent>
               </Card>
 
@@ -223,15 +230,44 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <CardTitle className="text-lg md:text-xl font-black uppercase tracking-widest text-primary/80">Cultivation</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 md:pt-6 space-y-3 md:space-y-4">
-                  <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 group">
-                    <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Maturity</span>
-                    <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.maturityTime}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 group">
-                    <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Yield</span>
-                    <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.yieldExpectation}</span>
-                  </div>
+                  {product.maturityTime && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Maturity</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.maturityTime}</span>
+                    </div>
+                  )}
+                  {product.yieldExpectation && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Yield</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.yieldExpectation}</span>
+                    </div>
+                  )}
+                  {product.sowingTime && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Sowing Time</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.sowingTime}</span>
+                    </div>
+                  )}
+                  {product.harvestTime && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Harvest Time</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.harvestTime}</span>
+                    </div>
+                  )}
+                  {product.soilType && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Soil Type</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.soilType}</span>
+                    </div>
+                  )}
+                  {product.waterRequirement && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Water</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.waterRequirement}</span>
+                    </div>
+                  )}
                 </CardContent>
+
               </Card>
             </div>
           </div>
