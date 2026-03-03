@@ -79,13 +79,72 @@ export const deleteProduct = asyncHandler(async (req: Request, res: Response) =>
 // @route   POST /api/products
 // @access  Private/Admin
 export const createProduct = asyncHandler(async (req: Request, res: Response) => {
+    const {
+        name,
+        slug,
+        description,
+        longDescription,
+        category,
+        cropName,
+        seedColor,
+        morphologicalCharacters,
+        flowerColor,
+        fruitShape,
+        plantHeight,
+        seasonality,
+        maturityTime,
+        yieldExpectation,
+        difficultyLevel,
+        varietyType,
+        sowingTime,
+        harvestTime,
+        soilType,
+        waterRequirement,
+        images,
+        plantingInstructions,
+        careInstructions,
+        harvestingTips,
+        storageGuidance,
+        growingGuide,
+        availability,
+        featured,
+        seoMetadata
+    } = req.body;
+
+    // Optional: auto-generate a slug if not provided
+    const baseSlug = slug || (name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : 'new-product');
+    // Ensure slug uniqueness could be done by appending Date.now(), but let's trust the frontend for now
+
     const product = new Product({
-        name: 'Sample Name',
-        slug: 'sample-name-' + Date.now(),
-        category: 'Vegetable Seeds',
-        images: [{ url: '/logo.png', altText: 'Savaj Seeds Logo', isPrimary: true }],
-        description: 'Sample description',
-        seasonality: ['Rabi'],
+        name: name || 'Unnamed Product',
+        slug: baseSlug,
+        description,
+        longDescription,
+        category: category || 'Vegetable',
+        cropName,
+        seedColor,
+        morphologicalCharacters,
+        flowerColor,
+        fruitShape,
+        plantHeight,
+        seasonality,
+        maturityTime,
+        yieldExpectation,
+        difficultyLevel,
+        varietyType,
+        sowingTime,
+        harvestTime,
+        soilType,
+        waterRequirement,
+        images: images || [],
+        plantingInstructions,
+        careInstructions,
+        harvestingTips,
+        storageGuidance,
+        growingGuide,
+        availability: availability !== undefined ? availability : true,
+        featured: featured || false,
+        seoMetadata
     });
 
     const createdProduct = await product.save();
