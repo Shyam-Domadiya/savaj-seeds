@@ -76,6 +76,7 @@ export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
 export interface Product {
   id: string;
+  slug?: string;
   name: string;
   // Excel Data Fields
   seedColor?: string;

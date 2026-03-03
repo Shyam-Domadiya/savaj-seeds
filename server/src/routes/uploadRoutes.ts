@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -35,7 +35,7 @@ const fileFilter = (_req: Request, file: Express.Multer.File, cb: multer.FileFil
 const upload = multer({
     storage,
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    limits: { fileSize: 20 * 1024 * 1024 }, // 20MB limit
 });
 
 // POST /api/upload
@@ -46,6 +46,23 @@ router.post('/', upload.single('image'), (req: Request, res: Response) => {
     }
     const imageUrl = `/uploads/${req.file.filename}`;
     res.json({ url: imageUrl });
+});
+
+// Multer error handler (must have 4 args to be recognized as error middleware)
+router.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            res.status(413).json({ message: 'File too large. Maximum allowed size is 20MB.' });
+            return;
+        }
+        res.status(400).json({ message: err.message });
+        return;
+    }
+    if (err) {
+        res.status(400).json({ message: err.message || 'Upload failed' });
+        return;
+    }
+    _next();
 });
 
 export default router;

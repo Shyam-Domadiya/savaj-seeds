@@ -102,12 +102,12 @@ export function ProductImageGallery({ images, productName, className }: ProductI
   }
 
   return (
-    <div className={cn("space-y-4", className)}>
-      {/* Main Image Display */}
-      <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
+    <div className={cn("flex flex-col h-full", className)}>
+      {/* Main Image Display — fills all available height */}
+      <div className="relative flex-1 min-h-0 bg-white dark:bg-card overflow-hidden group">
         <div
           ref={containerRef}
-          className="relative w-full h-full cursor-zoom-in"
+          className="relative w-full h-full cursor-pointer"
           onMouseMove={handleMouseMove}
           onClick={handleZoomIn}
         >
@@ -117,8 +117,8 @@ export function ProductImageGallery({ images, productName, className }: ProductI
             alt={currentImage.altText}
             fill
             className={cn(
-              "object-cover transition-transform duration-300",
-              isZoomed && "cursor-zoom-out"
+              "object-contain transition-transform duration-300",
+              isZoomed && "cursor-pointer"
             )}
             style={{
               transform: `scale(${zoomLevel}) translate(${zoomPosition.x}px, ${zoomPosition.y}px)`,
@@ -231,56 +231,6 @@ export function ProductImageGallery({ images, productName, className }: ProductI
           {currentImage.caption}
         </p>
       )}
-
-      {/* Fullscreen Modal */}
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            variant="outline"
-            className="w-full mt-2"
-            aria-label="View in fullscreen"
-          >
-            View Fullscreen
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-4xl w-full h-[80vh] p-0" aria-describedby={undefined}>
-          <div className="sr-only">
-            <DialogTitle>Fullscreen View - {currentImage.altText}</DialogTitle>
-            <DialogDescription>
-              Enlarged view of {currentImage.altText}. Use arrow keys to navigate between images.
-            </DialogDescription>
-          </div>
-          <div className="relative w-full h-full">
-            <Image
-              src={currentImage.url}
-              alt={currentImage.altText}
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 80vw"
-            />
-            {sortedImages.length > 1 && (
-              <>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm"
-                  onClick={prevImage}
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm"
-                  onClick={nextImage}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
