@@ -214,21 +214,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </CardHeader>
                 <CardContent className="pt-4 md:pt-6 space-y-3 md:space-y-4">
                   {basicSpecs.map(spec => (
-                    <div key={spec.id} className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">{spec.name}</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{spec.value}</span>
+                    <div key={spec.id} className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">{spec.name}</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{spec.value}</span>
                     </div>
                   ))}
                   {product.varietyType && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Variety Type</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.varietyType}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Variety Type</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.varietyType}</span>
                     </div>
                   )}
                   {product.seasonality?.length > 0 && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Season</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.seasonality.join(', ')}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Season</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.seasonality.join(', ')}</span>
                     </div>
                   )}
 
@@ -242,39 +242,39 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <CardContent className="pt-4 md:pt-6 space-y-3 md:space-y-4">
 
                   {product.maturityTime && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Maturity</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.maturityTime}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Maturity</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.maturityTime}</span>
                     </div>
                   )}
                   {product.yieldExpectation && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Yield</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.yieldExpectation}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Yield</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.yieldExpectation}</span>
                     </div>
                   )}
                   {product.sowingTime && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Sowing Time</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.sowingTime}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Sowing Time</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.sowingTime}</span>
                     </div>
                   )}
                   {product.harvestTime && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Harvest Time</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.harvestTime}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Harvest Time</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.harvestTime}</span>
                     </div>
                   )}
                   {product.soilType && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Soil Type</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.soilType}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Soil Type</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.soilType}</span>
                     </div>
                   )}
                   {product.waterRequirement && (
-                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
-                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Water</span>
-                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.waterRequirement}</span>
+                    <div className="flex justify-between items-start gap-4 py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest shrink-0 pt-[2px]">Water</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors text-right">{product.waterRequirement}</span>
                     </div>
                   )}
                 </CardContent>

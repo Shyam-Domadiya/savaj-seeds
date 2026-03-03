@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import { Toaster } from "@/components/ui/toaster"
 import { BackToTop } from "@/components/layout/back-to-top"
@@ -26,7 +27,7 @@ const _geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Savaj Seeds - Happiness from the Farmer's Field | Premium Quality Seeds",
+  title: "Savaj Seeds | Premium Quality Seeds – Gujarat",
   description:
     "Premium quality vegetable seeds, crop seeds, and hybrid seeds for optimal farming growth. Trusted seed supplier committed to farmer success with over a decade of agricultural excellence. Leading agricultural solutions provider in Gujarat, India.",
   generator: "Next.js",
@@ -56,11 +57,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://savajseeds.com'),
   alternates: {
     canonical: '/',
-    languages: {
-      'en-US': '/en-US',
-      'hi-IN': '/hi-IN',
-      'gu-IN': '/gu-IN',
-    },
   },
   robots: {
     index: true,
@@ -208,7 +204,9 @@ export default function RootLayout({
           <BottomNav />
           <SpeedInsights />
         </Providers>
-
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   )

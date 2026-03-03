@@ -12,6 +12,7 @@ import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import blogRoutes from './routes/blogRoutes';
+import seoRoutes from './routes/seoRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -93,6 +94,9 @@ app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/blogs', blogRoutes);
+
+// Dynamic Sitemap Route
+app.use('/sitemap.xml', seoRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('API and GraphQL Server is running...');

@@ -227,26 +227,12 @@ export function generateBusinessSchema() {
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         opens: '09:00',
         closes: '18:00',
-        validFrom: '2024-01-01',
-        validThrough: '2024-12-31',
       },
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: 'Saturday',
         opens: '09:00',
         closes: '14:00',
-        validFrom: '2024-01-01',
-        validThrough: '2024-12-31',
-      },
-    ],
-    specialOpeningHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        opens: '08:00',
-        closes: '20:00',
-        validFrom: '2024-03-01',
-        validThrough: '2024-06-30',
-        description: 'Extended hours during planting season',
       },
     ],
     sameAs: [
@@ -518,10 +504,7 @@ export function generateBusinessSchema() {
       'Export Excellence Award 2020',
     ],
     naics: '111219', // Other Vegetable and Melon Farming
-    duns: '123456789',
-    taxID: 'GSTIN123456789',
-    vatID: 'VAT123456789',
-    leiCode: 'LEI123456789012345678',
+    taxID: '24AFKFS9042R1Z5', // actual GSTIN
     isicV4: '0119', // Growing of other non-perennial crops
     parentOrganization: {
       '@type': 'Organization',
