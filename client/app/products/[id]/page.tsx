@@ -230,6 +230,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <CardTitle className="text-lg md:text-xl font-black uppercase tracking-widest text-primary/80">Cultivation</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 md:pt-6 space-y-3 md:space-y-4">
+                  {product.cropName && (
+                    <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
+                      <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Crop Name</span>
+                      <span className="font-black text-xs md:text-sm group-hover:text-primary transition-colors">{product.cropName}</span>
+                    </div>
+                  )}
                   {product.maturityTime && (
                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
                       <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Maturity</span>
