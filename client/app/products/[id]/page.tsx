@@ -165,20 +165,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {/* Header info */}
               <div className="relative z-10 space-y-6 md:space-y-8">
                 <div className="space-y-4 md:space-y-6">
-                  <div className="flex flex-wrap gap-2 md:gap-3">
-                    <Badge variant="secondary" className={`px-3 py-1 md:px-4 md:py-1.5 text-[9px] md:text-xs font-black uppercase tracking-widest ${visuals.accent} rounded-full`}>
-                      {product.subcategory !== 'General' ? product.subcategory : product.category}
-                    </Badge>
-                    {product.featured && (
+                  {product.featured && (
+                    <div className="flex flex-wrap gap-2 md:gap-3">
                       <Badge className="bg-gradient-to-r from-primary to-emerald-500 text-white border-0 shadow-lg px-3 py-1 md:px-4 md:py-1.5 text-[9px] md:text-xs font-black uppercase tracking-widest rounded-full">
                         Featured Collection
                       </Badge>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
-                  <h1 className="text-3xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground leading-[1.1] md:leading-[1] text-balance">
-                    {product.name}
-                  </h1>
+                  <div className="flex flex-col gap-2 md:gap-3 items-start">
+                    {product.cropName && (
+                      <div className="inline-flex items-center px-4 py-1.5 md:px-5 md:py-2 rounded-xl md:rounded-2xl bg-primary/20 text-primary border border-primary/30 font-black uppercase text-[10px] md:text-xs tracking-[0.2em] shadow-sm backdrop-blur-md">
+                        {product.cropName}
+                      </div>
+                    )}
+                    <h1 className="text-3xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground leading-[1.1] md:leading-[1] text-balance">
+                      {product.name}
+                    </h1>
+                  </div>
 
                   <p className="text-lg md:text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl">
                     {product.description}
@@ -230,6 +234,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <CardTitle className="text-lg md:text-xl font-black uppercase tracking-widest text-primary/80">Cultivation</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 md:pt-6 space-y-3 md:space-y-4">
+
                   {product.maturityTime && (
                     <div className="flex justify-between items-center py-2 md:py-3 border-b border-border/40 last:border-0 group">
                       <span className="text-muted-foreground font-bold text-[10px] md:text-xs uppercase tracking-widest">Maturity</span>
@@ -274,31 +279,33 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         {/* Related Products Section */}
-        {relatedProducts.length > 0 && (
-          <section className="mt-16 md:mt-24 border-t border-border/50 pt-16 md:pt-24">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-12 md:mb-16">
-              <div className="space-y-3 md:space-y-4">
-                <Badge variant="secondary" className={`px-4 py-1.5 md:px-5 md:py-2 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] ${visuals.accent} rounded-full`}>
-                  Discovery
-                </Badge>
-                <h2 className="text-3xl md:text-6xl font-black tracking-tight leading-none">Similar <span className="text-primary italic">Varieties</span></h2>
+        {
+          relatedProducts.length > 0 && (
+            <section className="mt-16 md:mt-24 border-t border-border/50 pt-16 md:pt-24">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-12 md:mb-16">
+                <div className="space-y-3 md:space-y-4">
+                  <Badge variant="secondary" className={`px-4 py-1.5 md:px-5 md:py-2 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] ${visuals.accent} rounded-full`}>
+                    Discovery
+                  </Badge>
+                  <h2 className="text-3xl md:text-6xl font-black tracking-tight leading-none">Similar <span className="text-primary italic">Varieties</span></h2>
+                </div>
+                <Button variant="outline" asChild className="rounded-full h-12 md:h-14 px-8 md:px-10 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 hover:bg-primary hover:text-white hover:border-primary transition-all">
+                  <Link href="/products">View All Seeds</Link>
+                </Button>
               </div>
-              <Button variant="outline" asChild className="rounded-full h-12 md:h-14 px-8 md:px-10 font-black uppercase tracking-widest text-[10px] md:text-xs border-2 hover:bg-primary hover:text-white hover:border-primary transition-all">
-                <Link href="/products">View All Seeds</Link>
-              </Button>
-            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
-              {relatedProducts.map(p => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
-          </section>
-        )}
-      </main>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+                {relatedProducts.map(p => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </main >
 
       <SiteFooter />
 
-    </div>
+    </div >
   )
 }
