@@ -200,7 +200,7 @@ export function ProductImageGallery({ images, productName, className }: ProductI
         <div className="flex gap-2 overflow-x-auto pb-2">
           {sortedImages.map((image, index) => (
             <button
-              key={image.id}
+              key={image.id || image.url || index}
               className={cn(
                 "relative flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all duration-200",
                 index === currentImageIndex
