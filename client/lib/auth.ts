@@ -1,7 +1,6 @@
 export interface IAdmin {
     _id: string;
     email: string;
-    // token is intentionally not stored here — it lives in an HttpOnly cookie
 }
 
 export const getAdminUser = (): IAdmin | null => {
@@ -23,11 +22,28 @@ export const setAdminUser = (admin: IAdmin) => {
 export const removeAdminUser = () => {
     if (typeof window !== 'undefined') {
         localStorage.removeItem('adminUser');
+        localStorage.removeItem('adminToken');
     }
 };
 
-// No longer sends Authorization header — auth is via HttpOnly cookie
-// Use `credentials: 'include'` in all authenticated fetch calls instead
+export const setAdminToken = (token: string) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('adminToken', token);
+    }
+};
+
+export const getAdminToken = (): string | null => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('adminToken');
+    }
+    return null;
+};
+
+// Returns Authorization header for all protected admin API calls
 export const getAuthHeader = (): Record<string, string> => {
+    const token = getAdminToken();
+    if (token) {
+        return { Authorization: `Bearer ${token}` };
+    }
     return {};
 };

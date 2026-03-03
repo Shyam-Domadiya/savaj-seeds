@@ -10,6 +10,7 @@ import connectDB from './config/db';
 import contactRoutes from './routes/contactRoutes';
 import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
+import uploadRoutes from './routes/uploadRoutes';
 import { notFound, errorHandler } from './middleware/errorMiddleware';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -34,6 +35,9 @@ app.set('trust proxy', 1);
 
 // Middleware
 app.use(express.json());
+
+// Serve uploaded images as static files
+app.use('/uploads', express.static(require('path').join(process.cwd(), 'uploads')));
 
 const allowedOrigins = [
     'http://localhost:3000',
@@ -65,8 +69,8 @@ app.use(session({
     }),
     cookie: {
         httpOnly: true,
-        secure: isProduction,               // HTTPS only in production
-        sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin (Vercel <-> Render)
+        secure: isProduction,
+        sameSite: isProduction ? ('none' as const) : ('lax' as const),
         maxAge: 30 * 24 * 60 * 60 * 1000,  // 30 days in ms
     },
     name: 'savaj.sid', // custom cookie name
@@ -76,6 +80,7 @@ app.use(session({
 app.use('/api/contact', contactRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('API and GraphQL Server is running...');

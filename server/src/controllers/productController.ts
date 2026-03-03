@@ -113,6 +113,11 @@ export const updateProduct = asyncHandler(async (req: Request, res: Response) =>
             maturityTime,
             yieldExpectation,
             difficultyLevel,
+            varietyType,
+            sowingTime,
+            harvestTime,
+            soilType,
+            waterRequirement,
             images,
             plantingInstructions,
             careInstructions,
@@ -146,6 +151,11 @@ export const updateProduct = asyncHandler(async (req: Request, res: Response) =>
             product.maturityTime = maturityTime || product.maturityTime;
             product.yieldExpectation = yieldExpectation || product.yieldExpectation;
             product.difficultyLevel = difficultyLevel || product.difficultyLevel;
+            product.varietyType = varietyType || product.varietyType;
+            product.sowingTime = sowingTime || product.sowingTime;
+            product.harvestTime = harvestTime || product.harvestTime;
+            product.soilType = soilType || product.soilType;
+            product.waterRequirement = waterRequirement || product.waterRequirement;
 
             // Images
             product.images = images || product.images;

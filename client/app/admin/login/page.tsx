@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { getApiUrl } from '@/lib/api-config';
 import { useRouter } from 'next/navigation';
-import { setAdminUser } from '@/lib/auth';
+import { setAdminUser, setAdminToken } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,8 +34,8 @@ export default function AdminLogin() {
             const data = await res.json();
 
             if (res.ok) {
-                // Only store display info (not the token — it's in the HttpOnly cookie)
                 setAdminUser({ _id: data._id, email: data.email });
+                if (data.token) setAdminToken(data.token);
                 toast({
                     title: 'Login Successful',
                     description: 'Welcome back, Admin!',

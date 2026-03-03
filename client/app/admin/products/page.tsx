@@ -1,6 +1,7 @@
 'use client';
 
 import { getApiUrl } from '@/lib/api-config';
+import { getAuthHeader } from '@/lib/auth';
 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -44,7 +45,8 @@ export default function AdminProducts() {
         mutationFn: async (id: string) => {
             const res = await fetch(`${getApiUrl()}/products/${id}`, {
                 method: 'DELETE',
-                credentials: 'include', // Auth via HttpOnly cookie
+                headers: { ...getAuthHeader() },
+                credentials: 'include',
             });
             if (!res.ok) {
                 const data = await res.json();

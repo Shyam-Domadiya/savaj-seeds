@@ -31,6 +31,11 @@ export interface IProduct extends Document {
     maturityTime?: string;
     yieldExpectation?: string;
     difficultyLevel?: 'Beginner' | 'Intermediate' | 'Advanced';
+    varietyType?: string;       // Hybrid / Open Pollinated / Organic
+    sowingTime?: string;
+    harvestTime?: string;
+    soilType?: string;          // Black soil, Loamy, Sandy
+    waterRequirement?: string;  // Low / Medium / High
 
     // Images
     images: IProductImage[];
@@ -84,6 +89,11 @@ const productSchema: Schema = new Schema(
             enum: ['Beginner', 'Intermediate', 'Advanced'],
             default: 'Intermediate'
         },
+        varietyType: { type: String },
+        sowingTime: { type: String },
+        harvestTime: { type: String },
+        soilType: { type: String },
+        waterRequirement: { type: String },
 
         // Images
         images: [{

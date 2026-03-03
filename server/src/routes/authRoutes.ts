@@ -1,5 +1,6 @@
 import express, { Request } from 'express';
 import Admin from '../models/Admin';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ declare module 'express-session' {
     }
 }
 
-// @desc    Auth admin & create session
+// @desc    Auth admin & create session + return JWT
 // @route   POST /api/auth/login
 // @access  Public
 router.post('/login', async (req, res) => {
@@ -22,10 +23,17 @@ router.post('/login', async (req, res) => {
         // Store admin ID in the session (persisted to MongoDB via MongoStore)
         req.session.adminId = (admin._id as unknown) as string;
 
+        // Also return a JWT for clients that can't use cookies (e.g. through Next.js proxy)
+        const token = jwt.sign(
+            { id: admin._id },
+            process.env.JWT_SECRET as string,
+            { expiresIn: '30d' }
+        );
+
         res.json({
             _id: admin._id,
             email: admin.email,
-            // No token — auth is now session-based
+            token,
         });
     } else {
         res.status(401);
