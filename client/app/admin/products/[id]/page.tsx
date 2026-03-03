@@ -2,22 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { getApiUrl } from '@/lib/api-config';
+import { getAuthHeader } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { use } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, ArrowLeft, Plus, X } from 'lucide-react';
+import { Loader2, ArrowLeft, Plus, X, Upload, ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 
 interface Product {
@@ -25,23 +18,18 @@ interface Product {
     name: string;
     slug: string;
     description: string;
-    longDescription?: string;
     category: string;
     cropName?: string;
     seedColor?: string;
-    morphologicalCharacters?: string;
-    flowerColor?: string;
-    fruitShape?: string;
-    plantHeight?: string;
+    varietyType?: string;
     seasonality: string[];
     maturityTime?: string;
+    sowingTime?: string;
+    harvestTime?: string;
     yieldExpectation?: string;
-    difficultyLevel?: string;
+    soilType?: string;
+    waterRequirement?: string;
     images: { url: string; altText: string; isPrimary: boolean }[];
-    plantingInstructions?: string;
-    careInstructions?: string;
-    harvestingTips?: string;
-    storageGuidance?: string;
     availability: boolean;
     featured: boolean;
 }
@@ -51,6 +39,7 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
     const router = useRouter();
     const { toast } = useToast();
     const [saving, setSaving] = useState(false);
+    const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
 
     // Initial State
     const [product, setProduct] = useState<Product>({
@@ -103,9 +92,6 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
         setProduct((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSelectChange = (name: string, value: string) => {
-        setProduct((prev) => ({ ...prev, [name]: value }));
-    };
 
     const handleImageChange = (index: number, field: string, value: string | boolean) => {
         const newImages = [...product.images];
@@ -123,6 +109,30 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
     const removeImage = (index: number) => {
         const newImages = product.images.filter((_, i) => i !== index);
         setProduct((prev) => ({ ...prev, images: newImages }));
+    };
+
+    const handleFileUpload = async (index: number, file: File) => {
+        setUploadingIndex(index);
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await fetch(`${getApiUrl()}/upload`, {
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Upload failed');
+            }
+            const data = await res.json();
+            // data.url is like /uploads/filename.jpg — Next.js rewrites proxy this to the backend
+            handleImageChange(index, 'url', data.url);
+        } catch (err: any) {
+            toast({ title: 'Upload Error', description: err.message, variant: 'destructive' });
+        } finally {
+            setUploadingIndex(null);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -150,8 +160,9 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                 method,
                 headers: {
                     'Content-Type': 'application/json',
+                    ...getAuthHeader(),
                 },
-                credentials: 'include', // Auth via HttpOnly cookie
+                credentials: 'include',
                 body: JSON.stringify(cleanedProduct),
             });
 
@@ -162,7 +173,8 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                 });
                 router.push('/admin/products');
             } else {
-                throw new Error('Update failed');
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.message || `Save failed (${res.status})`);
             }
         } catch (error: any) {
             toast({
@@ -188,128 +200,217 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                 <h1 className="text-2xl font-bold">{id === 'new' ? 'Create Product' : 'Edit Product'}</h1>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border dark:border-gray-700">
+            <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border dark:border-gray-700">
 
-                {/* Basic Info */}
-                <div className="space-y-4">
-                    <h2 className="text-xl font-semibold border-b pb-2">Basic Info</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label>Name</Label>
-                            <Input name="name" value={product.name} onChange={handleChange} required />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Slug</Label>
-                            <Input name="slug" value={product.slug} onChange={handleChange} required />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Category</Label>
-                            <Select value={product.category} onValueChange={(val) => handleSelectChange('category', val)}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select Category" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Cotton">Cotton</SelectItem>
-                                    <SelectItem value="Wheat">Wheat</SelectItem>
-                                    <SelectItem value="Groundnut">Groundnut</SelectItem>
-                                    <SelectItem value="Cumin">Cumin</SelectItem>
-                                    <SelectItem value="Sesame">Sesame</SelectItem>
-                                    <SelectItem value="Castor">Castor</SelectItem>
-                                    <SelectItem value="Maize">Maize</SelectItem>
-                                    <SelectItem value="Gram">Gram</SelectItem>
-                                    <SelectItem value="Millet">Millet</SelectItem>
-                                    <SelectItem value="Coriander">Coriander</SelectItem>
-                                    <SelectItem value="Pigeon Pea">Pigeon Pea</SelectItem>
-                                    <SelectItem value="Vegetable">Vegetable</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Difficulty</Label>
-                            <Select value={product.difficultyLevel} onValueChange={(val) => handleSelectChange('difficultyLevel', val)}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Beginner">Beginner</SelectItem>
-                                    <SelectItem value="Intermediate">Intermediate</SelectItem>
-                                    <SelectItem value="Advanced">Advanced</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <Label>Short Description</Label>
-                        <Input name="description" value={product.description} onChange={handleChange} />
-                    </div>
-                    <div className="space-y-2">
-                        <Label>Long Description</Label>
-                        <Textarea name="longDescription" value={product.longDescription || ''} onChange={handleChange} rows={5} />
+                {/* Product Name */}
+                <div className="space-y-2">
+                    <Label>Product Name <span className="text-red-500">*</span></Label>
+                    <Input
+                        name="name"
+                        value={product.name}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            setProduct((prev) => ({
+                                ...prev,
+                                name: val,
+                                // auto-generate slug from name
+                                slug: val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+                            }));
+                        }}
+                        placeholder="e.g. Savaj Premium Cotton"
+                        required
+                    />
+                </div>
+
+                {/* Crop Name */}
+                <div className="space-y-2">
+                    <Label>Crop Name</Label>
+                    <Input name="cropName" value={product.cropName || ''} onChange={handleChange} placeholder="e.g. Maize, Cotton, Wheat" />
+                </div>
+
+                {/* Seed Color */}
+                <div className="space-y-2">
+                    <Label>Seed Color</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {['Yellow', 'White', 'Brown', 'Black', 'Red', 'Green'].map((color) => {
+                            const selected = product.seedColor === color;
+                            return (
+                                <button key={color} type="button"
+                                    onClick={() => setProduct((p) => ({ ...p, seedColor: selected ? '' : color }))}
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
+                                        }`}>{color}</button>
+                            );
+                        })}
                     </div>
                 </div>
 
-                {/* Attributes */}
-                <div className="space-y-4">
-                    <h2 className="text-xl font-semibold border-b pb-2">Attributes</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <Label>Crop Name</Label>
-                            <Input name="cropName" value={product.cropName || ''} onChange={handleChange} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Seed Color</Label>
-                            <Input name="seedColor" value={product.seedColor || ''} onChange={handleChange} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Maturity Time</Label>
-                            <Input name="maturityTime" value={product.maturityTime || ''} onChange={handleChange} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Yield Expectation</Label>
-                            <Input name="yieldExpectation" value={product.yieldExpectation || ''} onChange={handleChange} />
-                        </div>
+                {/* Variety Type */}
+                <div className="space-y-2">
+                    <Label>Variety Type</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {['Hybrid', 'Open Pollinated', 'Organic'].map((type) => {
+                            const selected = product.varietyType === type;
+                            return (
+                                <button key={type} type="button"
+                                    onClick={() => setProduct((p) => ({ ...p, varietyType: selected ? '' : type }))}
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
+                                        }`}>{type}</button>
+                            );
+                        })}
                     </div>
+                </div>
+
+                {/* Season */}
+                <div className="space-y-2">
+                    <Label>Season</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {['Kharif', 'Rabi', 'Zaid', 'Year-Round'].map((season) => {
+                            const selected = product.seasonality.includes(season);
+                            return (
+                                <button key={season} type="button"
+                                    onClick={() => setProduct((prev) => ({
+                                        ...prev,
+                                        seasonality: selected
+                                            ? prev.seasonality.filter((s) => s !== season)
+                                            : [...prev.seasonality, season],
+                                    }))}
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
+                                        }`}>{season}</button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Two-column grid for text fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label>Maturity Time</Label>
+                        <Input name="maturityTime" value={product.maturityTime || ''} onChange={handleChange} placeholder="e.g. 90–110 days" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Yield Expectation</Label>
+                        <Input name="yieldExpectation" value={product.yieldExpectation || ''} onChange={handleChange} placeholder="e.g. 25–30 quintal/acre" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Sowing Time</Label>
+                        <Input name="sowingTime" value={product.sowingTime || ''} onChange={handleChange} placeholder="e.g. June–July" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Harvest Time</Label>
+                        <Input name="harvestTime" value={product.harvestTime || ''} onChange={handleChange} placeholder="e.g. October–November" />
+                    </div>
+                </div>
+
+                {/* Suitable Soil Type */}
+                <div className="space-y-2">
+                    <Label>Suitable Soil Type</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {['Black Soil', 'Loamy', 'Sandy', 'Clay', 'Red Soil'].map((soil) => {
+                            const selected = product.soilType === soil;
+                            return (
+                                <button key={soil} type="button"
+                                    onClick={() => setProduct((p) => ({ ...p, soilType: selected ? '' : soil }))}
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
+                                        }`}>{soil}</button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Water Requirement */}
+                <div className="space-y-2">
+                    <Label>Water Requirement</Label>
+                    <div className="flex flex-wrap gap-2">
+                        {['Low', 'Medium', 'High'].map((level) => {
+                            const selected = product.waterRequirement === level;
+                            return (
+                                <button key={level} type="button"
+                                    onClick={() => setProduct((p) => ({ ...p, waterRequirement: selected ? '' : level }))}
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
+                                        }`}>{level}</button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Short Description */}
+                <div className="space-y-2">
+                    <Label>Short Description</Label>
+                    <Input name="description" value={product.description} onChange={handleChange} placeholder="Brief description of the product" />
                 </div>
 
                 {/* Images */}
                 <div className="space-y-4">
                     <div className="flex justify-between items-center border-b pb-2">
                         <h2 className="text-xl font-semibold">Images</h2>
-                        <Button type="button" onClick={addImage} variant="outline" size="sm"><Plus className="w-4 h-4 mr-2" /> Add Image</Button>
+                        <Button type="button" onClick={addImage} variant="outline" size="sm">
+                            <Plus className="w-4 h-4 mr-2" /> Add Image
+                        </Button>
                     </div>
+
+                    {product.images.length === 0 && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400 italic">No images yet. Click &quot;Add Image&quot; to upload one.</p>
+                    )}
+
                     {product.images.map((img, index) => (
-                        <div key={index} className="flex space-x-2 items-end">
-                            <div className="flex-1 space-y-2">
-                                <Label>URL</Label>
-                                <Input value={img.url} onChange={(e) => handleImageChange(index, 'url', e.target.value)} />
+                        <div key={index} className="rounded-lg border dark:border-gray-600 p-4 space-y-3 bg-gray-50 dark:bg-gray-900">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Image {index + 1}</span>
+                                <Button type="button" variant="destructive" size="icon" onClick={() => removeImage(index)}>
+                                    <X className="w-4 h-4" />
+                                </Button>
                             </div>
-                            <div className="flex-1 space-y-2">
+
+                            {/* Image preview */}
+                            {img.url && (
+                                <div className="w-full flex justify-center">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={img.url}
+                                        alt={img.altText || 'Preview'}
+                                        className="h-40 object-contain rounded-md border dark:border-gray-600"
+                                    />
+                                </div>
+                            )}
+
+                            {/* File upload button */}
+                            <div className="space-y-1">
+                                <Label className="flex items-center gap-1"><ImageIcon className="w-3 h-3" /> Upload from PC</Label>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) handleFileUpload(index, file);
+                                        }}
+                                    />
+                                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-dashed border-gray-400 dark:border-gray-500 bg-white dark:bg-gray-800 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                                        {uploadingIndex === index ? (
+                                            <><Loader2 className="w-4 h-4 animate-spin" /> Uploading...</>
+                                        ) : (
+                                            <><Upload className="w-4 h-4" /> Choose Image File</>
+                                        )}
+                                    </span>
+                                </label>
+                            </div>
+
+
+                            {/* Alt text */}
+                            <div className="space-y-1">
                                 <Label>Alt Text</Label>
-                                <Input value={img.altText} onChange={(e) => handleImageChange(index, 'altText', e.target.value)} />
+                                <Input
+                                    placeholder="Describe the image (for accessibility & SEO)"
+                                    value={img.altText}
+                                    onChange={(e) => handleImageChange(index, 'altText', e.target.value)}
+                                />
                             </div>
-                            <Button type="button" variant="destructive" size="icon" onClick={() => removeImage(index)}>
-                                <X className="w-4 h-4" />
-                            </Button>
                         </div>
                     ))}
                 </div>
 
-                {/* Guides */}
-                <div className="space-y-4">
-                    <h2 className="text-xl font-semibold border-b pb-2">Guides</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        <div className="space-y-2">
-                            <Label>Planting Instructions</Label>
-                            <Textarea name="plantingInstructions" value={product.plantingInstructions || ''} onChange={handleChange} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Care Instructions</Label>
-                            <Textarea name="careInstructions" value={product.careInstructions || ''} onChange={handleChange} />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex justify-end pt-6">
+                <div className="flex justify-end pt-4">
                     <Button type="submit" className="bg-green-600 hover:bg-green-700" disabled={saving}>
                         {saving ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...</> : 'Save Changes'}
                     </Button>

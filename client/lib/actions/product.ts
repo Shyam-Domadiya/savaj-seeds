@@ -30,7 +30,7 @@ const transformProduct = (p: any): Product => {
 export async function getAllProducts(): Promise<Product[]> {
     try {
         const res = await fetch(`${API_URL}/products`, {
-            next: { revalidate: 3600 },
+            cache: 'no-store',
         });
 
         if (!res.ok) {

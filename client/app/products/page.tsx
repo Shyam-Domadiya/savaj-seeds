@@ -25,7 +25,7 @@ import { getAllProducts } from "@/lib/actions/product"
 
 
 
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 0; // Always fetch live data (no cache)
 
 export default async function ProductsPage() {
   const products = await getAllProducts()
