@@ -231,54 +231,24 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                 {/* Seed Color */}
                 <div className="space-y-2">
                     <Label>Seed Color</Label>
-                    <div className="flex flex-wrap gap-2">
-                        {['Yellow', 'White', 'Brown', 'Black', 'Red', 'Green'].map((color) => {
-                            const selected = product.seedColor === color;
-                            return (
-                                <button key={color} type="button"
-                                    onClick={() => setProduct((p) => ({ ...p, seedColor: selected ? '' : color }))}
-                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
-                                        }`}>{color}</button>
-                            );
-                        })}
-                    </div>
+                    <Input name="seedColor" value={product.seedColor || ''} onChange={handleChange} placeholder="e.g. Yellow, White, Brown" />
                 </div>
 
                 {/* Variety Type */}
                 <div className="space-y-2">
                     <Label>Variety Type</Label>
-                    <div className="flex flex-wrap gap-2">
-                        {['Hybrid', 'Open Pollinated', 'Organic'].map((type) => {
-                            const selected = product.varietyType === type;
-                            return (
-                                <button key={type} type="button"
-                                    onClick={() => setProduct((p) => ({ ...p, varietyType: selected ? '' : type }))}
-                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
-                                        }`}>{type}</button>
-                            );
-                        })}
-                    </div>
+                    <Input name="varietyType" value={product.varietyType || ''} onChange={handleChange} placeholder="e.g. Hybrid, Open Pollinated" />
                 </div>
 
                 {/* Season */}
                 <div className="space-y-2">
                     <Label>Season</Label>
-                    <div className="flex flex-wrap gap-2">
-                        {['Kharif', 'Rabi', 'Zaid', 'Year-Round'].map((season) => {
-                            const selected = product.seasonality.includes(season);
-                            return (
-                                <button key={season} type="button"
-                                    onClick={() => setProduct((prev) => ({
-                                        ...prev,
-                                        seasonality: selected
-                                            ? prev.seasonality.filter((s) => s !== season)
-                                            : [...prev.seasonality, season],
-                                    }))}
-                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
-                                        }`}>{season}</button>
-                            );
-                        })}
-                    </div>
+                    <Input
+                        name="seasonality"
+                        value={product.seasonality?.join(', ') || ''}
+                        onChange={(e) => setProduct(p => ({ ...p, seasonality: e.target.value.split(',').map(s => s.trim()).filter(Boolean) }))}
+                        placeholder="e.g. Kharif, Rabi"
+                    />
                 </div>
 
                 {/* Two-column grid for text fields */}
@@ -304,33 +274,13 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                 {/* Suitable Soil Type */}
                 <div className="space-y-2">
                     <Label>Suitable Soil Type</Label>
-                    <div className="flex flex-wrap gap-2">
-                        {['Black Soil', 'Loamy', 'Sandy', 'Clay', 'Red Soil'].map((soil) => {
-                            const selected = product.soilType === soil;
-                            return (
-                                <button key={soil} type="button"
-                                    onClick={() => setProduct((p) => ({ ...p, soilType: selected ? '' : soil }))}
-                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
-                                        }`}>{soil}</button>
-                            );
-                        })}
-                    </div>
+                    <Input name="soilType" value={product.soilType || ''} onChange={handleChange} placeholder="e.g. Black Soil, Loamy" />
                 </div>
 
                 {/* Water Requirement */}
                 <div className="space-y-2">
                     <Label>Water Requirement</Label>
-                    <div className="flex flex-wrap gap-2">
-                        {['Low', 'Medium', 'High'].map((level) => {
-                            const selected = product.waterRequirement === level;
-                            return (
-                                <button key={level} type="button"
-                                    onClick={() => setProduct((p) => ({ ...p, waterRequirement: selected ? '' : level }))}
-                                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${selected ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-500 hover:border-green-500'
-                                        }`}>{level}</button>
-                            );
-                        })}
-                    </div>
+                    <Input name="waterRequirement" value={product.waterRequirement || ''} onChange={handleChange} placeholder="e.g. Low, Medium, High" />
                 </div>
 
                 {/* Short Description */}
