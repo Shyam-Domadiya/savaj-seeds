@@ -6,14 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { 
-  MessageCircle, 
-  X, 
-  Send, 
-  User, 
-  Bot, 
-  Phone, 
-  Mail, 
+import {
+  MessageCircle,
+  X,
+  Send,
+  User,
+  Bot,
+  Phone,
+  Mail,
   MessageSquare,
   Clock
 } from "lucide-react"
@@ -45,7 +45,7 @@ const botResponses = {
   bulk: "Excellent! We offer competitive pricing for bulk orders. Our team can provide customized quotes based on your requirements. Let me connect you with our sales team.",
   technical: "Our agricultural experts are here to help! We provide comprehensive technical support including planting guides, pest management, and crop optimization advice.",
   pricing: "We offer competitive pricing across all our product lines. For detailed pricing information, I'll connect you with our sales team who can provide accurate quotes.",
-  default: "Thank you for your message. Our team will get back to you shortly. For immediate assistance, you can also call us at +91 79 2345 6789.",
+  default: "Thank you for your message. Our team will get back to you shortly. For immediate assistance, you can also call us at +91 8141430417.",
 }
 
 export function LiveChatWidget() {
@@ -79,7 +79,7 @@ export function LiveChatWidget() {
 
   const getBotResponse = (userMessage: string): string => {
     const message = userMessage.toLowerCase()
-    
+
     if (message.includes("product") || message.includes("seed") || message.includes("variety")) {
       return botResponses.product
     }
@@ -92,7 +92,7 @@ export function LiveChatWidget() {
     if (message.includes("price") || message.includes("cost") || message.includes("pricing")) {
       return botResponses.pricing
     }
-    
+
     return botResponses.default
   }
 
@@ -211,13 +211,13 @@ export function LiveChatWidget() {
                         <p>{message.text}</p>
                         <p className={cn(
                           "text-xs mt-1",
-                          message.sender === "user" 
-                            ? "text-primary-foreground/70" 
+                          message.sender === "user"
+                            ? "text-primary-foreground/70"
                             : "text-muted-foreground"
                         )}>
-                          {message.timestamp.toLocaleTimeString([], { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
+                          {message.timestamp.toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit'
                           })}
                         </p>
                       </div>
@@ -279,7 +279,7 @@ export function LiveChatWidget() {
                     <Send className="h-4 w-4" />
                   </Button>
                 </form>
-                
+
                 {/* Contact Options */}
                 <div className="flex justify-center gap-4 mt-3 pt-3 border-t border-border/50">
                   <Button
@@ -295,7 +295,7 @@ export function LiveChatWidget() {
                     variant="ghost"
                     size="sm"
                     className="text-xs"
-                    onClick={() => window.open("mailto:info@savajseeds.com")}
+                    onClick={() => window.open("mailto:savajseeds@gmail.com")}
                   >
                     <Mail className="w-3 h-3 mr-1" />
                     Email

@@ -24,14 +24,14 @@ export default function ContactPage() {
 
   // Enhanced local business schema for contact page
   const localBusinessSchema = generateLocalBusinessSchema({
-    name: "Savaj Seeds - Ahmedabad Office",
-    address: "123, Agricultural Complex, GIDC Estate",
-    city: "Ahmedabad",
-    state: "Gujarat",
-    postalCode: "380015",
-    phone: "+91-79-2345-6789",
-    latitude: 23.0225,
-    longitude: 72.5714,
+    name: "SAVAJ SEED COMPANY - Vadal Office",
+    address: "1090, NEAR RADHAWADI CHOWK, VADAL",
+    city: "JUNAGADH",
+    state: "GUJARAT",
+    postalCode: "362310",
+    phone: "+91-8141430417",
+    latitude: 21.5222,
+    longitude: 70.4579,
   })
 
   return (
@@ -97,12 +97,12 @@ export default function ContactPage() {
                   <p className="text-xl md:text-2xl font-bold group-hover:text-primary transition-colors duration-300">
                     Visit Our Office
                   </p>
-                  <p className="text-muted-foreground text-sm md:text-lg">123, Agricultural Complex, GIDC Estate<br />Ahmedabad, Gujarat 380015</p>
+                  <p className="text-muted-foreground text-sm md:text-lg">1090, NEAR RADHAWADI CHOWK, VADAL<br />JUNAGADH, GUJARAT 362310</p>
                   <Button
                     variant="outline"
                     size="lg"
                     className="mt-2 md:mt-4 h-10 md:h-12"
-                    onClick={() => window.open("https://maps.google.com/?q=Savaj+Seeds+Ahmedabad")}
+                    onClick={() => window.open("https://maps.google.com/?q=SAVAJ+SEED+COMPANY+VADAL+JUNAGADH")}
                   >
                     <MapPin className="w-4 h-4 mr-2" />
                     Get Directions

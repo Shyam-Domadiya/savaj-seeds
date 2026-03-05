@@ -29,9 +29,10 @@ export function ProductCard({
 
   return (
     <Link href={`/products/${product.id}`} className="block h-full group">
-      <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-border/50 hover:-translate-y-2 cursor-pointer overflow-hidden bg-card/60 backdrop-blur-sm relative group">
+      <Card className="h-full flex flex-col transition-all duration-500 border-border/50 hover:-translate-y-2 cursor-pointer overflow-hidden bg-card/60 backdrop-blur-sm relative group">
         {/* Visual Polish: Background Glow */}
         <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl opacity-20 ${visuals.iconColor} group-hover:opacity-30 transition-opacity duration-500`} />
+
 
         {/* Image / Visual Header */}
         <div className={`relative aspect-[4/3] w-full overflow-hidden ${visuals.gradient} flex items-center justify-center`}>
@@ -55,14 +56,14 @@ export function ProductCard({
 
           {/* Quick View Overlay */}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-            <span className="inline-flex items-center justify-center rounded-full text-sm font-bold bg-white text-black hover:bg-primary hover:text-white h-11 px-6 shadow-2xl translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-professional">
+            <span className="inline-flex items-center justify-center rounded-full text-sm font-bold bg-white text-black hover:bg-primary hover:text-white h-11 px-6 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-professional">
               View Details <ArrowRight className="ml-2 h-4 w-4" />
             </span>
           </div>
 
           {product.featured && (
             <div className="absolute top-4 left-4 z-20">
-              <Badge className="bg-primary/95 hover:bg-primary shadow-lg backdrop-blur-md px-3 py-1 text-xs font-bold ring-2 ring-white/20">
+              <Badge className="bg-primary/95 hover:bg-primary backdrop-blur-md px-3 py-1 text-xs font-bold ring-2 ring-white/20">
                 Premium
               </Badge>
             </div>
@@ -224,7 +225,7 @@ export function ProductsContent({ initialProducts }: { initialProducts: Product[
                     {filteredProducts.map((product, index) => (
                       <div
                         key={product.id}
-                        className="transition-all duration-500 ease-out hover-lift"
+                        className="transition-all duration-500 ease-out"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
                         <ProductCard product={product} />

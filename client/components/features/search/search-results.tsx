@@ -71,7 +71,7 @@ export function SearchResults({ initialProducts }: { initialProducts: Product[] 
 function ProductCard({ product }: { product: any }) {
     return (
         <Link href={`/products/${product.id}`} className="group">
-            <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300">
+            <Card className="h-full overflow-hidden transition-all duration-300 hover:-translate-y-1">
                 <div className="relative h-48 bg-muted/30 overflow-hidden flex items-center justify-center">
                     {sanitizeImageUrl(product.images[0]?.url) ? (
                         <img

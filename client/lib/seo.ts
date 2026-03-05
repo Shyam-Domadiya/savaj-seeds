@@ -127,14 +127,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
       ],
 
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: fullTitle,
-      description,
-      images: [imageUrl],
-      creator: '@SavajSeeds',
-      site: '@SavajSeeds',
-    },
+
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -158,10 +151,9 @@ export function generateMetadata(config: SEOConfig): Metadata {
       'google-site-verification': process.env.GOOGLE_SITE_VERIFICATION || '',
       'application-name': 'Savaj Seeds',
       'msapplication-config': '/browserconfig.xml',
-      'geo.region': 'IN-GJ',
-      'geo.placename': 'Ahmedabad, Gujarat, India',
-      'geo.position': '23.0225;72.5714',
-      'ICBM': '23.0225, 72.5714',
+      'geo.placename': 'Junagadh, Gujarat, India',
+      'geo.position': '21.5222;70.4579',
+      'ICBM': '21.5222, 70.4579',
     },
   }
 }
@@ -186,13 +178,12 @@ export function generateBusinessSchema() {
     '@type': ['LocalBusiness', 'Store', 'Organization', 'AgricolaSupplier'],
     '@id': `${baseUrl}/#business`,
     name: 'Savaj Seeds',
-    legalName: 'Savaj Seeds Private Limited',
+    legalName: 'SAVAJ SEED COMPANY',
     alternateName: ['Savaj Seeds - Premium Quality Seeds', 'Savaj Agricultural Solutions', 'સવજ સીડ્સ'],
     description: 'Premium quality vegetable seeds, crop seeds, and hybrid seeds for optimal farming growth. Trusted seed supplier committed to farmer success with over a decade of experience in agricultural excellence. Leading agricultural solutions provider in Gujarat, India.',
     url: baseUrl,
-    telephone: '+91-79-2345-6789',
-    faxNumber: '+91-79-2345-6790',
-    email: 'info@savajseeds.com',
+    telephone: '+91-8141430417',
+    email: 'savajseeds@gmail.com',
     foundingDate: '2010-01-15',
     founder: {
       '@type': 'Person',
@@ -210,16 +201,16 @@ export function generateBusinessSchema() {
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123, Agricultural Complex, GIDC Estate',
-      addressLocality: 'Ahmedabad',
-      addressRegion: 'Gujarat',
-      postalCode: '380015',
+      streetAddress: '1090, NEAR RADHAWADI CHOWK, VADAL',
+      addressLocality: 'JUNAGADH',
+      addressRegion: 'GUJARAT',
+      postalCode: '362310',
       addressCountry: 'IN',
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 23.0225,
-      longitude: 72.5714,
+      latitude: 21.5222,
+      longitude: 70.4579,
     },
     openingHoursSpecification: [
       {
@@ -238,9 +229,6 @@ export function generateBusinessSchema() {
     sameAs: [
       'https://www.facebook.com/savajseeds',
       'https://www.instagram.com/savajseeds',
-      'https://www.linkedin.com/company/savajseeds',
-      'https://twitter.com/savajseeds',
-      'https://www.youtube.com/c/savajseeds',
       'https://in.pinterest.com/savajseeds',
       'https://www.indiamart.com/savajseeds',
       'https://www.justdial.com/savajseeds',
@@ -439,7 +427,7 @@ export function generateBusinessSchema() {
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+91-79-2345-6789',
+        telephone: '+91-8141430417',
         contactType: 'customer service',
         areaServed: 'IN',
         availableLanguage: ['English', 'Hindi', 'Gujarati'],
@@ -453,7 +441,7 @@ export function generateBusinessSchema() {
       },
       {
         '@type': 'ContactPoint',
-        telephone: '+91-91733-86405',
+        telephone: '+91-8141888118',
         contactType: 'technical support',
         areaServed: 'IN',
         availableLanguage: ['English', 'Hindi', 'Gujarati'],
@@ -466,7 +454,7 @@ export function generateBusinessSchema() {
       },
       {
         '@type': 'ContactPoint',
-        telephone: '+91-79-2345-6790',
+        telephone: '+91-8141430417',
         contactType: 'sales',
         areaServed: 'IN',
         availableLanguage: ['English', 'Hindi', 'Gujarati'],
@@ -476,22 +464,22 @@ export function generateBusinessSchema() {
       {
         '@type': 'Organization',
         name: 'Sales Department',
-        telephone: '+91-79-2345-6789',
-        email: 'sales@savajseeds.com',
+        telephone: '+91-8141430417',
+        email: 'savajseeds@gmail.com',
         description: 'Product sales and customer inquiries',
       },
       {
         '@type': 'Organization',
         name: 'Technical Support',
-        telephone: '+91-91733-86405',
-        email: 'support@savajseeds.com',
+        telephone: '+91-8141888118',
+        email: 'savajseeds@gmail.com',
         description: 'Agricultural consulting and technical guidance',
       },
       {
         '@type': 'Organization',
         name: 'Quality Assurance',
-        telephone: '+91-79-2345-6791',
-        email: 'quality@savajseeds.com',
+        telephone: '+91-8141430417',
+        email: 'savajseeds@gmail.com',
         description: 'Seed testing and quality control',
       },
     ],
@@ -541,10 +529,10 @@ export function generateBusinessSchema() {
         name: 'Savaj Seeds Processing Facility',
         address: {
           '@type': 'PostalAddress',
-          streetAddress: '456, Industrial Area, GIDC',
-          addressLocality: 'Ahmedabad',
-          addressRegion: 'Gujarat',
-          postalCode: '380016',
+          streetAddress: '1090, NEAR RADHAWADI CHOWK, VADAL',
+          addressLocality: 'JUNAGADH',
+          addressRegion: 'GUJARAT',
+          postalCode: '362310',
           addressCountry: 'IN',
         },
       },
@@ -705,7 +693,7 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     '@id': `${baseUrl}/#organization`,
     name: 'Savaj Seeds',
-    legalName: 'Savaj Seeds Private Limited',
+    legalName: 'SAVAJ SEED COMPANY',
     url: baseUrl,
     logo: {
       '@type': 'ImageObject',
@@ -715,24 +703,22 @@ export function generateOrganizationSchema() {
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+91-79-2345-6789',
+      telephone: '+91-8141430417',
       contactType: 'customer service',
       areaServed: 'IN',
       availableLanguage: ['English', 'Hindi', 'Gujarati'],
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123, Agricultural Complex, GIDC Estate',
-      addressLocality: 'Ahmedabad',
-      addressRegion: 'Gujarat',
-      postalCode: '380015',
+      streetAddress: '1090, NEAR RADHAWADI CHOWK, VADAL',
+      addressLocality: 'JUNAGADH',
+      addressRegion: 'GUJARAT',
+      postalCode: '362310',
       addressCountry: 'IN',
     },
     sameAs: [
       'https://www.facebook.com/savajseeds',
       'https://www.instagram.com/savajseeds',
-      'https://www.linkedin.com/company/savajseeds',
-      'https://twitter.com/savajseeds',
     ],
     foundingDate: '2010-01-15',
     numberOfEmployees: {

@@ -11,13 +11,13 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-primary text-primary-foreground active:scale-95 transition-all duration-150',
         destructive:
-          'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 hover:shadow-lg hover:shadow-destructive/20 active:scale-95 transition-all duration-150',
+          'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 active:scale-95 transition-all duration-150',
         outline:
-          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 hover:shadow-md active:scale-95 transition-all duration-150',
+          'border bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 active:scale-95 transition-all duration-150',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-lg active:scale-95 transition-all duration-150',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-95 transition-all duration-150',
         ghost:
-          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 hover:shadow-sm active:scale-95 transition-all duration-150',
+          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 active:scale-95 transition-all duration-150',
         link: 'text-primary underline-offset-4 hover:underline hover:text-primary/80 active:scale-95 transition-all duration-150',
       },
       size: {

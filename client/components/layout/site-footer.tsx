@@ -22,9 +22,6 @@ export function SiteFooter() {
   const socialIcons = {
     facebook: Facebook,
     instagram: Instagram,
-    twitter: Twitter,
-    youtube: Youtube,
-    linkedin: Linkedin,
   };
 
   return (
