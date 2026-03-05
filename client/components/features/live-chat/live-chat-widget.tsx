@@ -45,7 +45,7 @@ const botResponses = {
   bulk: "Excellent! We offer competitive pricing for bulk orders. Our team can provide customized quotes based on your requirements. Let me connect you with our sales team.",
   technical: "Our agricultural experts are here to help! We provide comprehensive technical support including planting guides, pest management, and crop optimization advice.",
   pricing: "We offer competitive pricing across all our product lines. For detailed pricing information, I'll connect you with our sales team who can provide accurate quotes.",
-  default: "Thank you for your message. Our team will get back to you shortly. For immediate assistance, you can also call us at +91 8141430417.",
+  default: "Thank you for your message. Our team will get back to you shortly. For immediate assistance, you can also call us at +91 9316831926.",
 }
 
 export function LiveChatWidget() {
@@ -286,7 +286,7 @@ export function LiveChatWidget() {
                     variant="ghost"
                     size="sm"
                     className="text-xs"
-                    onClick={() => window.open("tel:+917923456789")}
+                    onClick={() => window.open("tel:+919316831926")}
                   >
                     <Phone className="w-3 h-3 mr-1" />
                     Call
@@ -304,7 +304,7 @@ export function LiveChatWidget() {
                     variant="ghost"
                     size="sm"
                     className="text-xs"
-                    onClick={() => window.open("https://wa.me/919173386405")}
+                    onClick={() => window.open("https://wa.me/919316831926")}
                   >
                     <MessageCircle className="w-3 h-3 mr-1" />
                     WhatsApp
