@@ -12,7 +12,6 @@ export const mockTeamMembers: TeamMember[] = [
     experience: '25+ years',
     education: 'Ph.D. in Agricultural Sciences, Gujarat Agricultural University',
     email: 'rajesh@savajseeds.com',
-    linkedin: 'https://linkedin.com/in/rajeshpatel',
   },
   {
     id: '2',
@@ -49,7 +48,6 @@ export const mockTeamMembers: TeamMember[] = [
     experience: '10+ years',
     education: 'M.Sc. in Seed Technology, Tamil Nadu Agricultural University',
     email: 'sunita@savajseeds.com',
-    linkedin: 'https://linkedin.com/in/sunitadevi',
   },
   {
     id: '5',
@@ -78,21 +76,21 @@ export const mockTeamMembers: TeamMember[] = [
 ];
 
 export const businessInfo: BusinessInfo = {
-  companyName: 'Savaj Seeds Private Limited',
-  establishedYear: 2010,
+  companyName: 'SAVAJ SEED COMPANY',
+  establishedYear: 2026,
 
   gstNumber: 'GSTIN: 24AFKFS9042R1Z5',
   address: {
-    street: '123, Agricultural Complex, GIDC Estate',
-    city: 'Ahmedabad',
-    state: 'Gujarat',
-    pincode: '380015',
-    country: 'India',
+    street: '1090, NEAR RADHAWADI CHOWK, VADAL',
+    city: 'JUNAGADH',
+    state: 'GUJARAT',
+    pincode: '362310',
+    country: 'INDIA',
   },
   contact: {
-    phone: ['+91 79 2345 6789', '+91 79 2345 6790'],
-    email: ['info@savajseeds.com', 'support@savajseeds.com'],
-    whatsapp: '+91 91733 86405',
+    phone: ['+91 8141430417', '+91 8141888118'],
+    email: ['savajseeds@gmail.com'],
+    whatsapp: '+91 8141430417',
   },
   businessHours: {
     weekdays: '9:00 AM - 6:00 PM',
@@ -102,8 +100,5 @@ export const businessInfo: BusinessInfo = {
   socialMedia: {
     facebook: 'https://facebook.com/savajseeds',
     instagram: 'https://instagram.com/savajseeds',
-    twitter: 'https://twitter.com/savajseeds',
-    youtube: 'https://youtube.com/savajseeds',
-    linkedin: 'https://linkedin.com/company/savajseeds',
   },
 };

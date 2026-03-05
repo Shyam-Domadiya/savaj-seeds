@@ -39,7 +39,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }
                             <Button
                                 asChild
                                 size="lg"
-                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white rounded-full font-bold"
+                                className="w-full sm:w-auto text-base sm:text-lg h-12 sm:h-14 px-8 sm:px-10 hover:scale-105 transition-all duration-300 bg-primary hover:bg-primary/90 text-white rounded-full font-bold"
                             >
                                 <Link href="/products" className="flex items-center">
                                     View Our Products
@@ -111,12 +111,12 @@ export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }
                             <EntranceAnimation key={index} delay={index * 0.1}>
                                 <Link
                                     href={feature.href}
-                                    className="group block relative bg-white/60 dark:bg-card/40 backdrop-blur-md border border-white/20 dark:border-white/10 p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full"
+                                    className="group block relative bg-white/60 dark:bg-card/40 backdrop-blur-md border border-white/20 dark:border-white/10 p-6 md:p-8 rounded-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full"
                                 >
                                     <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
 
                                     <div className="relative z-10">
-                                        <div className={`inline-flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-xl bg-white dark:bg-white/10 shadow-sm dark:shadow-none mb-4 md:mb-6 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                                        <div className={`inline-flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-xl bg-white dark:bg-white/10 dark:shadow-none mb-4 md:mb-6 ${feature.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                                             <feature.icon className="h-6 w-6 md:h-7 md:w-7" />
                                         </div>
                                         <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors duration-300">
@@ -147,7 +147,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         {/* Vegetable Seeds Card */}
                         <EntranceAnimation delay={0.1}>
-                            <Link href="/products?category=vegetable" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 block h-full">
+                            <Link href="/products?category=vegetable" className="group relative aspect-[4/5] sm:aspect-[3/4] md:aspect-square overflow-hidden rounded-2xl cursor-pointer transition-all duration-500 block h-full">
                                 <div className="absolute inset-0">
                                     <div className="absolute inset-0 bg-black/40 z-10 group-hover:bg-black/30 transition-colors duration-500" />
                                     <Image
@@ -161,7 +161,7 @@ export function HomeContent({ cropCalendar }: { cropCalendar?: React.ReactNode }
 
                                 <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-20">
                                     <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                        <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-green-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                        <div className="inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-green-600/90 backdrop-blur-sm text-white mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
                                             <Sprout className="h-6 w-6 md:h-7 md:w-7" />
                                         </div>
                                         <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-white">Vegetable Seeds</h3>

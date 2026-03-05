@@ -181,7 +181,7 @@ export const ProductGuidePDF = ({ product }: ProductGuidePDFProps) => (
 
             <View style={styles.footer}>
                 <Text>Thank you for choosing Savaj Seeds. For more information, visit www.savajseeds.com</Text>
-                <Text>Contact: +91 123 456 7890 | support@savajseeds.com</Text>
+                <Text>Contact: +91 8141430417 | savajseeds@gmail.com</Text>
             </View>
         </Page>
     </Document>

@@ -31,7 +31,7 @@ export default function TermsOfService() {
 
                     <section>
                         <h2 className="text-2xl font-semibold mb-4 text-primary">4. Contact Information</h2>
-                        <p>If you have any questions about these Terms, please contact us at support@savajseeds.com.</p>
+                        <p>If you have any questions about these Terms, please contact us at savajseeds@gmail.com.</p>
                     </section>
                 </div>
             </main>
