@@ -2,19 +2,19 @@
 
 import type React from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
 import { BusinessInfo } from "@/components/sections/contact/ContactDetails"
 import { Breadcrumb } from "@/components/shared/breadcrumb"
-import { EnhancedContactForm } from "@/components/sections/contact/EnhancedContactForm"
 import { MultiContactMethods } from "@/components/sections/contact/MultiContactMethods"
 import { LiveChatWidget } from "@/components/features/live-chat/live-chat-widget"
 import { StructuredData } from "@/components/providers/structured-data"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { generateBreadcrumbSchema, generateLocalBusinessSchema } from "@/lib/seo"
-import { MapPin } from "lucide-react"
+import { MapPin, Phone } from "lucide-react"
 
 export default function ContactPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -73,41 +73,53 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Contact Form and Business Info Section */}
-        <section className="py-16 md:py-28 bg-muted/40">
+        {/* Information Center: Contact Info & Map */}
+        <section className="py-16 md:py-28 bg-muted/30">
           <div className="container px-4 sm:px-6">
-            <div className="grid lg:grid-cols-2 gap-10 md:gap-12">
-              <EnhancedContactForm />
-
-              <div className="space-y-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Left Column: Detailed Contact Info */}
+              <div className="animate-in fade-in-50 slide-in-from-left-8 duration-700">
                 <BusinessInfo />
-
-
               </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="py-16 md:py-28 animate-in fade-in-50 slide-in-from-bottom-8 duration-700 cursor-pointer">
-          <div className="container px-4 sm:px-6">
-            <div className="mx-auto max-w-4xl animate-in fade-in-50 slide-in-from-bottom-8 duration-700">
-              <div className="aspect-video sm:aspect-[21/9] md:aspect-video rounded-2xl bg-gradient-to-br from-primary/15 via-accent/10 to-secondary/15 flex items-center justify-center shadow-lg hover:shadow-2xl hover:scale-[1.02] md:hover:scale-105 transition-all duration-500 group">
-                <div className="text-center space-y-4 md:space-y-5 px-6">
-                  <MapPin className="h-12 w-12 md:h-20 md:w-20 text-primary mx-auto group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-500" />
-                  <p className="text-xl md:text-2xl font-bold group-hover:text-primary transition-colors duration-300">
-                    Visit Our Office
-                  </p>
-                  <p className="text-muted-foreground text-sm md:text-lg">1090, NEAR RADHAWADI CHOWK, VADAL<br />JUNAGADH, GUJARAT 362310</p>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="mt-2 md:mt-4 h-10 md:h-12"
-                    onClick={() => window.open("https://maps.google.com/?q=SAVAJ+SEED+COMPANY+VADAL+JUNAGADH")}
-                  >
-                    <MapPin className="w-4 h-4 mr-2" />
-                    Get Directions
-                  </Button>
-                </div>
+              {/* Right Column: Map & Directions Card */}
+              <div className="animate-in fade-in-50 slide-in-from-right-8 duration-700 delay-200">
+                <Card className="overflow-hidden border-border/50 shadow-none hover:border-primary/30 transition-all duration-500 group">
+                  <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 flex items-center justify-center">
+                    <MapPin className="h-16 w-16 text-primary/40 group-hover:scale-110 group-hover:text-primary transition-all duration-500" />
+                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                  <CardContent className="p-8 space-y-6">
+                    <div className="space-y-2">
+                      <h3 className="text-2xl font-bold">Visit Our Office</h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        We welcome you to visit our main office in Junagadh. Our experts are available for consultations and product demonstrations.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button
+                        size="lg"
+                        className="flex-1 h-12 text-base shadow-none transition-all duration-300"
+                        onClick={() => window.open("https://maps.google.com/?q=SAVAJ+SEED+COMPANY+VADAL+JUNAGADH")}
+                      >
+                        <MapPin className="w-4 h-4 mr-2" />
+                        Get Directions
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="flex-1 h-12 text-base transition-all duration-300"
+                        asChild
+                      >
+                        <Link href="tel:+918141430417">
+                          <Phone className="w-4 h-4 mr-2" />
+                          Call Office
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>

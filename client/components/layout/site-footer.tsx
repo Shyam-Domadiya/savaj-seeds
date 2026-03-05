@@ -40,7 +40,7 @@ export function SiteFooter() {
                 alt="Savaj Seeds logo"
                 width={180}
                 height={120}
-                className="h-12 md:h-14 w-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
+                className="h-12 md:h-14 w-auto transition-transform duration-300 cursor-pointer"
               />
             </Link>
             <p className="text-[15px] text-muted-foreground leading-relaxed max-w-sm">
@@ -65,7 +65,7 @@ export function SiteFooter() {
                     key={platform}
                     variant="outline"
                     size="icon"
-                    className="w-9 h-9 hover:scale-110 transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    className="w-9 h-9 transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     asChild
                   >
                     <Link
@@ -91,7 +91,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/"
-                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
                 >
                   Home
                 </Link>
@@ -99,7 +99,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/about"
-                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
                 >
                   About Us
                 </Link>
@@ -107,7 +107,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/products"
-                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+                  className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
                 >
                   Products
                 </Link>
@@ -123,7 +123,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/products?category=vegetable"
-                  className="hover:text-primary hover:translate-x-1 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
+                  className="hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
                 >
                   Vegetable Seeds
                 </Link>
@@ -131,7 +131,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/products?category=crop"
-                  className="hover:text-primary hover:translate-x-1 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
+                  className="hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
                 >
                   Crop Seeds
                 </Link>
@@ -139,7 +139,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/products?category=hybrid"
-                  className="hover:text-primary hover:translate-x-1 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
+                  className="hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
                 >
                   Hybrid Seeds
                 </Link>
@@ -147,7 +147,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/products?category=organic"
-                  className="hover:text-primary hover:translate-x-1 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
+                  className="hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded inline-block"
                 >
                   Organic Seeds
                 </Link>
@@ -231,19 +231,19 @@ export function SiteFooter() {
           <nav className="flex gap-8" aria-label="Legal links">
             <Link
               href="/privacy-policy"
-              className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+              className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms-of-service"
-              className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+              className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
             >
               Terms of Service
             </Link>
             <Link
               href="/refund-policy"
-              className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+              className="text-[15px] text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
             >
               Refund Policy
             </Link>

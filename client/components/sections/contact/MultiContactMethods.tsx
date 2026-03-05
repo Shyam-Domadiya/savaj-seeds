@@ -75,24 +75,6 @@ export function MultiContactMethods() {
       url: businessInfo.socialMedia.instagram,
       color: "hover:text-pink-600",
     },
-    {
-      name: "Twitter",
-      icon: <Twitter className="w-4 h-4" />,
-      url: businessInfo.socialMedia.twitter,
-      color: "hover:text-blue-400",
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin className="w-4 h-4" />,
-      url: businessInfo.socialMedia.linkedin,
-      color: "hover:text-blue-700",
-    },
-    {
-      name: "YouTube",
-      icon: <Youtube className="w-4 h-4" />,
-      url: businessInfo.socialMedia.youtube,
-      color: "hover:text-red-600",
-    },
   ]
 
   return (
@@ -110,7 +92,7 @@ export function MultiContactMethods() {
             {contactMethods.map((method) => (
               <Card
                 key={method.id}
-                className="relative cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 group"
+                className="relative cursor-pointer transition-all duration-300 group"
                 onClick={method.action}
               >
                 {method.preferred && (
@@ -133,9 +115,7 @@ export function MultiContactMethods() {
                           <Clock className="w-3 h-3" />
                           <span>{method.availability}</span>
                         </div>
-                        <div className="text-xs font-medium text-green-600">
-                          Response: {method.responseTime}
-                        </div>
+
                       </div>
                     </div>
                   </div>

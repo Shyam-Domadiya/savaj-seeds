@@ -140,9 +140,9 @@ export function LiveChatWidget() {
           <Button
             onClick={() => setIsOpen(true)}
             size="lg"
-            className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
+            className="h-14 w-14 rounded-full transition-all duration-300 group"
           >
-            <MessageCircle className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+            <MessageCircle className="h-6 w-6 transition-transform duration-300" />
             <span className="sr-only">Open chat</span>
           </Button>
         )}
@@ -151,7 +151,7 @@ export function LiveChatWidget() {
       {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-80 sm:w-96">
-          <Card className="shadow-2xl border-border/50">
+          <Card className="shadow-none border-border/50">
             <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
