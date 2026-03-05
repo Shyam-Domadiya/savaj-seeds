@@ -182,7 +182,7 @@ export function generateBusinessSchema() {
     alternateName: ['Savaj Seeds - Premium Quality Seeds', 'Savaj Agricultural Solutions', 'સવજ સીડ્સ'],
     description: 'Premium quality vegetable seeds, crop seeds, and hybrid seeds for optimal farming growth. Trusted seed supplier committed to farmer success with over a decade of experience in agricultural excellence. Leading agricultural solutions provider in Gujarat, India.',
     url: baseUrl,
-    telephone: '+91-8141430417',
+    telephone: '+91 9316831926',
     email: 'savajseeds@gmail.com',
     foundingDate: '2010-01-15',
     founder: {
@@ -427,7 +427,7 @@ export function generateBusinessSchema() {
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+91-8141430417',
+        telephone: '+91 9316831926',
         contactType: 'customer service',
         areaServed: 'IN',
         availableLanguage: ['English', 'Hindi', 'Gujarati'],
@@ -441,7 +441,7 @@ export function generateBusinessSchema() {
       },
       {
         '@type': 'ContactPoint',
-        telephone: '+91-8141888118',
+        telephone: '+91 9316831926',
         contactType: 'technical support',
         areaServed: 'IN',
         availableLanguage: ['English', 'Hindi', 'Gujarati'],
@@ -454,7 +454,7 @@ export function generateBusinessSchema() {
       },
       {
         '@type': 'ContactPoint',
-        telephone: '+91-8141430417',
+        telephone: '+91 9316831926',
         contactType: 'sales',
         areaServed: 'IN',
         availableLanguage: ['English', 'Hindi', 'Gujarati'],
@@ -464,21 +464,21 @@ export function generateBusinessSchema() {
       {
         '@type': 'Organization',
         name: 'Sales Department',
-        telephone: '+91-8141430417',
+        telephone: '+91 9316831926',
         email: 'savajseeds@gmail.com',
         description: 'Product sales and customer inquiries',
       },
       {
         '@type': 'Organization',
         name: 'Technical Support',
-        telephone: '+91-8141888118',
+        telephone: '+91 9316831926',
         email: 'savajseeds@gmail.com',
         description: 'Agricultural consulting and technical guidance',
       },
       {
         '@type': 'Organization',
         name: 'Quality Assurance',
-        telephone: '+91-8141430417',
+        telephone: '+91 9316831926',
         email: 'savajseeds@gmail.com',
         description: 'Seed testing and quality control',
       },
@@ -703,7 +703,7 @@ export function generateOrganizationSchema() {
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+91-8141430417',
+      telephone: '+91 9316831926',
       contactType: 'customer service',
       areaServed: 'IN',
       availableLanguage: ['English', 'Hindi', 'Gujarati'],

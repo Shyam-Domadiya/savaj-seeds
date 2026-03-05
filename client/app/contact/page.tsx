@@ -29,7 +29,7 @@ export default function ContactPage() {
     city: "JUNAGADH",
     state: "GUJARAT",
     postalCode: "362310",
-    phone: "+91-8141430417",
+    phone: "+91 9316831926",
     latitude: 21.5222,
     longitude: 70.4579,
   })
@@ -112,7 +112,7 @@ export default function ContactPage() {
                         className="flex-1 h-12 text-base transition-all duration-300"
                         asChild
                       >
-                        <Link href="tel:+918141430417">
+                        <Link href="tel:+919316831926">
                           <Phone className="w-4 h-4 mr-2" />
                           Call Office
                         </Link>

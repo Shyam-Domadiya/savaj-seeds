@@ -88,9 +88,9 @@ export const businessInfo: BusinessInfo = {
     country: 'INDIA',
   },
   contact: {
-    phone: ['+91 8141430417', '+91 8141888118'],
+    phone: ['+91 9316831926'],
     email: ['savajseeds@gmail.com'],
-    whatsapp: '+91 8141430417',
+    whatsapp: '+91 9316831926',
   },
   businessHours: {
     weekdays: '9:00 AM - 6:00 PM',
