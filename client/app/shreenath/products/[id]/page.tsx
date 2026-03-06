@@ -111,39 +111,33 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
         setProduct((prev) => ({ ...prev, images: newImages }));
     };
 
-    const handleFileUpload = async (files: FileList | File[]) => {
-        setUploadingIndex(product.images.length); // Indicate upload started at the end of current list
+    const handleFileUpload = async (files: FileList | File[], indexToUpdate: number) => {
+        setUploadingIndex(indexToUpdate); // Indicate upload started for this specific image
         try {
-            const newUploadedImages: { url: string, altText: string, isPrimary: boolean }[] = [];
-
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const formData = new FormData();
-                formData.append('image', file);
-                const res = await fetch(`${getApiUrl()}/upload`, {
-                    method: 'POST',
-                    credentials: 'include',
-                    body: formData,
-                });
-                if (!res.ok) {
-                    const err = await res.json();
-                    throw new Error(err.message || 'Upload failed');
-                }
-                const data = await res.json();
-
-                // Keep track of new uploads
-                newUploadedImages.push({
-                    url: data.url,
-                    altText: '',
-                    isPrimary: product.images.length === 0 && i === 0 // Make first image primary if none exist
-                });
+            const file = files[0]; // Take the first file
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await fetch(`${getApiUrl()}/upload`, {
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Upload failed');
             }
+            const data = await res.json();
 
-            // Append all new images at once to state
-            setProduct((prev) => ({
-                ...prev,
-                images: [...prev.images, ...newUploadedImages]
-            }));
+            // Update the specific image at the given index instead of appending
+            setProduct((prev) => {
+                const newImages = [...prev.images];
+                newImages[indexToUpdate] = {
+                    ...newImages[indexToUpdate],
+                    url: data.url,
+                    isPrimary: prev.images.length === 1 // If it's the only image, make it primary
+                };
+                return { ...prev, images: newImages };
+            });
 
         } catch (err: any) {
             toast({ title: 'Upload Error', description: err.message, variant: 'destructive' });
@@ -347,20 +341,19 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                                     <input
                                         type="file"
                                         accept="image/*"
-                                        multiple
                                         className="hidden"
                                         onChange={(e) => {
                                             const files = e.target.files;
                                             if (files && files.length > 0) {
-                                                handleFileUpload(files);
+                                                handleFileUpload(files, index);
                                             }
                                         }}
                                     />
                                     <span className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-dashed border-gray-400 dark:border-gray-500 bg-white dark:bg-gray-800 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-                                        {uploadingIndex !== null ? (
+                                        {uploadingIndex === index ? (
                                             <><Loader2 className="w-4 h-4 animate-spin" /> Uploading...</>
                                         ) : (
-                                            <><Upload className="w-4 h-4" /> Choose Image File(s)</>
+                                            <><Upload className="w-4 h-4" /> Choose Image File</>
                                         )}
                                     </span>
                                 </label>
