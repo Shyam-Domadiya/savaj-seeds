@@ -25,6 +25,7 @@ import { getAllProducts } from "@/lib/actions/product"
 
 
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Always fetch live data (no cache)
 
 export default async function ProductsPage() {
