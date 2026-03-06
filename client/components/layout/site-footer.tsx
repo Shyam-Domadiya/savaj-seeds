@@ -44,7 +44,7 @@ export function SiteFooter() {
               />
             </Link>
             <p className="text-[15px] text-muted-foreground leading-relaxed max-w-sm">
-              {"Happiness from the Farmer's Field. Quality seeds for sustainable agriculture and better harvests since 2010."}
+              {"Happiness from the Farmer's Field. Quality seeds for sustainable agriculture and better harvests since 2026."}
             </p>
 
             {/* Business Registration */}
