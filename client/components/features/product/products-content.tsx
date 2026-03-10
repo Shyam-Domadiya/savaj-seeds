@@ -37,10 +37,12 @@ export function ProductCard({
         {/* Image / Visual Header */}
         <div className={`relative aspect-[4/3] w-full overflow-hidden ${visuals.gradient} flex items-center justify-center`}>
           {sanitizeImageUrl(product.images?.[0]?.url) ? (
-            <img
+            <Image
               src={product.images[0].url}
               alt={product.images[0].altText || product.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div className="relative w-full h-full p-8 flex items-center justify-center bg-white/50 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">

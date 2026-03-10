@@ -18,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'plus.unsplash.com',
+        hostname: 'res.cloudinary.com',
       },
     ],
     formats: ['image/webp', 'image/avif'],
