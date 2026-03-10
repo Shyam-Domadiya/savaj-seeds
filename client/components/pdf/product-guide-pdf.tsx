@@ -15,86 +15,84 @@ Font.register({
 
 const styles = StyleSheet.create({
     page: {
-        padding: 40,
+        padding: 50,
         fontFamily: 'Helvetica',
-        fontSize: 12,
-        color: '#333',
+        color: '#1a1a1a',
+        backgroundColor: '#fff',
     },
-    header: {
-        marginBottom: 20,
-        borderBottomWidth: 2,
-        borderBottomColor: '#16a34a', // Primary green
-        paddingBottom: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    brandName: {
-        fontSize: 24,
+    badge: {
+        backgroundColor: '#dcfce7',
+        color: '#166534',
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 12,
+        fontSize: 10,
         fontWeight: 'bold',
-        color: '#16a34a',
+        textTransform: 'uppercase',
+        alignSelf: 'flex-start',
+        marginBottom: 12,
+        letterSpacing: 1,
     },
     title: {
-        fontSize: 20,
+        fontSize: 48,
         fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#111',
-    },
-    subtitle: {
-        fontSize: 14,
-        color: '#666',
+        color: '#052e16',
         marginBottom: 20,
+        textTransform: 'uppercase',
+        letterSpacing: -1,
     },
-    section: {
-        marginBottom: 15,
+    description: {
+        fontSize: 14,
+        color: '#374151',
+        lineHeight: 1.6,
+        marginBottom: 40,
+        maxWidth: '90%',
     },
-    sectionTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 8,
-        color: '#16a34a',
-        backgroundColor: '#f0fdf4',
-        padding: 5,
-    },
-    text: {
-        lineHeight: 1.5,
-        marginBottom: 5,
-    },
-    row: {
+    contentRow: {
         flexDirection: 'row',
+        gap: 30,
+    },
+    column: {
+        flex: 1,
+        backgroundColor: '#f9fafb',
+        borderRadius: 24,
+        padding: 24,
+        borderWidth: 1,
+        borderColor: '#f3f4f6',
+    },
+    sectionHeader: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#166534',
+        textTransform: 'uppercase',
+        letterSpacing: 2,
+        marginBottom: 24,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingVertical: 5,
+        borderBottomColor: '#f3f4f6',
+        paddingBottom: 8,
+    },
+    infoRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f3f4f6',
     },
     label: {
-        width: '40%',
+        fontSize: 9,
         fontWeight: 'bold',
-        color: '#555',
+        color: '#6b7280',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+        width: '40%',
     },
     value: {
+        fontSize: 11,
+        fontWeight: 'bold',
+        color: '#111827',
+        textAlign: 'right',
         width: '60%',
-    },
-    table: {
-        marginBottom: 20,
-    },
-    image: {
-        width: '100%',
-        height: 200,
-        objectFit: 'cover',
-        marginBottom: 20,
-        borderRadius: 5,
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 30,
-        left: 40,
-        right: 40,
-        textAlign: 'center',
-        color: '#999',
-        fontSize: 10,
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        paddingTop: 10,
     },
 })
 
@@ -102,87 +100,93 @@ interface ProductGuidePDFProps {
     product: Product
 }
 
-export const ProductGuidePDF = ({ product }: ProductGuidePDFProps) => (
-    <Document>
-        <Page size="A4" style={styles.page}>
-            {/* Header */}
-            <View style={styles.header}>
-                <Text style={styles.brandName}>Savaj Seeds</Text>
-                <Text style={{ fontSize: 10, color: '#666' }}>Premium Quality Seeds</Text>
-            </View>
+export const ProductGuidePDF = ({ product }: ProductGuidePDFProps) => {
+    // Process seasonality to string
+    const seasonStr = product.seasonality && Array.isArray(product.seasonality)
+        ? product.seasonality.join(', ')
+        : (product.seasonality || 'N/A');
 
-            {/* Product Title & Image */}
-            <Text style={styles.title}>{product.name}</Text>
-            <Text style={styles.subtitle}>{product.category} - {product.subcategory}</Text>
+    return (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                {/* Product Header */}
+                <View style={styles.badge}>
+                    <Text>{product.cropName || product.category || 'Quality Seeds'}</Text>
+                </View>
 
-            {/* We can't easily use local images in react-pdf client-side without converting to base64 or public URL. 
-          Assuming product.images[0].url works if it is a public URL or we skip image if it fails. 
-          For now, let's try to render it if it's not a placeholder. */}
-            {/* <Image src={product.images[0]?.url} style={styles.image} /> */}
+                <Text style={styles.title}>{product.name}</Text>
 
-            {/* Description */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Product Description</Text>
-                <Text style={styles.text}>{product.longDescription}</Text>
-            </View>
+                <Text style={styles.description}>
+                    {product.description || product.longDescription}
+                </Text>
 
-            {/* Specifications Table */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Specifications</Text>
-                <View style={styles.table}>
-                    {product.specifications.slice(0, 6).map((spec) => (
-                        <View key={spec.id} style={styles.row}>
-                            <Text style={styles.label}>{spec.name}</Text>
-                            <Text style={styles.value}>{spec.value}</Text>
+                {/* Info Grid */}
+                <View style={styles.contentRow}>
+                    {/* Traits Column */}
+                    <View style={styles.column}>
+                        <Text style={styles.sectionHeader}>Traits</Text>
+
+                        {product.seedColor && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Seed Color</Text>
+                                <Text style={styles.value}>{product.seedColor}</Text>
+                            </View>
+                        )}
+
+                        {product.varietyType && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Variety Type</Text>
+                                <Text style={styles.value}>{product.varietyType}</Text>
+                            </View>
+                        )}
+
+                        <View style={styles.infoRow}>
+                            <Text style={styles.label}>Season</Text>
+                            <Text style={styles.value}>{seasonStr}</Text>
                         </View>
-                    ))}
+                    </View>
+
+                    {/* Cultivation Column */}
+                    <View style={styles.column}>
+                        <Text style={styles.sectionHeader}>Cultivation</Text>
+
+                        {product.maturityTime && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Maturity</Text>
+                                <Text style={styles.value}>{product.maturityTime}</Text>
+                            </View>
+                        )}
+
+                        {product.yieldExpectation && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Yield</Text>
+                                <Text style={styles.value}>{product.yieldExpectation}</Text>
+                            </View>
+                        )}
+
+                        {product.sowingTime && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Sowing Time</Text>
+                                <Text style={styles.value}>{product.sowingTime}</Text>
+                            </View>
+                        )}
+
+                        {product.harvestTime && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Harvest Time</Text>
+                                <Text style={styles.value}>{product.harvestTime}</Text>
+                            </View>
+                        )}
+
+                        {product.soilType && (
+                            <View style={styles.infoRow}>
+                                <Text style={styles.label}>Soil Type</Text>
+                                <Text style={styles.value}>{product.soilType}</Text>
+                            </View>
+                        )}
+                    </View>
                 </View>
-            </View>
-
-            {/* Growing Guide */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Growing Guide</Text>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Maturity Time</Text>
-                    <Text style={styles.value}>{product.maturityTime}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Yield Expectation</Text>
-                    <Text style={styles.value}>{product.yieldExpectation}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Difficulty</Text>
-                    <Text style={styles.value}>{product.difficultyLevel}</Text>
-                </View>
-            </View>
-
-            <Text break />
-
-            {/* Instructions */}
-            <View style={styles.header}>
-                <Text style={styles.brandName}>Savaj Seeds</Text>
-            </View>
-
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Detailed Instructions</Text>
-
-                <Text style={{ ...styles.text, fontWeight: 'bold', marginTop: 10 }}>Planting Instructions:</Text>
-                <Text style={styles.text}>{product.plantingInstructions}</Text>
-
-                <Text style={{ ...styles.text, fontWeight: 'bold', marginTop: 10 }}>Care Instructions:</Text>
-                <Text style={styles.text}>{product.careInstructions}</Text>
-
-                <Text style={{ ...styles.text, fontWeight: 'bold', marginTop: 10 }}>Harvesting Tips:</Text>
-                <Text style={styles.text}>{product.harvestingTips}</Text>
-
-                <Text style={{ ...styles.text, fontWeight: 'bold', marginTop: 10 }}>Storage Guidance:</Text>
-                <Text style={styles.text}>{product.storageGuidance}</Text>
-            </View>
-
-            <View style={styles.footer}>
-                <Text>Thank you for choosing Savaj Seeds. For more information, visit www.savajseeds.com</Text>
-                <Text>Contact: +91 9316831926 | savajseeds@gmail.com</Text>
-            </View>
-        </Page>
-    </Document>
-)
+            </Page>
+        </Document>
+    );
+}

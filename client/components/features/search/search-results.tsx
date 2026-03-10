@@ -74,10 +74,12 @@ function ProductCard({ product }: { product: any }) {
             <Card className="h-full overflow-hidden transition-all duration-300 hover:-translate-y-1">
                 <div className="relative h-48 bg-muted/30 overflow-hidden flex items-center justify-center">
                     {sanitizeImageUrl(product.images[0]?.url) ? (
-                        <img
+                        <Image
                             src={product.images[0].url}
                             alt={product.name}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     ) : (
                         <div className="p-8 flex items-center justify-center">

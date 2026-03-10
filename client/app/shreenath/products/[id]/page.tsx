@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getApiUrl } from '@/lib/api-config';
 import { getAuthHeader } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 import { use } from 'react';
 import { Button } from '@/components/ui/button';
@@ -326,11 +327,15 @@ export default function ProductEditPage({ params }: { params: Promise<{ id: stri
                             {img.url && (
                                 <div className="w-full flex justify-center">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={img.url}
-                                        alt={img.altText || 'Preview'}
-                                        className="h-40 object-contain rounded-md border dark:border-gray-600"
-                                    />
+                                    <div className="relative h-40 w-full">
+                                        <Image
+                                            src={img.url}
+                                            alt={img.altText || 'Preview'}
+                                            fill
+                                            className="object-contain rounded-md border dark:border-gray-600"
+                                            sizes="(max-width: 768px) 100vw, 400px"
+                                        />
+                                    </div>
                                 </div>
                             )}
 
